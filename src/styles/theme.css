@@ -1,0 +1,56 @@
+/* src/styles/theme.css */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
+    --bg-overlay: rgba(0, 0, 0, 0.8);
+    --text-primary: #1e1e1e;
+    --text-secondary: #4a4a4a;
+    --text-accent: #FFD700;
+    --border-color: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --accent-primary: #FFD700;
+    --accent-light: rgba(255, 215, 0, 0.1);
+    --accent-dark: #b8960f;
+    --error-color: #ff4d4d;
+    --error-light: rgba(255, 77, 77, 0.05);
+    --success-color: #FFD700;
+    --success-light: rgba(255, 215, 0, 0.1);
+    --header-bg: #000000;
+    --header-text: #ffffff;
+    --card-border: rgba(0, 0, 0, 0.05);
+    --policy-bg: #fff3cd;
+    --policy-border: #ff9800;
+    --policy-text: #1e1e1e;
+    --refusal-border: #ff4d4d;
+    --refusal-text: #ff4d4d;
+}
+
+.dark-mode {
+    --bg-primary: #121212;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #1e1e1e;
+    --bg-input: #2d2d2d;
+    --bg-overlay: rgba(0, 0, 0, 0.95);
+    --text-primary: #f1f1f1;
+    --text-secondary: #b0b0b0;
+    --text-accent: #FFD700;
+    --border-color: #333333;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --accent-primary: #FFD700;
+    --accent-light: rgba(255, 215, 0, 0.15);
+    --accent-dark: #b8960f;
+    --error-color: #ff8a8a;
+    --error-light: rgba(255, 77, 77, 0.15);
+    --success-color: #FFD700;
+    --success-light: rgba(255, 215, 0, 0.15);
+    --header-bg: #000000;
+    --header-text: #ffffff;
+    --card-border: rgba(255, 215, 0, 0.1);
+    --policy-bg: #332a00;
+    --policy-border: #ffb74d;
+    --policy-text: #ffe083;
+    --refusal-border: #ff8a8a;
+    --refusal-text: #ff8a8a;
+}

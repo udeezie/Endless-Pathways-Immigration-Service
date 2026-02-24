@@ -1,0 +1,243 @@
+.footer {
+  background: #000;
+  color: #fff;
+  padding: 3rem 0 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.footer-disclaimer {
+  max-width: 1200px;
+  margin: 0 auto 2.5rem;
+  padding: 0 20px;
+  font-size: 0.9rem;
+  color: #ccc;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.footer-logo-wrapper {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.footer-logo-image {
+  max-width: 240px;
+  max-height: 90px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+.footer-logo-image:hover {
+  opacity: 0.8;
+}
+
+.footer-contact {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.footer-contact a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.footer-contact a:hover {
+  color: #ffd700;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding: 1.5rem 20px 0;
+  border-top: 1px solid #333;
+  text-align: center;
+}
+
+.copyright {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.footer * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+  .footer {
+    padding: 2.5rem 0 1.2rem;
+  }
+
+  .footer-disclaimer {
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+    padding: 0 15px;
+  }
+
+  .footer-contact {
+    padding: 0 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-logo-image {
+    max-width: 200px;
+    max-height: 70px;
+  }
+
+  .footer-disclaimer {
+    margin-bottom: 1.8rem;
+    font-size: 0.8rem;
+    padding: 0 12px;
+    line-height: 1.5;
+  }
+
+  .footer-contact {
+    font-size: 0.85rem;
+    padding: 0 12px;
+    gap: 0.5rem;
+  }
+
+  .footer-contact a {
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .footer-bottom {
+    margin-top: 2.5rem;
+    padding: 1.2rem 12px 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer {
+    padding: 2rem 0 1rem;
+  }
+
+  .footer-logo-image {
+    max-width: 180px;
+    max-height: 65px;
+  }
+
+  .footer-disclaimer {
+    margin-bottom: 1.5rem;
+    font-size: 0.75rem;
+    padding: 0 10px;
+  }
+
+  .footer-contact {
+    font-size: 0.8rem;
+    padding: 0 10px;
+    gap: 0.4rem;
+  }
+
+  .footer-contact a {
+    font-size: 0.8rem;
+  }
+
+  .footer-bottom {
+    margin-top: 2rem;
+    padding: 1rem 10px 0;
+  }
+
+  .copyright {
+    font-size: 0.7rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1.5rem 0 0.8rem;
+  }
+
+  .footer-logo-image {
+    max-width: 150px;
+    max-height: 55px;
+  }
+
+  .footer-disclaimer {
+    margin-bottom: 1.2rem;
+    font-size: 0.7rem;
+    padding: 0 8px;
+    line-height: 1.4;
+  }
+
+  .footer-contact {
+    font-size: 0.75rem;
+    padding: 0 8px;
+    gap: 0.3rem;
+  }
+
+  .footer-contact a {
+    font-size: 0.75rem;
+  }
+
+  .footer-bottom {
+    margin-top: 1.5rem;
+    padding: 0.8rem 8px 0;
+  }
+
+  .copyright {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .footer {
+    padding: 1.2rem 0 0.5rem;
+  }
+
+  .footer-logo-image {
+    max-width: 130px;
+    max-height: 45px;
+  }
+
+  .footer-disclaimer {
+    font-size: 0.65rem;
+    margin-bottom: 1rem;
+    padding: 0 5px;
+  }
+
+  .footer-contact {
+    font-size: 0.7rem;
+    padding: 0 5px;
+  }
+
+  .footer-contact a {
+    font-size: 0.7rem;
+  }
+
+  .copyright {
+    font-size: 0.6rem;
+  }
+}
