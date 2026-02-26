@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
@@ -15,30 +10,32 @@ import Events from "./pages/Events";
 import Blogs from "./pages/Blogs";
 import BlogPost from "./pages/BlogPost";
 import BookConsultation from "./pages/BookConsultation";
+import ClientReviews from "./pages/ClientReviews";
 import Loader from "./components/Loader";
 import BackToTop from "./components/BackToTop";
 import LeafBackground from "./components/LeafBackground";
 
-function AppContent() {
-  const location = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location]);
-
-  return (
-    <Routes>
-      <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-      <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
-      <Route path="/services/:serviceId" element={<MainLayout><ServiceDetail /></MainLayout>} />
-      <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
-      <Route path="/events" element={<MainLayout><Events /></MainLayout>} />
-      <Route path="/blogs" element={<MainLayout><Blogs /></MainLayout>} />
-      <Route path="/blogs/:id" element={<MainLayout><BlogPost /></MainLayout>} />
-      <Route path="/book-consultation" element={<MainLayout><BookConsultation /></MainLayout>} />
-    </Routes>
-  );
-}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <LeafBackground>
+        <MainLayout />
+      </LeafBackground>
+    ),
+    children: [
+      { index: true, element: <Home /> },
+      { path: "services", element: <Services /> },
+      { path: "services/:serviceId", element: <ServiceDetail /> },
+      { path: "contact", element: <Contact /> },
+      { path: "events", element: <Events /> },
+      { path: "blogs", element: <Blogs /> },
+      { path: "blogs/:id", element: <BlogPost /> },
+      { path: "book-consultation", element: <BookConsultation /> },
+      { path: "client-reviews", element: <ClientReviews /> },
+    ],
+  },
+]);
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -50,13 +47,19 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  return (
-    <Router>
+  if (loading) {
+    return (
       <LeafBackground>
-        {loading ? <Loader /> : <AppContent />}
-        <BackToTop />
+        <Loader />
       </LeafBackground>
-    </Router>
+    );
+  }
+
+  return (
+    <>
+      <RouterProvider router={router} />
+      <BackToTop />
+    </>
   );
 }
 

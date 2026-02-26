@@ -205,7 +205,7 @@ If your CRS score remains below 490, inaction represents the highest-risk decisi
     id: 4,
     date: "February 2, 2026",
     title:
-      "Why Ontario Immigrants Must Shift Focus from Express Entry to OINP — And Avoid Costly Stream Mistakes",
+      "Why Ontario Immigrants Must Shift Focus from Express Entry to OINP And Avoid Costly Stream Mistakes",
     excerpt:
       "With Ontario preparing for its 2026 nomination allocations, strategic positioning is essential. Understanding the distinction between OINP streams can prevent errors that lead to refusal.",
     content: `The previous week's analysis established a fundamental reality: Express Entry no longer offers the reliable pathway it once represented for many candidates.

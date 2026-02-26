@@ -66,20 +66,11 @@ const Header: React.FC = () => {
   useEffect(() => {
     if (isMenuOpen) {
       document.body.classList.add("menu-open");
-      const scrollY = window.scrollY;
-      document.body.style.top = `-${scrollY}px`;
+      document.body.style.overflow = "hidden";
     } else {
-      const scrollY = document.body.style.top;
       document.body.classList.remove("menu-open");
-      document.body.style.top = "";
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      }
+      document.body.style.overflow = "";
     }
-    return () => {
-      document.body.classList.remove("menu-open");
-      document.body.style.top = "";
-    };
   }, [isMenuOpen]);
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -124,6 +115,11 @@ const Header: React.FC = () => {
               <li className="nav-item">
                 <Link to="/blogs" className="nav-link">
                   Blog
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/client-reviews" className="nav-link">
+                  Reviews
                 </Link>
               </li>
               <li className="nav-item">
@@ -271,6 +267,15 @@ const Header: React.FC = () => {
             <li className="mobile-nav-item">
               <Link to="/blogs" className="mobile-nav-link" onClick={closeMenu}>
                 Blog
+              </Link>
+            </li>
+            <li className="mobile-nav-item">
+              <Link
+                to="/client-reviews"
+                className="mobile-nav-link"
+                onClick={closeMenu}
+              >
+                Client Reviews
               </Link>
             </li>
             <li className="mobile-nav-item">

@@ -1,4 +1,3 @@
-/* src/pages/Header.css */
 .header {
   background: var(--header-bg);
   color: var(--header-text);
@@ -132,9 +131,9 @@ body {
   display: inline-block;
   width: 3.5em;
   height: 1.8em;
-  margin-left: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .theme-switch input {
@@ -167,17 +166,22 @@ body {
   background-color: #F1EEF5;
   transition: .5s;
   z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .theme-switch .divider {
   position: absolute;
-  left: 0.65em;
-  width: 0.8em;
-  height: 1.4em;
+  width: 0.6em;
+  height: 0.8em;
   background-color: var(--accent-primary);
   z-index: 10;
   border-radius: 0 2em 2em 0;
   transition: .4s;
+  top: 50%;
+  left: 0.4em;
+  transform: translateY(-50%);
 }
 
 .theme-switch input:checked+.slider {
@@ -193,8 +197,8 @@ body {
 }
 
 .theme-switch input:checked+.slider .circle .divider {
-  left: 0;
-  width: 0.8em;
+  left: auto;
+  right: 0.4em;
   border-radius: 2em 0 0 2em;
   background-color: #585F60;
 }
@@ -538,8 +542,12 @@ body {
   animation-delay: 0.6s;
 }
 
+.mobile-nav.open .mobile-nav-item:nth-child(7) {
+  animation-delay: 0.7s;
+}
+
 .mobile-nav.open .mobile-social-section {
-  animation: slideIn 0.4s ease forwards 0.7s;
+  animation: slideIn 0.4s ease forwards 0.8s;
   opacity: 0;
 }
 
@@ -562,6 +570,10 @@ body {
     padding: 1.2rem 25px;
   }
 
+  .header-right-container {
+    gap: 12px;
+  }
+
   .nav-link {
     font-size: 0.85rem;
     padding: 0.5rem 0.2rem;
@@ -579,14 +591,27 @@ body {
 
   .theme-switch {
     font-size: 16px;
-    width: 3.2em;
+    width: 3.3em;
     height: 1.7em;
-    margin-left: 10px;
   }
 
   .theme-switch .slider .circle {
     height: 1.3em;
     width: 1.3em;
+  }
+
+  .theme-switch .divider {
+    width: 0.55em;
+    height: 0.75em;
+    left: 0.35em;
+  }
+
+  .theme-switch input:checked+.slider .circle {
+    transform: translateX(1.6em);
+  }
+
+  .theme-switch input:checked+.slider .circle .divider {
+    right: 0.35em;
   }
 }
 
@@ -628,11 +653,36 @@ body {
   }
 
   .header-logo-image {
-    height: 75px;
+    height: 70px;
   }
 
   .header-right-container {
     gap: 10px;
+  }
+
+  .theme-switch {
+    font-size: 15px;
+    width: 3.2em;
+    height: 1.6em;
+  }
+
+  .theme-switch .slider .circle {
+    height: 1.2em;
+    width: 1.2em;
+  }
+
+  .theme-switch .divider {
+    width: 0.5em;
+    height: 0.7em;
+    left: 0.3em;
+  }
+
+  .theme-switch input:checked+.slider .circle {
+    transform: translateX(1.5em);
+  }
+
+  .theme-switch input:checked+.slider .circle .divider {
+    right: 0.3em;
   }
 
   .mobile-nav {
@@ -647,11 +697,42 @@ body {
   }
 
   .header-logo-image {
-    height: 65px;
+    height: 60px;
+  }
+
+  .header-right-container {
+    gap: 8px;
+  }
+
+  .theme-switch {
+    font-size: 14px;
+    width: 3.1em;
+    height: 1.5em;
+  }
+
+  .theme-switch .slider .circle {
+    height: 1.1em;
+    width: 1.1em;
+    left: 0.15em;
+    bottom: 0.15em;
+  }
+
+  .theme-switch .divider {
+    width: 0.45em;
+    height: 0.65em;
+    left: 0.25em;
+  }
+
+  .theme-switch input:checked+.slider .circle {
+    transform: translateX(1.45em);
+  }
+
+  .theme-switch input:checked+.slider .circle .divider {
+    right: 0.25em;
   }
 
   .mobile-nav-logo {
-    height: 65px;
+    height: 60px;
   }
 
   .mobile-nav {
@@ -670,17 +751,6 @@ body {
     font-size: 1rem;
   }
 
-  .theme-switch {
-    font-size: 15px;
-    width: 3em;
-    height: 1.6em;
-  }
-
-  .theme-switch .slider .circle {
-    height: 1.2em;
-    width: 1.2em;
-  }
-
   .mobile-socialContainer {
     width: 40px;
     height: 40px;
@@ -696,12 +766,64 @@ body {
 }
 
 @media (max-width: 480px) {
+  .header-container {
+    padding: 0.7rem 12px;
+  }
+
   .header-logo-image {
-    height: 55px;
+    height: 50px;
+  }
+
+  .header-right-container {
+    gap: 6px;
+  }
+
+  .theme-switch {
+    font-size: 13px;
+    width: 3em;
+    height: 1.4em;
+  }
+
+  .theme-switch .slider .circle {
+    height: 1em;
+    width: 1em;
+    left: 0.15em;
+    bottom: 0.15em;
+  }
+
+  .theme-switch .divider {
+    width: 0.4em;
+    height: 0.6em;
+    left: 0.25em;
+  }
+
+  .theme-switch input:checked+.slider .circle {
+    transform: translateX(1.4em);
+  }
+
+  .theme-switch input:checked+.slider .circle .divider {
+    right: 0.25em;
+  }
+
+  .mobile-menu-button {
+    width: 28px;
+    height: 20px;
+  }
+
+  .mobile-menu-button .bar {
+    height: 2.5px;
+  }
+
+  .mobile-menu-button.active .bar:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .mobile-menu-button.active .bar:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
   }
 
   .mobile-nav-logo {
-    height: 55px;
+    height: 50px;
   }
 
   .mobile-nav {
@@ -725,31 +847,23 @@ body {
     font-size: 0.95rem;
   }
 
-  .theme-switch {
-    font-size: 14px;
-  }
-
-  .header-right-container {
-    gap: 8px;
-  }
-
   .mobile-close-button {
-    width: 40px;
-    height: 40px;
-  }
-
-  .close-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .mobile-socialContainer {
     width: 38px;
     height: 38px;
   }
 
+  .close-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mobile-socialContainer {
+    width: 36px;
+    height: 36px;
+  }
+
   .mobile-socialContainer .socialSvg {
-    width: 16px;
+    width: 15px;
   }
 
   .mobile-social-section {
@@ -757,7 +871,82 @@ body {
   }
 
   .mobile-social-icons {
-    gap: 15px;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-container {
+    padding: 0.6rem 10px;
+  }
+
+  .header-logo-image {
+    height: 45px;
+  }
+
+  .header-right-container {
+    gap: 4px;
+  }
+
+  .theme-switch {
+    font-size: 12px;
+    width: 2.9em;
+    height: 1.3em;
+  }
+
+  .theme-switch .slider .circle {
+    height: 0.9em;
+    width: 0.9em;
+    left: 0.15em;
+    bottom: 0.15em;
+  }
+
+  .theme-switch .divider {
+    width: 0.35em;
+    height: 0.55em;
+    left: 0.2em;
+  }
+
+  .theme-switch input:checked+.slider .circle {
+    transform: translateX(1.35em);
+  }
+
+  .theme-switch input:checked+.slider .circle .divider {
+    right: 0.2em;
+  }
+
+  .mobile-menu-button {
+    width: 26px;
+    height: 18px;
+  }
+
+  .mobile-menu-button .bar {
+    height: 2.5px;
+  }
+
+  .mobile-menu-button.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-menu-button.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .mobile-nav-link {
+    font-size: 0.9rem;
+  }
+
+  .mobile-socialContainer {
+    width: 34px;
+    height: 34px;
+  }
+
+  .mobile-socialContainer .socialSvg {
+    width: 14px;
+  }
+
+  .mobile-social-icons {
+    gap: 10px;
   }
 }
 
