@@ -300,11 +300,11 @@ A single incorrect decision can cost months of time, significant financial inves
       "Why It's Time to Shift Focus from Express Entry to OINP and Other Provincial Nominee Programs",
     excerpt:
       "With CRS scores remaining consistently above 500, candidates below 470 with expiring work permits must consider alternative pathways before time runs out.",
-    content: `In recent years, Canada's immigration landscape has undergone significant transformation. Before the pandemic, Express Entry—particularly the Canadian Experience Class (CEC)—offered a relatively reliable pathway for many international students and temporary workers.
+    content: `In recent years, Canada's immigration landscape has undergone significant transformation. Before the pandemic, Express Entry, particularly the Canadian Experience Class (CEC) offered a relatively reliable pathway for many international students and temporary workers.
 
 By comparison, on April 29, 2021, IRCC conducted a CEC draw with a cutoff score of 400, inviting approximately 6,000 candidates due to limited pool size.
 
-Even more notable was the February 13, 2021 draw, when the lowest Comprehensive Ranking System score ever recorded—75—received invitations. Every candidate in the pool meeting CEC requirements received an Invitation to Apply (ITA).
+Even more notable was the February 13, 2021 draw, when the lowest Comprehensive Ranking System score ever recorded is 75 received invitations. Every candidate in the pool meeting CEC requirements received an Invitation to Apply (ITA).
 
 **Current Conditions**
 

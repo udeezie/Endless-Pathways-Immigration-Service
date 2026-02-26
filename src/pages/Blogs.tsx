@@ -4,48 +4,54 @@ import { blogPosts } from "../data/blogPosts";
 import "./Blogs.css";
 
 const Blogs: React.FC = () => {
+  const latestPost = blogPosts.reduce((latest, post) => {
+    const postDate = new Date(post.date);
+    const latestDate = new Date(latest.date);
+    return postDate > latestDate ? post : latest;
+  }, blogPosts[0]);
+
   return (
     <div className="blogs-page">
-      {/* Hero Section */}
       <section className="blogs-hero">
         <div className="blogs-hero-container">
           <h1 className="blogs-hero-title">
-            <span className="blogs-hero-title-main">Monday Immigration Watch</span>
-            <span className="blogs-hero-title-accent">Weekly insights, analysis, and strategies for your Canadian immigration journey</span>
+            <span className="blogs-hero-title-main">
+              Monday Immigration Watch
+            </span>
+            <span className="blogs-hero-title-accent">
+              Weekly insights, analysis, and strategies for your Canadian
+              immigration journey
+            </span>
           </h1>
         </div>
       </section>
 
-      {/* Main Content */}
       <main className="blogs-main">
         <div className="blogs-container">
-          {/* Articles Grid */}
           <div className="blogs-grid">
             {blogPosts.map((post) => (
               <article key={post.id} className="blogs-card">
                 <div className="blogs-card-content">
-                  {/* Metadata */}
                   <div className="blogs-card-meta">
                     <time dateTime={post.date} className="blogs-card-date">
                       {post.date}
                     </time>
-                    <span className="blogs-card-category">Monday Immigration Watch</span>
+                    {post.id === latestPost.id && (
+                      <span className="blogs-card-new">NEW</span>
+                    )}
                   </div>
 
-                  {/* Title */}
                   <h3 className="blogs-card-title">
                     <Link to={`/blogs/${post.id}`} className="blogs-card-link">
                       {post.title}
                     </Link>
                   </h3>
 
-                  {/* Excerpt */}
                   <p className="blogs-card-excerpt">{post.excerpt}</p>
 
-                  {/* Author & Read More */}
                   <div className="blogs-card-footer">
                     <span className="blogs-card-author">By {post.author}</span>
-                    <Link 
+                    <Link
                       to={`/blogs/${post.id}`}
                       className="blogs-read-more"
                       aria-label={`Read ${post.title}`}

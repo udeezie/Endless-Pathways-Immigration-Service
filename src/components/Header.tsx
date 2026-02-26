@@ -118,11 +118,6 @@ const Header: React.FC = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/client-reviews" className="nav-link">
-                  Reviews
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link to="/events" className="nav-link">
                   Events
                 </Link>
@@ -267,15 +262,6 @@ const Header: React.FC = () => {
             <li className="mobile-nav-item">
               <Link to="/blogs" className="mobile-nav-link" onClick={closeMenu}>
                 Blog
-              </Link>
-            </li>
-            <li className="mobile-nav-item">
-              <Link
-                to="/client-reviews"
-                className="mobile-nav-link"
-                onClick={closeMenu}
-              >
-                Client Reviews
               </Link>
             </li>
             <li className="mobile-nav-item">

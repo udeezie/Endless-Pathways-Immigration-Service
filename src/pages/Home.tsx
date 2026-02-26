@@ -1,28 +1,34 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
 import "./Home.css";
 
-const useInView = (options = {}) => {
+const useInView = (options?: IntersectionObserverInit) => {
   const [isInView, setIsInView] = useState(false);
   const ref = useRef<HTMLElement | null>(null);
 
+  const stableOptions = useMemo(
+    () => ({ threshold: 0.1, ...(options || {}) }),
+    [options],
+  );
+
   useEffect(() => {
     if (!ref.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1, ...options },
-    );
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsInView(true);
+        observer.unobserve(entry.target);
+      }
+    }, stableOptions);
+
     observer.observe(ref.current);
+
     return () => {
       if (ref.current) observer.unobserve(ref.current);
     };
-  }, [options]);
+  }, [stableOptions]);
+
   return { ref, isInView };
 };
 
@@ -44,7 +50,6 @@ const Home: React.FC = () => {
     useInView(),
   ];
   const learnMoreBtnRef = useInView();
-  const expandableRef = useInView();
   const whyChooseTitleRef = useInView();
   const benefitRefs = [
     useInView(),
@@ -322,10 +327,7 @@ const Home: React.FC = () => {
           </div>
 
           {showMore && (
-            <div
-              className={`expandable-content slide-up ${expandableRef.isInView ? "in-view" : ""}`}
-              ref={expandableRef.ref as React.RefObject<HTMLDivElement>}
-            >
+            <div className="expandable-content slide-up in-view">
               <article className="approach-section">
                 <h3 className="section-subtitle">OUR APPROACH</h3>
                 <div className="content-block">
@@ -743,86 +745,6 @@ const Home: React.FC = () => {
               ) : null}
             </article>
           ))}
-        </div>
-      </section>
-
-      <section className="client-reviews-section">
-        <h2 className="section-title">CLIENT REVIEWS</h2>
-        <div className="client-reviews-grid">
-          <article className="client-review-card">
-            <div className="client-review-rating">
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-            </div>
-            <p className="client-review-text">
-              "Endless Pathways helped me get my study permit and co op work
-              permit in 2023. They walked me through everything and made sure I
-              understood each step. From my application to landing in Canada, it
-              was smooth all the way."
-            </p>
-            <div className="client-review-author">
-              <div className="client-review-author-initials">BA</div>
-              <div className="client-review-author-info">
-                <h4>Bernard Asare</h4>
-                <p>Study Permit + Co-op</p>
-              </div>
-            </div>
-          </article>
-
-          <article className="client-review-card">
-            <div className="client-review-rating">
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-            </div>
-            <p className="client-review-text">
-              "I didn't know much about the study permit process, but Endless
-              Pathways took time to explain everything. They answered all my
-              questions and made sure I felt confident before submitting.
-              Grateful for their patience."
-            </p>
-            <div className="client-review-author">
-              <div className="client-review-author-initials">JA</div>
-              <div className="client-review-author-info">
-                <h4>Jonathan Asamoah</h4>
-                <p>Study Permit</p>
-              </div>
-            </div>
-          </article>
-
-          <article className="client-review-card">
-            <div className="client-review-rating">
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-            </div>
-            <p className="client-review-text">
-              "Endless Pathways didn't just process my application, they guided
-              me through it all. From explaining what documents I needed to
-              submitting on time, their service was top notch. So glad I found
-              them."
-            </p>
-            <div className="client-review-author">
-              <div className="client-review-author-initials">PV</div>
-              <div className="client-review-author-info">
-                <h4>Prince Vortia</h4>
-                <p>Study Permit</p>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div className="client-reviews-cta">
-          <Link to="/client-reviews" className="client-reviews-link">
-            Read More Client Reviews <i className="fas fa-arrow-right"></i>
-          </Link>
         </div>
       </section>
 

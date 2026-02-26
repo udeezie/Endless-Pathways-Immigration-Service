@@ -139,6 +139,7 @@
   transform: translateX(0);
 }
 
+.video-hero-section .hero-btn.styled-btn:focus,
 .video-hero-section .hero-btn.styled-btn:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
@@ -176,6 +177,7 @@
   box-shadow: 0 4px 20px var(--shadow-color);
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
   border: 4px solid var(--accent-primary);
+  background-color: var(--accent-light);
 }
 
 .text-section {
@@ -194,7 +196,7 @@
   font-weight: 600;
   font-family: 'Montserrat', sans-serif;
   line-height: 1.3;
-  text-align: left;
+  text-align: center !important;
   text-transform: uppercase;
   padding-bottom: 0;
   transition: color 0.3s ease;
@@ -267,6 +269,7 @@
   box-shadow: 0 6px 16px rgba(255, 215, 0, 0.25);
 }
 
+.verify-link:focus,
 .verify-link:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
@@ -333,6 +336,8 @@
   width: auto;
   object-fit: contain;
   transition: opacity 0.2s, filter 0.3s ease;
+  background-color: var(--bg-secondary);
+  min-height: 40px;
 }
 
 .cicc-logo:hover,
@@ -342,7 +347,7 @@
 
 .insights-button-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   margin: 50px 0 30px;
 }
 
@@ -390,6 +395,7 @@
   transform: translateX(0);
 }
 
+.styled-btn:focus,
 .styled-btn:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
@@ -422,6 +428,11 @@
   text-align: left;
   text-transform: uppercase;
   transition: color 0.3s ease;
+}
+
+.approach-section .section-subtitle,
+.closing-section .section-subtitle {
+  text-align: center;
 }
 
 .professional-list {
@@ -511,7 +522,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
   transition: all 0.3s ease;
 }
 
@@ -607,7 +618,6 @@
   justify-content: center;
   margin: 0 auto 25px;
   transition: all 0.3s ease;
-  box-shadow: none;
 }
 
 .service-category-card:hover .service-icon-wrapper {
@@ -806,122 +816,8 @@
   border-width: 1.5px;
 }
 
-.client-reviews-section {
-  max-width: 1200px;
-  margin: 80px auto 60px;
-  padding: 0 20px;
-  position: relative;
-  z-index: 1;
-}
-
-.client-reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-bottom: 40px;
-  align-items: stretch;
-}
-
-.client-review-card {
-  background: var(--bg-card);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  padding: 30px;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 18px var(--shadow-color);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  text-align: left;
-}
-
-.client-review-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--accent-primary);
-  box-shadow: 0 12px 28px rgba(255, 215, 0, 0.12);
-}
-
-.client-review-rating {
-  color: var(--accent-primary);
-  margin-bottom: 20px;
-  font-size: 1.1rem;
-  letter-spacing: 4px;
-  text-align: center;
-}
-
-.client-review-text {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  margin-bottom: 25px;
-  font-style: italic;
-  font-family: 'Georgia', serif;
-  flex: 1;
-  transition: color 0.3s ease;
-  text-align: left;
-}
-
-.client-review-author {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: auto;
-  justify-content: flex-start;
-}
-
-.client-review-author-initials {
-  width: 45px;
-  height: 45px;
-  background: linear-gradient(135deg, var(--accent-light), var(--accent-primary));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  color: var(--bg-primary);
-  font-family: 'Montserrat', sans-serif;
-  flex-shrink: 0;
-}
-
-.client-review-author-info h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 4px;
-  font-family: 'Montserrat', sans-serif;
-  transition: color 0.3s ease;
-  text-align: left;
-}
-
-.client-review-author-info p {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-family: 'Open Sans', sans-serif;
-  transition: color 0.3s ease;
-  text-align: left;
-}
-
-.client-reviews-cta {
-  text-align: center;
-}
-
-.client-reviews-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--accent-primary);
-  text-decoration: none;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
-  transition: all 0.3s ease;
-}
-
-.client-reviews-link:hover {
-  gap: 15px;
-  color: var(--text-primary);
-}
-
-.client-reviews-link:focus-visible {
+.process-btn:focus,
+.process-btn:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
@@ -1007,6 +903,7 @@
   color: var(--accent-primary);
 }
 
+.home-blog-link:focus,
 .home-blog-link:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
@@ -1057,6 +954,7 @@
   color: var(--text-primary);
 }
 
+.home-blog-read-more:focus,
 .home-blog-read-more:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
@@ -1126,6 +1024,7 @@
   transform: translateY(-50%) rotate(180deg);
 }
 
+.home-faq-item summary:focus,
 .home-faq-item summary:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
@@ -1142,6 +1041,17 @@
   background: var(--bg-secondary);
   transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
   text-align: left;
+}
+
+.home-faq-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.home-faq-cta p {
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  font-family: 'Open Sans', sans-serif;
 }
 
 .fade-in {
@@ -1220,18 +1130,6 @@
 
 .process-grid .process-card:nth-child(5) {
   transition-delay: 0.25s;
-}
-
-.client-reviews-grid .client-review-card:nth-child(1) {
-  transition-delay: 0.05s;
-}
-
-.client-reviews-grid .client-review-card:nth-child(2) {
-  transition-delay: 0.1s;
-}
-
-.client-reviews-grid .client-review-card:nth-child(3) {
-  transition-delay: 0.15s;
 }
 
 .home-blogs-grid .home-blog-card:nth-child(1) {
@@ -1387,7 +1285,6 @@
     font-size: 1.8rem;
   }
 
-  .client-reviews-grid,
   .home-blogs-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1451,7 +1348,7 @@
 
   .welcome-title {
     font-size: 1.6rem;
-    text-align: left;
+    text-align: center !important;
   }
 
   .section-subtitle {
@@ -1528,8 +1425,8 @@
   }
 
   .service-category-list li {
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
   }
 
   .process-section {
@@ -1558,7 +1455,7 @@
   }
 
   .process-card .step-description {
-    text-align: center;
+    text-align: left;
   }
 
   .process-card-header {
@@ -1601,7 +1498,7 @@
 
   .benefit-card p {
     font-size: 0.9rem;
-    text-align: center;
+    text-align: left;
   }
 
   .benefit-icon-container {
@@ -1630,47 +1527,13 @@
     font-size: 2.5rem;
   }
 
-  .client-reviews-grid,
   .home-blogs-grid {
     grid-template-columns: 1fr;
   }
 
-  .client-review-card,
   .home-blog-card {
     padding: 20px;
     align-items: center;
-    text-align: center;
-  }
-
-  .client-review-card {
-    text-align: center;
-  }
-
-  .client-review-rating {
-    text-align: center;
-  }
-
-  .client-review-text {
-    text-align: center;
-  }
-
-  .client-review-author {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-    justify-content: center;
-  }
-
-  .client-review-author-info h4,
-  .client-review-author-info p {
-    text-align: center;
-  }
-
-  .client-review-author-initials {
-    margin: 0 auto;
-  }
-
-  .home-blog-card {
     text-align: center;
   }
 
@@ -1683,7 +1546,7 @@
   }
 
   .home-blog-excerpt {
-    text-align: center;
+    text-align: left;
   }
 
   .home-blog-footer {
@@ -1710,6 +1573,10 @@
     padding: 0 20px 20px 20px;
     font-size: 0.95rem;
     text-align: left;
+  }
+
+  .insights-button-container {
+    justify-content: center !important;
   }
 }
 
@@ -1870,7 +1737,7 @@
 
   .service-category-list li {
     flex-wrap: wrap;
-    text-align: center;
+    text-align: left;
   }
 }
 
@@ -1904,5 +1771,17 @@
     max-width: 200px;
     width: 100%;
     margin: 0 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -35,9 +35,15 @@ const ClientReviews: React.FC = () => {
   ];
 
   const renderStars = (rating: number) => {
-    return Array(rating)
+    return Array(5)
       .fill(0)
-      .map((_, i) => <i key={i} className="fas fa-star"></i>);
+      .map((_, i) => (
+        <i
+          key={i}
+          className={`fas fa-star${i < rating ? "" : "-o"}`}
+          style={{ color: i < rating ? "#FFD700" : "#ccc" }}
+        ></i>
+      ));
   };
 
   return (
@@ -45,9 +51,9 @@ const ClientReviews: React.FC = () => {
       <div className="background-pattern" aria-hidden="true"></div>
 
       <section className="client-reviews-hero">
-        <div className="client-reviews-hero-gradient"></div>
+        <div className="client-reviews-hero-overlay"></div>
         <div className="client-reviews-hero-content">
-          <h1 className="client-reviews-hero-title">Client Reviews</h1>
+          <h1 className="client-reviews-hero-title">Success Stories</h1>
           <p className="client-reviews-hero-subtitle">
             Real feedback from people we've helped
           </p>
@@ -61,10 +67,18 @@ const ClientReviews: React.FC = () => {
               <article key={review.id} className="client-review-card">
                 <div className="client-review-rating">
                   {renderStars(review.rating)}
+                  <span className="verified-badge">
+                    <i className="fas fa-check-circle"></i> Verified
+                  </span>
                 </div>
                 <p className="client-review-text">"{review.text}"</p>
                 <div className="client-review-author">
-                  <div className="client-review-author-initials">
+                  <div
+                    className="client-review-author-initials"
+                    style={{
+                      backgroundColor: `hsl(${review.id * 60}, 70%, 60%)`,
+                    }}
+                  >
                     {review.initials}
                   </div>
                   <div className="client-review-author-info">
@@ -84,11 +98,21 @@ const ClientReviews: React.FC = () => {
       <section className="client-reviews-cta-section">
         <div className="client-reviews-cta-container">
           <p className="client-reviews-cta-text">
-            Join our growing family of satisfied clients.
+            Share your experience or start your journey today.
           </p>
-          <Link to="/book-consultation" className="styled-btn">
-            Book a Consultation
-          </Link>
+          <div className="cta-buttons">
+            <Link to="/book-consultation" className="styled-btn">
+              Book a Consultation
+            </Link>
+            <a
+              href="https://g.page/review/..."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="styled-btn"
+            >
+              Write a Review
+            </a>
+          </div>
         </div>
       </section>
     </div>

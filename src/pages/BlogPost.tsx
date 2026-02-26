@@ -19,11 +19,9 @@ const BlogPost: React.FC = () => {
     );
   }
 
-  // Better content formatting with section detection
   const formatContent = (content: string) => {
     const sections = content.split("\n\n");
     return sections.map((block, index) => {
-      // Check if it's a heading (all caps or ends with colon)
       if (block.match(/^[A-Z\s]{5,}$/) || block.match(/^[A-Z][a-z]+:/)) {
         return (
           <h2 key={index} className="blog-post-section-heading">
@@ -31,7 +29,6 @@ const BlogPost: React.FC = () => {
           </h2>
         );
       }
-      // Check for bullet points
       if (block.includes("•")) {
         const items = block
           .split("\n")
@@ -44,7 +41,6 @@ const BlogPost: React.FC = () => {
           </ul>
         );
       }
-      // Regular paragraph
       return (
         <p key={index} className="blog-post-paragraph">
           {block}
