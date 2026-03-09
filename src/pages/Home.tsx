@@ -76,6 +76,12 @@ const Home: React.FC = () => {
     }
   }, []);
 
+  const latestPost = blogPosts.reduce((latest, post) => {
+    const postDate = new Date(post.date);
+    const latestDate = new Date(latest.date);
+    return postDate > latestDate ? post : latest;
+  }, blogPosts[0]);
+
   const recentPosts = blogPosts.slice(0, 3);
 
   const faqs = [
@@ -265,10 +271,10 @@ const Home: React.FC = () => {
               >
                 Like many of the clients I now serve, my journey to Canada began
                 as an immigrant. I first arrived as an international student,
-                navigating the same complex systems, uncertainty, and
-                high‑stakes decisions that so many newcomers face. That lived
+                navigating the same complex systems, uncertainty, and high
+                stakes decisions that so many newcomers face. That lived
                 experience continues to shape both my professional practice and
-                my commitment to ethical, client‑centered immigration services.
+                my commitment to ethical, client centered immigration services.
               </p>
 
               <p
@@ -293,8 +299,8 @@ const Home: React.FC = () => {
                   contentRefs[3].ref as React.RefObject<HTMLParagraphElement>
                 }
               >
-                That insight grounded in research and real lives, is what led to
-                the creation of Endless Pathways Immigration Services.
+                That insight, grounded in research and real lives, is what led
+                to the creation of Endless Pathways Immigration Services.
               </p>
 
               <p
@@ -492,17 +498,22 @@ const Home: React.FC = () => {
               </h3>
               <p>
                 {index === 0 &&
-                  "Appiah Bonsu is a Regulated Canadian Immigration Consultant (RCIC‑IRB) in good standing with the College of Immigration and Citizenship Consultants (CICC). You are represented by a qualified professional bound by a strict code of ethics."}
+                  "Appiah Bonsu is a Regulated Canadian Immigration Consultant (RCIC IRB) in good standing with the College of Immigration and Citizenship Consultants (CICC). When you work with us, you are represented by a qualified professional bound by a strict code of ethics."}
+
                 {index === 1 &&
-                  "As a former international student, Appiah knows the system from the inside. Combined with a Master's degree in Critical Sociology and 10+ years of research on immigrant experiences, his advice is both empathetic and evidence‑based."}
+                  "As a former international student, Appiah understands the immigration system from the inside. Combined with a Master's degree in Critical Sociology and more than 10 years of research on immigrant experiences, his advice is both empathetic and evidence based."}
+
                 {index === 2 &&
-                  "Our decade of research revealed a core truth: immigrants struggle because the system is too complex. We turn that insight into clear, proactive application strategies that anticipate officer concerns and reduce refusal rates."}
+                  "Over a decade of research revealed a core truth: many immigrants struggle because the system is complex. We turn that insight into clear, proactive application strategies that anticipate officer concerns and help reduce refusal risks."}
+
                 {index === 3 &&
-                  "From study permits and work visas to family sponsorship, refugee claims, and citizenship, we handle the entire immigration lifecycle. You never need to switch firms as your goals evolve."}
+                  "From study permits and work visas to family sponsorship, refugee claims, and citizenship, we support clients throughout the entire immigration lifecycle. As your goals evolve, you will not need to switch firms."}
+
                 {index === 4 &&
-                  "Fixed fees, no hidden charges. We provide a clear written agreement before any work begins. Integrity is not optional – it is the foundation of our practice."}
+                  "Fixed fees with no hidden charges. We provide a clear written agreement before any work begins. Integrity is not optional. It is the foundation of our practice."}
+
                 {index === 5 &&
-                  "A lot of applications are filed across all immigration streams. While every case is unique, our methodical approach has earned the trust of clients from several countries."}
+                  "We have supported numerous applications across multiple immigration streams. While every case is unique, our methodical approach has earned the trust of clients from around the world."}
               </p>
             </article>
           ))}
@@ -762,6 +773,9 @@ const Home: React.FC = () => {
                 <time dateTime={post.date} className="home-blog-date">
                   {post.date}
                 </time>
+                {post.id === latestPost.id && (
+                  <span className="home-blog-new">NEW</span>
+                )}
               </div>
               <h3 className="home-blog-title">
                 <Link to={`/blogs/${post.id}`} className="home-blog-link">

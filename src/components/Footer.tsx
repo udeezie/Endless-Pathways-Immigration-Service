@@ -77,6 +77,10 @@ const Footer: React.FC = () => {
           <br />
           RCIC Number: R1053912 | Member in good standing with ICCRC
         </div>
+        {/* Developer Credit - Added here */}
+        <div className="developer-credit">
+          Website by <a href="https://yourwebsite.com" target="_blank" rel="noopener noreferrer">aflo</a>
+        </div>
       </div>
     </footer>
   );

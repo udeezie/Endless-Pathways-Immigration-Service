@@ -108,7 +108,8 @@ const Services: React.FC = () => {
 
       <section className="services-cta">
         <div className="cta-content">
-          <p className="cta-text">
+          <h2>READY TO BEGIN YOUR JOURNEY?</h2>
+          <p>
             Each immigration journey is unique. Our experienced team provides
             personalized guidance to help you navigate Canada's immigration
             system with confidence.

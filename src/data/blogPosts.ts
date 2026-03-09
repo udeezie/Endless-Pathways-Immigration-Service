@@ -9,6 +9,137 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 7,
+    date: "March 9, 2026",
+    title:
+      "Canada May Open a New TR-to-PR Pathway for 33,000 Temporary Residents",
+    excerpt:
+      "If you are currently working in Canada on a work permit or living here as a temporary resident, this development is important. Canada's immigration department has quietly launched plans for a one-time Temporary Resident to Permanent Resident (TR-to-PR) pathway that could allow up to 33,000 foreign workers to become permanent residents between 2026 and 2027.",
+    content: `If you are currently working in Canada on a work permit or living here as a temporary resident, this development is important.
+
+Canada's immigration department has quietly launched plans for a one-time Temporary Resident to Permanent Resident (TR-to-PR) pathway that could allow up to 33,000 foreign workers to become permanent residents between 2026 and 2027.
+
+According to recent reports, the program will focus primarily on temporary foreign workers in specific in-demand sectors, particularly those working in rural areas of Canada. More details and eligibility criteria are expected to be released in April.
+
+For many temporary workers whose permits may be expiring in the coming years, this pathway could become one of the most important immigration opportunities in Canada.
+
+However, there is one key lesson from history.
+
+When the previous TR-to-PR program opened in 2021, the application caps were reached within hours. Many eligible candidates missed the opportunity simply because their documents were not ready.
+
+This is why preparation matters.
+
+If you are considering this pathway, it is wise to start preparing your documents now.
+
+Some of the documents that may be required include:
+
+• Language test results (IELTS, CELPIP, PTE Core, TEF, or TCF)
+• Police clearance certificates
+• Proof of education or credential assessments
+• Employer reference letters and employment records
+• Proof of current employment in Canada
+• Travel history records
+• Identity and civil status documents
+• Proof of legal status in Canada
+
+Many of these documents can take weeks or even months to obtain. Preparing early can make the difference between submitting your application on time and missing the opportunity entirely.
+
+However, gathering documents alone is not enough.
+
+There are two critical factors that will determine whether someone can benefit from this pathway:
+
+**Eligibility and Admissibility**
+
+You must first meet the eligibility requirements once the program criteria are released. In addition, you must be admissible to Canada, which means meeting requirements related to security, criminality, and medical checks.
+
+**Submitting Before the Cap Is Reached**
+
+The program will only accept 33,000 applications. Once that number is reached, the pathway will close. Candidates who are fully prepared will have a significant advantage.
+
+This is why strategic preparation now is extremely important.
+
+If you are unsure what documents you should start preparing now, or whether your situation could qualify once the program opens, it may be helpful to obtain professional guidance.
+
+Every immigration case is different, and preparing the right documents in advance can save valuable time when the program launches.
+
+**Need Guidance?**
+
+If you want to understand whether this upcoming pathway could apply to your situation and what documents you should start gathering now, feel free to reach out.`,
+    author: "Appiah Bonsu",
+  },
+  {
+    id: 6,
+    date: "March 2, 2026",
+    title:
+      "Low Express Entry Score? Ontario’s EOI Streams May Be Your Best Option",
+    excerpt:
+      "If you are already in Canada and your Express Entry score is not high enough to receive an invitation, this is for you. The Ontario Immigrant Nominee Program (OINP) offers alternative pathways that do not rely solely on having a high CRS score.",
+    content: `If you are already in Canada and your Express Entry score is not high enough to receive an invitation, this is for you.
+
+Many skilled workers, international students, and temporary residents feel stuck because federal Express Entry draws can be unpredictable and highly competitive.
+
+But here is what many people overlook:
+
+The Ontario Immigrant Nominee Program (OINP) offers alternative pathways that do not rely solely on having a high CRS score.
+
+For many candidates already working or studying in Ontario, this can be a more realistic route to permanent residence.
+
+If You Have a Job Offer in Ontario
+
+If you are working in Ontario and have a valid job offer, you may qualify under:
+
+• Employer Job Offer: Foreign Worker Stream – For skilled workers (including certain physicians) with a qualifying job offer.
+• Employer Job Offer: International Student Stream – For recent graduates with a job offer in Ontario.
+• Employer Job Offer: In-Demand Skills Stream – For workers in specific high-demand occupations such as trades, transportation, agriculture, and personal support roles.
+
+These streams operate through Ontario’s Expression of Interest (EOI) system; not through CRS score competition.
+
+If You Graduated from an Ontario University
+
+If you completed your education in Ontario, you may qualify even without a job offer:
+
+• Masters Graduate Stream – For individuals who earned a master’s degree from an eligible Ontario university.
+• PhD Graduate Stream – For individuals who earned a PhD from an eligible Ontario university.
+
+These streams recognize your Canadian education and potential contribution to the province.
+
+Ontario’s Express Entry Streams (With a Strategic Advantage)
+
+Even if your CRS score is not competitive for federal draws, Ontario can still select you through Express Entry if your profile matches labour market needs.
+
+Ontario’s Express Entry streams include:
+
+• Human Capital Priorities
+• Skilled Trades
+• French-Speaking Skilled Worker
+
+If Ontario issues you a Notification of Interest and nominates you, you receive 600 additional CRS points, which virtually guarantees permanent residence.
+
+Why This Matters
+
+If you are:
+• Already working in Ontario
+• A recent graduate
+• In a skilled trade
+• In an in-demand occupation
+• Or simply not scoring high enough under Express Entry
+
+You should not assume permanent residence is out of reach.
+
+Ontario’s EOI system is designed to support candidates who are already contributing to the province’s economy.
+
+Sometimes the issue is not your qualifications, it’s that you are looking only at the federal route.
+
+Express Entry is not the only pathway.
+
+If your CRS score is holding you back, it may be time to strategically explore Ontario’s nomination streams instead of waiting indefinitely for a federal draw.
+
+Need Guidance?
+
+If you are unsure whether you qualify under Ontario’s EOI system, professional guidance can help you assess your options and avoid costly mistakes.`,
+    author: "Appiah Bonsu",
+  },
+  {
     id: 1,
     date: "February 23, 2026",
     title:

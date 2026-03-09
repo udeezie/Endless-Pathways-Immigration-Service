@@ -16,7 +16,11 @@ const Blogs: React.FC = () => {
         <div className="blogs-hero-container">
           <h1 className="blogs-hero-title">
             <span className="blogs-hero-title-main">
-              Monday Immigration Watch
+              Monday Immigration{" "}
+              <span className="watch-wrapper">
+                Watch
+                <span className="loader"></span>
+              </span>
             </span>
             <span className="blogs-hero-title-accent">
               Weekly insights, analysis, and strategies for your Canadian
