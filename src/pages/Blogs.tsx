@@ -30,6 +30,15 @@ const Blogs: React.FC = () => {
         </div>
       </section>
 
+      <section className="blogs-video-section">
+        <div className="video-container">
+          <video autoPlay muted loop playsInline className="background-video">
+            <source src="/immigration.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+
       <main className="blogs-main">
         <div className="blogs-container">
           <div className="blogs-grid">

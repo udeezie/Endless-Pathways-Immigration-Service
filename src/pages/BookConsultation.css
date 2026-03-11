@@ -33,11 +33,6 @@
     word-break: break-word;
 }
 
-.section-title i {
-    font-size: 2rem;
-    color: var(--accent-primary);
-}
-
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -184,7 +179,6 @@
     color: var(--accent-primary);
 }
 
-/* Package subtle hint - centered in the middle of the page */
 .package-subtle-hint {
     position: fixed;
     top: 50%;
@@ -210,10 +204,6 @@
     text-align: center;
     letter-spacing: 0.5px;
     backdrop-filter: blur(5px);
-}
-
-.package-subtle-hint .hint-icon {
-    display: none;
 }
 
 .package-subtle-hint .hint-text {
@@ -872,7 +862,6 @@
     }
 }
 
-/* Tablet Styles */
 @media (max-width: 1024px) {
     .section-title {
         font-size: 1.8rem;
@@ -888,7 +877,6 @@
     }
 }
 
-/* Mobile Styles */
 @media (max-width: 768px) {
     .consultation-page {
         overflow-x: hidden;
@@ -913,10 +901,6 @@
         font-size: 1.5rem;
         margin-bottom: 1.5rem;
         gap: 0.5rem;
-    }
-
-    .section-title i {
-        font-size: 1.5rem;
     }
 
     .form-container {
@@ -1167,7 +1151,6 @@
         box-sizing: border-box;
     }
 
-    /* Button container fixes for mobile */
     .button-container {
         display: flex;
         flex-direction: column;
@@ -1236,7 +1219,6 @@
         line-height: 1.4;
     }
 
-    /* Package subtle hint mobile adjustments */
     .package-subtle-hint {
         padding: 1.25rem 1.5rem;
         font-size: 1rem;
@@ -1282,7 +1264,6 @@
     }
 }
 
-/* Extra small devices */
 @media (max-width: 480px) {
     .consultation-page {
         padding: 0.75rem 0.5rem;
@@ -1304,10 +1285,6 @@
     .section-title {
         font-size: 1.3rem;
         gap: 0.4rem;
-    }
-
-    .section-title i {
-        font-size: 1.3rem;
     }
 
     .consultation-card {
@@ -1372,7 +1349,6 @@
     }
 }
 
-/* Very small devices */
 @media (max-width: 375px) {
     .consultation-page {
         padding: 0.5rem 0.25rem;
@@ -1455,7 +1431,6 @@
     }
 }
 
-/* Landscape mode */
 @media (max-width: 896px) and (orientation: landscape) {
     .consultation-page {
         padding: 1rem;
@@ -1513,7 +1488,6 @@
     }
 }
 
-/* Ensure touch targets are large enough */
 .consultation-card,
 .select-indicator,
 .add-time-btn,
@@ -1531,7 +1505,6 @@
     min-height: 48px;
 }
 
-/* Prevent zoom on input focus for iOS */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
 
     select,
@@ -1541,7 +1514,6 @@
     }
 }
 
-/* High contrast mode support */
 @media (prefers-contrast: high) {
     .consultation-card {
         border-width: 2px;
@@ -1552,7 +1524,6 @@
     }
 }
 
-/* Print styles */
 @media print {
     .consultation-page {
         padding: 1rem;

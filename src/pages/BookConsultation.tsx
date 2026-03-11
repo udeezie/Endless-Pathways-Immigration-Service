@@ -651,17 +651,12 @@ const BookConsultation: React.FC = () => {
         )}
 
         <section className="consultation-section" ref={consultationSectionRef}>
-          <h2 className="section-title">
-            <i className="fas fa-flag"></i> Residing in Canada
-          </h2>
-
+          <h2 className="section-title">Residing in Canada</h2>
           <div className="card-grid">{renderCards("canada")}</div>
         </section>
 
         <section className="consultation-section">
-          <h2 className="section-title">
-            <i className="fas fa-globe-americas"></i> Residing Outside Canada
-          </h2>
+          <h2 className="section-title">Residing Outside Canada</h2>
           <div className="card-grid">{renderCards("outside")}</div>
         </section>
 
@@ -967,7 +962,6 @@ const BookConsultation: React.FC = () => {
         </section>
       </div>
 
-      {/* Centered package selection hint */}
       {showConsultationHint && errors.consultation && (
         <div className="package-subtle-hint">
           <span className="hint-text">
