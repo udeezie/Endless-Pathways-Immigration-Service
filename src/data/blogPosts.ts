@@ -5,9 +5,85 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   author: string;
+  image?: string;
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: 8,
+    date: "March 16, 2026",
+    title: "Work Permit Expiring Soon? Understanding Your Next Steps in Canada",
+    excerpt:
+      "Are you at a crossroads? Are you worried because your work permit will expire soon and you are not sure what your next line of action should be? You are not alone. Every year, thousands of temporary workers and residents in Canada face the same uncertainty as their work permits approach their expiry date.",
+    content: `Are you at a crossroads?
+
+Are you worried because your work permit will expire soon and you are not sure what your next line of action should be?
+
+You are not alone. Every year, thousands of temporary workers and residents in Canada face the same uncertainty as their work permits approach their expiry date.
+
+The big question becomes: What happens next?
+
+Should you apply for permanent residence?
+
+Can your work permit be extended?
+
+Are there other immigration pathways available to you?
+
+The good news is that Canada has one of the most structured and flexible immigration systems in the world, with multiple pathways that can allow temporary residents to transition to permanent residence.
+
+Canada Offers Several Immigration Pathways Depending on your situation, you may qualify for immigration programs such as:
+
+Express Entry
+Provincial Nominee Program
+Canadian Experience Class
+Employer-supported work permit extensions
+Regional immigration programs designed to support labour shortages
+
+Each pathway has different requirements and eligibility criteria, which means the best option for one person may not necessarily be the best option for another.
+
+Why You Should Not Wait Until the Last Minute
+
+One of the biggest mistakes many temporary residents make is waiting until their work permit is very close to expiring before they begin planning their next step.
+
+Immigration applications often require documents such as:
+
+Language test results
+Educational credential assessments
+Employer reference letters
+Proof of work experience
+Police clearance certificates
+
+Some of these documents can take several weeks or even months to obtain.
+
+Planning early allows you to keep your options open and avoid unnecessary stress.
+
+Professional guidance can make a difference because every immigration case is unique, it is often helpful to sit down with an immigration professional who can review your situation and help you understand:
+
+The pathways that may be available to you
+
+What steps you should take now
+
+What documents you should begin preparing
+
+The best strategy to secure your future in Canada
+
+Taking the right step today could make a significant difference in your long-term immigration journey.
+
+Free 30-Minute Consultation This Week
+
+To support temporary residents who are unsure about their next step, 
+Endless Immigration Pathways is organizing FREE 30-minute consultation sessions this week.
+
+During this consultation, we will help you:
+
+Understand your possible pathway to permanent residence
+
+Review your current immigration situation
+
+Identify the next steps you should take before your work permit expires`,
+    author: "Appiah Bonsu",
+    image: "/blog8.png",
+  },
   {
     id: 7,
     date: "March 9, 2026",
@@ -66,6 +142,7 @@ Every immigration case is different, and preparing the right documents in advanc
 
 If you want to understand whether this upcoming pathway could apply to your situation and what documents you should start gathering now, feel free to reach out.`,
     author: "Appiah Bonsu",
+    image: "/blog7.png",
   },
   {
     id: 6,
@@ -138,6 +215,7 @@ Need Guidance?
 
 If you are unsure whether you qualify under Ontario’s EOI system, professional guidance can help you assess your options and avoid costly mistakes.`,
     author: "Appiah Bonsu",
+    image: "/blog6.png",
   },
   {
     id: 1,
@@ -183,6 +261,7 @@ Canada maintains its openness to immigration, yet success now depends more than 
 
 *For personalized guidance on how these changes may affect your specific circumstances, professional consultation is recommended.*`,
     author: "Appiah Bonsu",
+    image: "/blog1.png",
   },
   {
     id: 2,
@@ -262,6 +341,7 @@ The PGWP presents a valuable opportunity, but it is temporary. Success depends n
 
 *For individuals seeking clarity on their specific situation, professional immigration advice is strongly recommended before making critical status decisions.*`,
     author: "Appiah Bonsu",
+    image: "/blog2.png",
   },
   {
     id: 3,
@@ -331,6 +411,7 @@ This approach represents strategic alignment with immigration demand rather than
 
 If your CRS score remains below 490, inaction represents the highest-risk decision available. The candidates who succeed in the current environment are those who treat their profile as a work in progress rather than a static submission.`,
     author: "Appiah Bonsu",
+    image: "/blog3.png",
   },
   {
     id: 4,
@@ -423,6 +504,7 @@ A single incorrect decision can cost months of time, significant financial inves
 
 *For professional guidance on OINP employer-supported pathways and stream selection, consultation with a regulated immigration professional is strongly recommended.*`,
     author: "Appiah Bonsu",
+    image: "/blog4.png",
   },
   {
     id: 5,
@@ -477,5 +559,6 @@ These figures exclude study permit holders and extensions. Competition continues
 
 *For individuals needing professional guidance on Express Entry alternatives and PNP strategies, consultation with a regulated immigration professional is recommended.*`,
     author: "Appiah Bonsu",
+    image: "/blog5.png",
   },
 ];

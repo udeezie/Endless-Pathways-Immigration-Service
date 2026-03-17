@@ -7,6 +7,13 @@ const BlogPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const post = blogPosts.find((p) => p.id === Number(id));
 
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("");
+  };
+
   if (!post) {
     return (
       <div className="blog-post-not-found">
@@ -52,10 +59,25 @@ const BlogPost: React.FC = () => {
   return (
     <div className="blog-post-page">
       <article className="blog-post-container">
+        {post.image && (
+          <div className="blog-post-featured-image">
+            <img src={post.image} alt={post.title} />
+          </div>
+        )}
+
         <div className="blog-post-category">MONDAY IMMIGRATION WATCH</div>
         <h1 className="blog-post-title">{post.title}</h1>
+
         <div className="blog-post-byline">
-          <span className="blog-post-author">By {post.author}</span>
+          <div className="blog-post-author-with-avatar">
+            <div className="blog-post-author-avatar">
+              <div className="avatar">
+                <span>{getInitials(post.author)}</span>
+                <div className="tooltip">{post.author}</div>
+              </div>
+            </div>
+            <span className="blog-post-author">{post.author}</span>
+          </div>
           <span className="blog-post-date">{post.date}</span>
         </div>
 

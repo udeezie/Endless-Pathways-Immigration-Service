@@ -69,10 +69,22 @@ const Home: React.FC = () => {
     useInView(),
     useInView(),
   ];
+  const reviewsTitleRef = useInView();
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.75;
+    }
+  }, []);
+
+  useEffect(() => {
+    const scriptId = "elfsight-platform-script";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://elfsightcdn.com/platform.js";
+      script.async = true;
+      document.body.appendChild(script);
     }
   }, []);
 
@@ -227,7 +239,7 @@ const Home: React.FC = () => {
                 ref={verifySectionRef.ref as React.RefObject<HTMLDivElement>}
               >
                 <a
-                  href="https://college-ic.ca/protecting-the-public/find-an-immigration-consultant"
+                  href="https://register.college-ic.ca/Public-Register-EN/Licensee/Profile.aspx?ID=53912"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="verify-link"
@@ -756,6 +768,36 @@ const Home: React.FC = () => {
               ) : null}
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="home-reviews-section">
+        <h2
+          className={`section-title slide-up ${reviewsTitleRef.isInView ? "in-view" : ""}`}
+          ref={reviewsTitleRef.ref as React.RefObject<HTMLHeadingElement>}
+        >
+          REAL CLIENTS, REAL RESULTS – CLIENTS WHO TRUSTED ENDLESS PATHWAYS
+          IMMIGRATION SERVICES
+        </h2>
+        <div className="home-reviews-container">
+          <div
+            className="elfsight-app-f58d9626-b2a6-48ca-9a96-40c89f7f8f31"
+            data-elfsight-app-lazy
+          ></div>
+        </div>
+        <div className="view-all-reviews-btn-container">
+          <a
+            href="https://www.google.com/maps/place/?q=place_id:ChIJY-EBXtHf1IkReDCiRTx5LEE"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="view-all-reviews-btn styled-btn"
+          >
+            VIEW ALL REVIEWS ON GOOGLE
+            <i
+              className="fas fa-external-link-alt btn-icon"
+              aria-hidden="true"
+            ></i>
+          </a>
         </div>
       </section>
 

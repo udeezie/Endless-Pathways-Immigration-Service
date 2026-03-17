@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
         <div>
           <a href="mailto:info@endlesspathways.ca">info@endlesspathways.ca</a>
         </div>
-        <div>Mon-Fri: 9am-6pm EST</div>
+        <div>Mon-Fri: 9am-5pm EST</div>
       </div>
 
       <div className="footer-social">
@@ -79,7 +79,14 @@ const Footer: React.FC = () => {
         </div>
         {/* Developer Credit - Added here */}
         <div className="developer-credit">
-          Website by <a href="https://yourwebsite.com" target="_blank" rel="noopener noreferrer">aflo</a>
+          Website by{" "}
+          <a
+            href="https://yourwebsite.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            aflo
+          </a>
         </div>
       </div>
     </footer>

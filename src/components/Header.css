@@ -78,7 +78,7 @@ body {
   justify-content: center;
   flex-wrap: nowrap;
   white-space: nowrap;
-  gap: clamp(0.5rem, 1.5vw, 1.8rem);
+  gap: clamp(0.4rem, 1.2vw, 1.5rem);
 }
 
 .nav-item {
@@ -90,8 +90,8 @@ body {
   text-decoration: none;
   color: var(--header-text);
   font-weight: 500;
-  font-size: clamp(0.85rem, 0.9vw, 1rem);
-  padding: 0.5rem 0.3rem;
+  font-size: clamp(0.8rem, 0.85vw, 1rem);
+  padding: 0.5rem 0.2rem;
   transition: all 0.3s ease;
   position: relative;
   letter-spacing: 0.2px;
@@ -551,17 +551,28 @@ body {
   opacity: 0;
 }
 
+@media (max-width: 1300px) {
+  .nav-list {
+    gap: 0.4rem;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.1rem;
+  }
+}
+
 @media (max-width: 1200px) {
   .header-container {
     padding: 1.2rem 30px;
   }
 
   .nav-list {
-    gap: clamp(0.4rem, 1.2vw, 1.5rem);
+    gap: 0.35rem;
   }
 
   .nav-link {
-    font-size: clamp(0.82rem, 0.85vw, 0.95rem);
+    font-size: 0.8rem;
   }
 }
 
@@ -575,8 +586,8 @@ body {
   }
 
   .nav-link {
-    font-size: 0.85rem;
-    padding: 0.5rem 0.2rem;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.1rem;
   }
 
   .social-icons-card {
@@ -617,7 +628,7 @@ body {
 
 @media (max-width: 1024px) {
   .nav-link {
-    font-size: 0.82rem;
+    font-size: 0.7rem;
   }
 
   .social-icons-card {
@@ -971,4 +982,22 @@ body.menu-open {
   position: fixed;
   width: 100%;
   height: 100%;
+}
+
+.nav-link,
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-icon {
+  font-size: 1.1em;
+  color: var(--accent-primary);
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover .nav-icon,
+.mobile-nav-link:hover .nav-icon {
+  color: var(--header-text);
 }

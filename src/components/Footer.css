@@ -134,9 +134,18 @@
 .footer-bottom {
   max-width: 1200px;
   margin: 3rem auto 0;
-  padding: 1.5rem 20px 0;
-  border-top: 1px solid #333;
+  padding: 0 20px 0;
   text-align: center;
+  border-top: none;
+}
+
+.footer-bottom::before {
+  content: '';
+  display: block;
+  width: calc(100% - 60px);
+  height: 1px;
+  background-color: #333;
+  margin: 0 auto 1.5rem;
 }
 
 .copyright {
@@ -171,6 +180,10 @@
   .footer-social {
     margin: 1.3rem auto;
     gap: 18px;
+  }
+
+  .footer-bottom::before {
+    width: calc(100% - 50px);
   }
 }
 
@@ -214,7 +227,12 @@
 
   .footer-bottom {
     margin-top: 2.5rem;
-    padding: 1.2rem 12px 0;
+    padding: 0 12px 0;
+  }
+
+  .footer-bottom::before {
+    width: calc(100% - 40px);
+    margin-bottom: 1.2rem;
   }
 }
 
@@ -260,7 +278,12 @@
 
   .footer-bottom {
     margin-top: 2rem;
-    padding: 1rem 10px 0;
+    padding: 0 10px 0;
+  }
+
+  .footer-bottom::before {
+    width: calc(100% - 30px);
+    margin-bottom: 1rem;
   }
 
   .copyright {
@@ -312,7 +335,12 @@
 
   .footer-bottom {
     margin-top: 1.5rem;
-    padding: 0.8rem 8px 0;
+    padding: 0 8px 0;
+  }
+
+  .footer-bottom::before {
+    width: calc(100% - 20px);
+    margin-bottom: 0.8rem;
   }
 
   .copyright {
@@ -357,6 +385,16 @@
 
   .footer-socialSvg {
     width: 14px;
+  }
+
+  .footer-bottom {
+    margin-top: 1.2rem;
+    padding: 0 5px 0;
+  }
+
+  .footer-bottom::before {
+    width: calc(100% - 10px);
+    margin-bottom: 0.5rem;
   }
 
   .copyright {

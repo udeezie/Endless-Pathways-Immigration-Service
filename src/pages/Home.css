@@ -8,19 +8,6 @@
   overflow-x: hidden;
 }
 
-.background-pattern {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 20%),
-    radial-gradient(circle at 90% 50%, rgba(255, 215, 0, 0.03) 0%, transparent 25%),
-    repeating-linear-gradient(45deg, rgba(255, 215, 0, 0.02) 0px, rgba(255, 215, 0, 0.02) 2px, transparent 2px, transparent 10px);
-  pointer-events: none;
-  z-index: 0;
-}
-
 .video-hero-section {
   position: relative;
   width: 90%;
@@ -750,11 +737,13 @@ button.styled-btn {
 }
 
 .process-section {
-  max-width: 1200px;
-  margin: 80px auto 40px;
-  padding: 0 20px;
+  width: 100%;
+  margin: 80px 0 40px;
+  padding: 80px 20px 40px;
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  isolation: isolate;
+  background-color: var(--accent-primary);
 }
 
 .process-title {
@@ -771,8 +760,11 @@ button.styled-btn {
 
 .process-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .process-card {
@@ -788,6 +780,48 @@ button.styled-btn {
   overflow: hidden;
   height: 100%;
   text-align: left;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  z-index: 1;
+}
+
+.process-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg,
+      transparent,
+      var(--accent-primary) 20%,
+      #ffffff 40%,
+      var(--accent-primary) 60%,
+      #ffffff 80%,
+      transparent);
+  animation: rotateBorder 6s linear infinite;
+  z-index: -2;
+}
+
+.process-card::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: var(--bg-card);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+@keyframes rotateBorder {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .process-card:hover {
@@ -815,6 +849,8 @@ button.styled-btn {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .process-card:hover .process-icon {
@@ -829,6 +865,8 @@ button.styled-btn {
   color: rgba(255, 215, 0, 0.2);
   font-family: 'Montserrat', sans-serif;
   line-height: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .step-title {
@@ -844,6 +882,8 @@ button.styled-btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 2;
 }
 
 .step-description {
@@ -854,6 +894,8 @@ button.styled-btn {
   flex: 1;
   text-align: left;
   transition: color 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .process-btn {
@@ -862,12 +904,76 @@ button.styled-btn {
   padding: 10px 24px;
   font-size: 0.95rem;
   border-width: 1.5px;
+  position: relative;
+  z-index: 2;
 }
 
 .process-btn:focus,
 .process-btn:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
+}
+
+.home-reviews-section {
+  max-width: 1200px;
+  margin: 80px auto 60px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-reviews-container {
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 6px 18px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.home-reviews-container:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 12px 28px rgba(255, 215, 0, 0.12);
+}
+
+.home-reviews-container .elfsight-app-f58d9626-b2a6-48ca-9a96-40c89f7f8f31 {
+  width: 100%;
+  min-height: 300px;
+}
+
+.view-all-reviews-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.view-all-reviews-btn {
+  min-width: 280px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.view-all-reviews-btn i {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.view-all-reviews-btn:hover i {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .view-all-reviews-btn-container {
+    margin-top: 25px;
+  }
+
+  .view-all-reviews-btn {
+    min-width: 240px;
+    font-size: 14px;
+    padding: 12px 20px;
+  }
 }
 
 .home-blogs-section {
@@ -1192,6 +1298,14 @@ button.styled-btn {
   transition-delay: 0.25s;
 }
 
+.home-reviews-section .section-title {
+  transition-delay: 0.05s;
+}
+
+.home-reviews-section .home-reviews-container {
+  transition-delay: 0.1s;
+}
+
 .home-blogs-grid .home-blog-card:nth-child(1) {
   transition-delay: 0.05s;
 }
@@ -1230,10 +1344,6 @@ button.styled-btn {
 
 .image-section.fade-in.in-view {
   transform: translateX(0);
-}
-
-.dark-mode .background-pattern {
-  opacity: 0.5;
 }
 
 .dark-mode .cicc-logo,
@@ -1352,7 +1462,7 @@ button.styled-btn {
 
 @media (max-width: 992px) {
   .process-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .hero-title {
@@ -1589,6 +1699,14 @@ button.styled-btn {
     font-size: 2.5rem;
   }
 
+  .home-reviews-section {
+    margin: 60px auto 40px;
+  }
+
+  .home-reviews-container {
+    padding: 20px;
+  }
+
   .home-blogs-grid {
     grid-template-columns: 1fr;
   }
@@ -1748,6 +1866,14 @@ button.styled-btn {
   .video-hero-section {
     height: 45vh;
     min-height: 350px;
+  }
+
+  .home-reviews-section {
+    margin: 50px auto 30px;
+  }
+
+  .home-reviews-container {
+    padding: 15px;
   }
 
   .home-faq-item summary {

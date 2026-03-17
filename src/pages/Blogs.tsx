@@ -30,20 +30,24 @@ const Blogs: React.FC = () => {
         </div>
       </section>
 
-      <section className="blogs-video-section">
-        <div className="video-container">
-          <video autoPlay muted loop playsInline className="background-video">
-            <source src="/immigration.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </section>
-
       <main className="blogs-main">
         <div className="blogs-container">
           <div className="blogs-grid">
             {blogPosts.map((post) => (
               <article key={post.id} className="blogs-card">
+                <div className="blogs-card-image">
+                  {post.image ? (
+                    <img
+                      src={post.image}
+                      alt={`Illustration for ${post.title}`}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="blogs-card-image-placeholder">
+                      <span>Image coming soon</span>
+                    </div>
+                  )}
+                </div>
                 <div className="blogs-card-content">
                   <div className="blogs-card-meta">
                     <time dateTime={post.date} className="blogs-card-date">

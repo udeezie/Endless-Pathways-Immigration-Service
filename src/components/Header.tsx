@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {
+  FaHome,
+  FaBriefcase,
+  FaCalendarCheck,
+  FaNewspaper,
+  FaCalendarAlt,
+  FaEnvelope,
+  FaStar,
+} from "react-icons/fa";
 import "./Header.css";
 
 const Header: React.FC = () => {
@@ -99,32 +108,44 @@ const Header: React.FC = () => {
             <ul className="nav-list">
               <li className="nav-item">
                 <Link to="/" className="nav-link">
-                  Home
+                  <FaHome className="nav-icon" />
+                  <span>Home</span>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="/services" className="nav-link">
-                  Services
+                  <FaBriefcase className="nav-icon" />
+                  <span>Services</span>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="/book-consultation" className="nav-link">
-                  Consultation
+                  <FaCalendarCheck className="nav-icon" />
+                  <span>Consultation</span>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="/blogs" className="nav-link">
-                  Blog
+                  <FaNewspaper className="nav-icon" />
+                  <span>Blog</span>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="/events" className="nav-link">
-                  Events
+                  <FaCalendarAlt className="nav-icon" />
+                  <span>Events</span>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/client-reviews" className="nav-link">
+                  <FaStar className="nav-icon" />
+                  <span>Reviews</span>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="/contact" className="nav-link">
-                  Contact
+                  <FaEnvelope className="nav-icon" />
+                  <span>Contact</span>
                 </Link>
               </li>
             </ul>
@@ -238,7 +259,8 @@ const Header: React.FC = () => {
           <ul className="mobile-nav-list">
             <li className="mobile-nav-item">
               <Link to="/" className="mobile-nav-link" onClick={closeMenu}>
-                Home
+                <FaHome className="nav-icon" />
+                <span>Home</span>
               </Link>
             </li>
             <li className="mobile-nav-item">
@@ -247,7 +269,8 @@ const Header: React.FC = () => {
                 className="mobile-nav-link"
                 onClick={closeMenu}
               >
-                Services
+                <FaBriefcase className="nav-icon" />
+                <span>Services</span>
               </Link>
             </li>
             <li className="mobile-nav-item">
@@ -256,12 +279,14 @@ const Header: React.FC = () => {
                 className="mobile-nav-link"
                 onClick={closeMenu}
               >
-                Book a Consultation
+                <FaCalendarCheck className="nav-icon" />
+                <span>Book a Consultation</span>
               </Link>
             </li>
             <li className="mobile-nav-item">
               <Link to="/blogs" className="mobile-nav-link" onClick={closeMenu}>
-                Blog
+                <FaNewspaper className="nav-icon" />
+                <span>Blog</span>
               </Link>
             </li>
             <li className="mobile-nav-item">
@@ -270,7 +295,18 @@ const Header: React.FC = () => {
                 className="mobile-nav-link"
                 onClick={closeMenu}
               >
-                Events
+                <FaCalendarAlt className="nav-icon" />
+                <span>Events</span>
+              </Link>
+            </li>
+            <li className="mobile-nav-item">
+              <Link
+                to="/client-reviews"
+                className="mobile-nav-link"
+                onClick={closeMenu}
+              >
+                <FaStar className="nav-icon" />
+                <span>Reviews</span>
               </Link>
             </li>
             <li className="mobile-nav-item">
@@ -279,7 +315,8 @@ const Header: React.FC = () => {
                 className="mobile-nav-link"
                 onClick={closeMenu}
               >
-                Contact us
+                <FaEnvelope className="nav-icon" />
+                <span>Contact us</span>
               </Link>
             </li>
           </ul>
