@@ -69,10 +69,11 @@ The best strategy to secure your future in Canada
 
 Taking the right step today could make a significant difference in your long-term immigration journey.
 
-Free 30-Minute Consultation This Week
+Book a 30-Minute Consultation
 
-To support temporary residents who are unsure about their next step, 
-Endless Immigration Pathways is organizing FREE 30-minute consultation sessions this week.
+To support temporary residents who are unsure about their next step, Endless Immigration Pathways offers 30-minute consultation sessions.
+
+Consultations are a paid professional service. Current rates for each session length and format are listed on the booking page.
 
 During this consultation, we will help you:
 
