@@ -1,0 +1,90 @@
+// Events — an empty state. The job is to look deliberate rather than broken,
+// so it is centred, quiet, and carries a slow indicator instead of a spinner.
+.events-container {
+  display: grid;
+  place-items: center;
+  min-height: 62svh;
+  padding-block: calc(#{$header-h} + 80px) 100px;
+
+  @include wrap($wrap);
+
+  @include bp($bp-sm) {
+    padding-block: calc(#{$header-h} + 52px) 72px;
+  }
+}
+
+.events-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+}
+
+.events-loader {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 34px;
+}
+
+// Three bars breathing out of sync — reads as "nothing scheduled yet", not
+// as a page still loading.
+.events-box1,
+.events-box2,
+.events-box3 {
+  width: 8px;
+  border-radius: 999px;
+  background: var(--gold);
+  opacity: 0.55;
+
+  @include motion-safe {
+    animation: eventsBreathe 2.6s $ease-io infinite;
+  }
+}
+
+.events-box1 {
+  height: 18px;
+}
+
+.events-box2 {
+  height: 30px;
+  animation-delay: 0.28s;
+}
+
+.events-box3 {
+  height: 22px;
+  animation-delay: 0.56s;
+}
+
+@keyframes eventsBreathe {
+  0%,
+  100% {
+    transform: scaleY(0.62);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+// Static fallback: bars still read as a mark, just without motion.
+@media (prefers-reduced-motion: reduce) {
+  .events-box1,
+  .events-box2,
+  .events-box3 {
+    opacity: 0.7;
+  }
+}
+
+.events-message {
+  max-width: 34ch;
+  font-family: $display;
+  font-size: clamp(1.4rem, 2.6vw, 2.05rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  text-wrap: balance;
+}

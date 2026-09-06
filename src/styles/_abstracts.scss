@@ -1,0 +1,194 @@
+// Abstracts — variables, mixins, functions. Emits NO css.
+// Auto-injected into every .scss file via vite.config.ts additionalData,
+// so never put rules here or they will be duplicated in every stylesheet.
+@use "sass:math";
+
+// Type
+$display: "Newsreader", "Iowan Old Style", Georgia, serif;
+$sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+// Motion
+$ease: cubic-bezier(0.22, 1, 0.36, 1); // out-expo-ish, for entrances
+$ease-io: cubic-bezier(0.65, 0, 0.35, 1); // symmetric, for toggles
+$ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+// Layout
+$wrap: 1240px;
+$wrap-wide: 1440px;
+$measure: 68ch;
+$gutter: 44px;
+$gutter-sm: 22px;
+$header-h: 76px;
+
+// Breakpoints
+$bp-xl: 1200px;
+$bp-lg: 1024px;
+$bp-md: 860px;
+$bp-sm: 640px;
+$bp-xs: 460px;
+
+@mixin bp($w) {
+  @media (max-width: $w) {
+    @content;
+  }
+}
+
+@mixin bp-min($w) {
+  @media (min-width: $w + 1px) {
+    @content;
+  }
+}
+
+@mixin motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+// Structure
+@mixin wrap($max: $wrap) {
+  width: 100%;
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: $gutter;
+
+  @include bp($bp-md) {
+    padding-inline: 28px;
+  }
+
+  @include bp($bp-sm) {
+    padding-inline: $gutter-sm;
+  }
+}
+
+@mixin section-pad($top: 132px, $bottom: 132px) {
+  padding-block: $top $bottom;
+
+  @include bp($bp-lg) {
+    padding-block: $top * 0.72 $bottom * 0.72;
+  }
+
+  @include bp($bp-sm) {
+    padding-block: $top * 0.52 $bottom * 0.52;
+  }
+}
+
+// Typography
+// Small uppercase tracked label. The workhorse of the editorial look.
+@mixin eyebrow($color: var(--gold-text)) {
+  font-family: $sans;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: $color;
+}
+
+// Viewport range the fluid type interpolates across, in rem.
+$fluid-min-vw: math.div(375, 16);
+$fluid-max-vw: math.div(1440, 16);
+
+// Serif display heading with a fluid clamp.
+// $min/$max are UNITLESS rem values — display(1.9, 3.15), not display(1.9rem…).
+// The middle term is a real line through (375px, $min) and (1440px, $max), so
+// the size tracks the viewport instead of jumping at a breakpoint.
+@mixin display($min, $max, $weight: 400) {
+  $slope: math.div($max - $min, $fluid-max-vw - $fluid-min-vw);
+  $intercept: $min - $slope * $fluid-min-vw;
+
+  font-family: $display;
+  font-weight: $weight;
+  font-size: clamp(
+    #{$min}rem,
+    #{$intercept}rem + #{$slope * 100}vw,
+    #{$max}rem
+  );
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+}
+
+@mixin body-copy {
+  font-family: $sans;
+  font-size: 1.0125rem;
+  line-height: 1.78;
+  color: var(--text);
+}
+
+// Surfaces
+@mixin hairline($side: bottom, $color: var(--line)) {
+  border-#{$side}: 1px solid $color;
+}
+
+// Film grain. Warms up large flat surfaces in the light theme; switched off
+// entirely in dark, where the ground is meant to read as true black.
+@mixin grain($opacity: 0.045) {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: calc(#{$opacity} * var(--grain, 1));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@mixin card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+// Interaction
+@mixin focus-ring($offset: 3px) {
+  &:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: $offset;
+    border-radius: 2px;
+  }
+}
+
+// Link that draws its underline from left on hover, retracts to the right.
+@mixin underline-link($color: currentColor) {
+  position: relative;
+  text-decoration: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: $color;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s $ease;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+// Scroll-reveal. Pair with the useInView hook: `.reveal` + `.is-in`.
+@mixin reveal($y: 24px, $delay: 0s) {
+  opacity: 0;
+  transform: translateY($y);
+  transition:
+    opacity 0.9s $ease $delay,
+    transform 0.9s $ease $delay;
+
+  &.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

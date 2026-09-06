@@ -1,0 +1,47 @@
+.ambient-root {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Fixed, so the grid holds still while content scrolls through it.
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+// Warm light in the light theme; nothing at all in dark, where the ground is
+// meant to read as true black.
+.ambient__wash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 74% 46% at 78% -6%,
+      var(--ambient-wash),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 56% 40% at 4% 96%,
+      var(--ambient-wash),
+      transparent 58%
+    );
+}
+
+.ambient__grain {
+  @include grain(0.04);
+
+  position: absolute;
+  inset: 0;
+}
+
+// Page content rides above the atmosphere.
+.ambient-root > *:not(.ambient) {
+  position: relative;
+  z-index: 1;
+}

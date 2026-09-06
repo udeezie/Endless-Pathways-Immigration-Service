@@ -1,11 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "node:path";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 export default defineConfig({
   plugins: [
     react(),
     ViteImageOptimizer({
+      // The only SVG here is the hand-generated favicon (~1.3KB), and running
+      // it through the plugin would pull in svgo for no benefit.
+      exclude: /\.svg$/,
       png: {
         quality: 80,
         compressionLevel: 9,
@@ -24,6 +28,21 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Variables and mixins are available in every .scss file without an
+        // explicit @use. Keep _abstracts.scss output-free or it duplicates.
+        additionalData: `@use "@/styles/abstracts" as *;
+`,
+      },
+    },
+  },
   build: {
     rollupOptions: {
       output: {

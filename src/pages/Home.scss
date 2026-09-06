@@ -1,0 +1,987 @@
+// Home — quiet editorial layout: serif display type, generous margins and
+// restrained rules. Structure comes from spacing, not from drawn lines or
+// numbering. No cards, no shadows.
+$head-offset: $header-h; // fixed header height
+
+.home {
+  position: relative;
+}
+
+// Shared editorial furniture
+.sec-head {
+  max-width: 800px;
+  margin-bottom: 68px;
+
+  h2 {
+    @include display(1.9, 3.15);
+  }
+
+  p {
+    margin-top: 20px;
+    max-width: 56ch;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  @include bp($bp-sm) {
+    margin-bottom: 40px;
+  }
+}
+
+// Centred opening — used on the sections that anchor the page. Alternating
+// this against the left-aligned ones is what gives the page a shape you can
+// remember, without adding a single extra rule or number.
+.sec-head--center {
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+
+  p {
+    margin-inline: auto;
+  }
+}
+
+.sec-head--split {
+  display: grid;
+
+  &::before {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 40px 70px;
+  align-items: end;
+  max-width: none;
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+.sec-head__intro {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text);
+  max-width: 52ch;
+  padding-bottom: 6px;
+}
+
+// Every major section is separated by a full-width hairline rather than a
+// change of background colour.
+.services,
+.process,
+.reviews,
+.journal,
+.faq {
+  @include section-pad(92px, 92px);
+
+  position: relative;
+}
+
+// Tinted bands alternating with the plain page ground. This is the page's
+// rhythm — no extra lines, no numbering, just alternating surfaces.
+.services,
+.reviews {
+  background: var(--surface-2);
+}
+
+// Opening
+
+// Not a hero: no full-viewport stage, no photograph, no scrim. The page starts
+// the way a letterhead does — the statement, the actions, the credentials.
+.opening {
+  padding-top: calc(#{$header-h} + 92px);
+
+  @include bp($bp-lg) {
+    padding-top: calc(#{$header-h} + 64px);
+  }
+
+  @include bp($bp-sm) {
+    padding-top: calc(#{$header-h} + 44px);
+  }
+}
+
+// Stacked, not split. A headline beside its own supporting paragraph is the
+// one composition this site keeps overusing, so the opener sets the headline
+// on its own and lets the statement follow beneath it.
+.opening__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  padding-bottom: 64px;
+
+  @include bp($bp-lg) {
+    gap: 30px;
+    padding-bottom: 48px;
+  }
+}
+
+.opening__title {
+  font-family: $display;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5.2vw, 4.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.032em;
+  color: var(--ink);
+  max-width: 17ch;
+
+  em {
+    font-style: italic;
+    font-weight: 400;
+    // Lit gold rather than flat — the one moment of shine on the page.
+    background: linear-gradient(
+      100deg,
+      var(--gold-deep),
+      var(--gold-bright) 44%,
+      var(--gold) 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--gold-text);
+  }
+
+  @include bp($bp-sm) {
+    max-width: none;
+  }
+}
+
+.opening__text {
+  max-width: 58ch;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.opening__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+
+  @include bp($bp-sm) {
+    .btn {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+// Credential band closing the opener, full width against a tinted ground.
+.opening__cred {
+  background: var(--surface-2);
+}
+
+.opening__credInner {
+  display: flex;
+  align-items: center;
+  gap: 16px 34px;
+  flex-wrap: wrap;
+  padding-block: 22px;
+
+  @include bp($bp-sm) {
+    justify-content: center;
+    text-align: center;
+    gap: 14px 18px;
+  }
+}
+
+.opening__credBadges {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+
+  img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    // Supplied as artwork on white; multiply drops the box out on the paper.
+    mix-blend-mode: multiply;
+  }
+
+  @include bp($bp-sm) {
+    img {
+      height: 34px;
+    }
+  }
+}
+
+body.dark-mode .opening__credBadges img {
+  mix-blend-mode: normal;
+  background: #fff;
+  padding: 4px 6px;
+  border-radius: 2px;
+}
+
+.opening__credText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.opening__credReg {
+  color: var(--gold-text);
+}
+
+.opening__credVerify {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+  transition: color 0.35s $ease;
+
+  span {
+    @include underline-link(var(--gold));
+  }
+
+  i {
+    font-size: 0.72em;
+    color: var(--gold-text);
+    transition: transform 0.4s $ease;
+  }
+
+  &:hover {
+    color: var(--gold-text);
+
+    i {
+      transform: translate(3px, -3px);
+    }
+  }
+
+  @include focus-ring;
+
+  @include bp($bp-md) {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  @include bp($bp-sm) {
+    justify-content: center;
+  }
+}
+
+// Services
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+// Panels rather than bare lists: services are the practice's product, so they
+// carry real surface weight on the page.
+.svc {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 34px 38px;
+  border-radius: 3px;
+  background: linear-gradient(
+    180deg,
+    var(--surface-raised),
+    var(--surface) 62%
+  );
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition:
+    border-color 0.5s $ease,
+    transform 0.5s $ease,
+    box-shadow 0.5s $ease;
+
+  // Lit top edge.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--edge-light),
+      transparent
+    );
+    opacity: 0.55;
+  }
+
+  // Warm light pooling from below on hover.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 76% 62% at 50% 112%,
+      var(--gold-wash),
+      transparent 72%
+    );
+    opacity: 0;
+    transition: opacity 0.55s $ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    border-color: var(--gold-line);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @include bp($bp-sm) {
+    padding: 30px 24px 28px;
+  }
+}
+
+.svc__title {
+  margin-bottom: 22px;
+  padding-bottom: 20px;
+  font-family: $display;
+  font-size: 1.62rem;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+.svc__list {
+  list-style: none;
+
+  li {
+    position: relative;
+    padding: 9px 0 9px 20px;
+    font-size: 0.9375rem;
+    color: var(--text);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 1.15em;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.75;
+    }
+  }
+}
+
+.services__cta {
+  margin-top: 54px;
+
+  @include bp($bp-sm) {
+    margin-top: 36px;
+  }
+}
+
+// Process
+.process__rail {
+  display: flex;
+  flex-direction: column;
+}
+
+// Full-width rows with an oversized serif numeral. Reads as a numbered
+// procedure — no rail, no markers, no extra lines beyond the row divider.
+.step {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px 40px;
+  padding: 30px 0;
+
+  @include hairline(top);
+
+  &:last-child {
+    @include hairline(bottom);
+  }
+
+  &:hover .step__marker {
+    color: var(--gold-text);
+  }
+
+  @include bp($bp-md) {
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 8px 26px;
+    padding: 30px 0;
+  }
+
+  @include bp($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 26px 0;
+  }
+}
+
+.step__marker {
+  grid-row: 1 / span 3;
+  font-family: $display;
+  font-size: 3.4rem;
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--text-faint);
+  transition: color 0.45s $ease;
+
+  @include bp($bp-md) {
+    grid-row: 1 / span 3;
+    font-size: 2.4rem;
+  }
+
+  @include bp($bp-sm) {
+    grid-row: auto;
+    font-size: 1.6rem;
+    color: var(--gold-text);
+  }
+}
+
+.step__title {
+  font-family: $display;
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+
+  @include bp($bp-sm) {
+    font-size: 1.3rem;
+  }
+}
+
+.step__body {
+  grid-column: 2;
+  max-width: 62ch;
+  margin-top: 10px;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--text);
+
+  @include bp($bp-sm) {
+    grid-column: 1;
+  }
+}
+
+.step__link {
+  grid-column: 3;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 8px;
+  white-space: nowrap;
+
+  @include eyebrow(var(--gold-text));
+
+  font-size: 11px;
+  transition: gap 0.4s $ease;
+
+  i {
+    font-size: 0.85em;
+  }
+
+  &:hover {
+    gap: 15px;
+  }
+
+  @include focus-ring;
+
+  @include bp($bp-md) {
+    grid-column: 2;
+    grid-row: auto;
+    margin-top: 14px;
+  }
+
+  @include bp($bp-sm) {
+    grid-column: 1;
+  }
+}
+
+// WHY CHOOSE  —  inverted anchor band
+
+// The one full-bleed dark moment on the page. It breaks the run of paper,
+// gives the gold somewhere to actually glow, and bookends with the footer.
+.reasons {
+  @include section-pad(104px, 104px);
+
+  position: relative;
+  background: #08090a;
+  border-block: 1px solid rgba(244, 244, 244, 0.1);
+  overflow: hidden;
+
+  &::after {
+    @include grain(0.055);
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  // Warm pool so the black has depth rather than reading as a flat slab.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -30% 0 auto 0;
+    height: 120%;
+    background: radial-gradient(
+      ellipse 52% 46% at 50% 12%,
+      rgba(201, 165, 78, 0.14),
+      transparent 66%
+    );
+    pointer-events: none;
+  }
+
+  .sec-head h2 {
+    color: #f4f4f4;
+  }
+
+  .sec-head p {
+    color: rgba(244, 244, 244, 0.62);
+  }
+}
+
+.reasons__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  list-style: none;
+
+  @include bp($bp-md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include bp($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reason {
+  padding: 34px 36px 38px;
+  border-top: 1px solid rgba(244, 244, 244, 0.12);
+  border-right: 1px solid rgba(244, 244, 244, 0.12);
+  transition: background-color 0.5s $ease;
+
+  // Close the open right edge on the last column of each row.
+  &:nth-child(3n) {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  &:nth-child(3n + 1) {
+    padding-left: 0;
+  }
+
+  &:hover {
+    background: rgba(244, 244, 244, 0.035);
+  }
+
+  @include bp($bp-md) {
+    padding: 30px 28px 32px;
+
+    &:nth-child(3n),
+    &:nth-child(3n + 1) {
+      padding-inline: 28px;
+      border-right: 1px solid rgba(244, 244, 244, 0.12);
+    }
+
+    &:nth-child(2n) {
+      border-right: 0;
+      padding-right: 0;
+    }
+
+    &:nth-child(2n + 1) {
+      padding-left: 0;
+    }
+  }
+
+  @include bp($bp-sm) {
+    padding: 26px 0 28px;
+
+    &,
+    &:nth-child(3n),
+    &:nth-child(3n + 1),
+    &:nth-child(2n),
+    &:nth-child(2n + 1) {
+      padding-inline: 0;
+      border-right: 0;
+    }
+  }
+}
+
+.reason__title {
+  margin-bottom: 14px;
+  font-family: $display;
+  font-size: 1.42rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #f4f4f4;
+
+  @include bp($bp-sm) {
+    font-size: 1.28rem;
+  }
+}
+
+.reason__body {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: rgba(244, 244, 244, 0.62);
+}
+
+// Reviews
+.reviews__frame {
+  position: relative;
+  padding: 20px;
+  border-radius: 3px;
+  background: linear-gradient(
+    180deg,
+    var(--surface-raised),
+    var(--surface) 60%
+  );
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  min-height: 220px;
+
+  @include bp($bp-sm) {
+    padding: 12px;
+  }
+}
+
+.reviews__cta {
+  margin-top: 42px;
+}
+
+// Journal
+
+// Image-led cards. Along with the hero this is where the page stops being type
+// on a flat ground — the article photographs were already in the project and
+// were simply never used here.
+.journal__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.entry {
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition:
+    border-color 0.45s $ease,
+    transform 0.45s $ease,
+    box-shadow 0.45s $ease;
+
+  &:hover {
+    border-color: var(--gold-line);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+
+    .entry__figure img {
+      transform: scale(1.05);
+    }
+
+    .entry__title {
+      color: var(--gold-text);
+    }
+
+    .entry__more i {
+      transform: translateX(5px);
+    }
+  }
+}
+
+.entry__hit {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @include focus-ring(-4px);
+}
+
+.entry__figure {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--surface-2);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s $ease;
+  }
+}
+
+.entry__new {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 10px;
+  background: var(--gold);
+  color: #14110c;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  border-radius: 2px;
+}
+
+.entry__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px 24px 26px;
+
+  @include bp($bp-sm) {
+    padding: 20px;
+  }
+}
+
+.entry__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 14px;
+
+  @include eyebrow(var(--text-faint));
+
+  font-size: 10px;
+}
+
+.entry__dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.entry__title {
+  margin-bottom: 12px;
+  font-family: $display;
+  font-size: 1.32rem;
+  font-weight: 400;
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  transition: color 0.4s $ease;
+  text-wrap: pretty;
+}
+
+.entry__excerpt {
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.entry__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.entry__author {
+  @include eyebrow(var(--text-faint));
+
+  font-size: 9.5px;
+}
+
+.entry__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  @include eyebrow(var(--gold-text));
+
+  font-size: 10.5px;
+
+  i {
+    font-size: 0.85em;
+    transition: transform 0.4s $ease;
+  }
+}
+
+.journal__cta {
+  margin-top: 48px;
+}
+
+// Faq
+.faq__wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+  gap: 60px;
+  align-items: start;
+
+  @include bp($bp-lg) {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .sec-head {
+    margin-bottom: 0;
+    position: sticky;
+    top: calc(#{$header-h} + 34px);
+
+    @include bp($bp-lg) {
+      position: static;
+    }
+  }
+}
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.qa {
+  @include hairline(top);
+
+  &:last-child {
+    @include hairline(bottom);
+  }
+
+  h3 {
+    margin: 0;
+    font: inherit;
+    letter-spacing: normal;
+  }
+
+  &.is-open {
+    .qa__text {
+      color: var(--gold-text);
+    }
+
+    .qa__sign::after {
+      transform: rotate(90deg) scaleX(0);
+    }
+  }
+}
+
+.qa__q {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+  padding: 26px 0;
+  text-align: left;
+
+  @include focus-ring;
+
+  &:hover .qa__text {
+    color: var(--gold-text);
+  }
+
+  @include bp($bp-sm) {
+    gap: 14px;
+    padding: 20px 0;
+  }
+}
+
+.qa__text {
+  flex: 1;
+  font-family: $display;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.32;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  transition: color 0.35s $ease;
+
+  @include bp($bp-sm) {
+    font-size: 1.1rem;
+  }
+}
+
+// Plus/minus drawn from two rules so it can animate to a minus.
+.qa__sign {
+  position: relative;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 6px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: var(--gold-text);
+    transition: transform 0.45s $ease;
+  }
+
+  &::after {
+    transform: rotate(90deg);
+  }
+}
+
+.qa__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s $ease;
+
+  .qa.is-open & {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.qa__panelInner {
+  overflow: hidden;
+  min-height: 0;
+
+  p {
+    padding: 0 0 30px;
+    font-size: 0.9375rem;
+    line-height: 1.8;
+    color: var(--text);
+    max-width: 68ch;
+
+    @include bp($bp-sm) {
+      padding-bottom: 22px;
+    }
+  }
+}

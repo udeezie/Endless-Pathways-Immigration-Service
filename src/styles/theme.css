@@ -1,56 +1,166 @@
-/* src/styles/theme.css */
+/*
+   Design tokens.
+
+   Two layers:
+     1. The premium palette (--bg, --ink, --gold, --line …) — what new work uses.
+     2. Legacy aliases (--bg-primary, --accent-primary …) kept pointing at the
+        new palette so pages not yet redesigned inherit the refresh instead of
+        breaking. Delete an alias only once nothing references it.
+
+   Theming is runtime (.dark-mode on <body>), so colours must stay CSS custom
+   properties — SCSS variables cannot switch at runtime.
+*/
+
 :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
-    --bg-card: #ffffff;
-    --bg-input: #ffffff;
-    --bg-overlay: rgba(0, 0, 0, 0.8);
-    --text-primary: #1e1e1e;
-    --text-secondary: #4a4a4a;
-    --text-accent: #FFD700;
-    --border-color: #e0e0e0;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --accent-primary: #FFD700;
-    --accent-light: rgba(255, 215, 0, 0.1);
-    --accent-dark: #b8960f;
-    --error-color: #ff4d4d;
-    --error-light: rgba(255, 77, 77, 0.05);
-    --success-color: #FFD700;
-    --success-light: rgba(255, 215, 0, 0.1);
-    --header-bg: #000000;
-    --header-text: #ffffff;
-    --card-border: rgba(0, 0, 0, 0.05);
-    --policy-bg: #fff3cd;
-    --policy-border: #ff9800;
-    --policy-text: #1e1e1e;
-    --refusal-border: #ff4d4d;
-    --refusal-text: #ff4d4d;
+  color-scheme: light;
+
+  /* Ground — warm paper rather than stark white. White reads clinical; the
+     cream keeps gold from turning acidic against it. */
+  --bg: #f7f4ec;
+  --bg-2: #efeae0;
+  --surface: #fffcf7;
+  --surface-2: #f3efe5;
+  --surface-raised: #ffffff;
+  --overlay: rgba(12, 10, 7, 0.62);
+
+  /* Type */
+  --ink: #14110c;
+  --text: #4a443a;
+  --text-dim: #6e675a;
+  --text-faint: #948c7c;
+
+  /* Rules */
+  --line: rgba(20, 17, 12, 0.11);
+  --line-strong: rgba(20, 17, 12, 0.2);
+  --line-faint: rgba(20, 17, 12, 0.06);
+
+  /* Gold. --gold fills, --gold-text writes. #FFD700 is unreadable as text on
+     paper, hence the deeper companion. */
+  --gold: #c9a54e;
+  --gold-text: #8a6a21;
+  --gold-bright: #e0c78a;
+  --gold-deep: #6f5417;
+  --gold-wash: rgba(201, 165, 78, 0.1);
+  --gold-line: rgba(201, 165, 78, 0.34);
+
+  /* Page-wide atmospheric wash behind everything. */
+  --ambient-wash: rgba(201, 165, 78, 0.1);
+
+  /* Film grain multiplier: on in light, off in dark. */
+  --grain: 1;
+
+  /* Depth kit — see the dark block for what these do. */
+  --glow: rgba(201, 165, 78, 0.18);
+  --glow-soft: rgba(201, 165, 78, 0.08);
+  --edge-light: rgba(255, 255, 255, 0.9);
+
+  /* Status */
+  --error: #b3261e;
+  --error-wash: rgba(179, 38, 30, 0.07);
+  --success: #2f6b46;
+  --success-wash: rgba(47, 107, 70, 0.08);
+  --notice-bg: #fbf3dd;
+  --notice-line: #d9a92b;
+
+  /* Elevation — low, wide and warm. Grey drop-shadows look cheap on cream. */
+  --shadow-sm: 0 1px 2px rgba(20, 17, 12, 0.05);
+  --shadow: 0 12px 32px -12px rgba(20, 17, 12, 0.16);
+  --shadow-lg: 0 34px 70px -28px rgba(20, 17, 12, 0.26);
+
+  --radius: 3px;
+  --radius-lg: 6px;
 }
 
-.dark-mode {
-    --bg-primary: #121212;
-    --bg-secondary: #1a1a1a;
-    --bg-card: #1e1e1e;
-    --bg-input: #2d2d2d;
-    --bg-overlay: rgba(0, 0, 0, 0.95);
-    --text-primary: #f1f1f1;
-    --text-secondary: #b0b0b0;
-    --text-accent: #FFD700;
-    --border-color: #333333;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --accent-primary: #FFD700;
-    --accent-light: rgba(255, 215, 0, 0.15);
-    --accent-dark: #b8960f;
-    --error-color: #ff8a8a;
-    --error-light: rgba(255, 77, 77, 0.15);
-    --success-color: #FFD700;
-    --success-light: rgba(255, 215, 0, 0.15);
-    --header-bg: #000000;
-    --header-text: #ffffff;
-    --card-border: rgba(255, 215, 0, 0.1);
-    --policy-bg: #332a00;
-    --policy-border: #ffb74d;
-    --policy-text: #ffe083;
-    --refusal-border: #ff8a8a;
-    --refusal-text: #ff8a8a;
+body.dark-mode {
+  color-scheme: dark;
+
+  /* Pitch-black ground, but with a real elevation ladder above it. Depth is
+     what separates an expensive dark theme from a flat one: the page is black,
+     the surfaces sitting on it are not. */
+  --bg: #000000;
+  --bg-2: #060708;
+  --surface: #101215;
+  --surface-2: #0a0b0d;
+  --surface-raised: #181b20;
+  --overlay: rgba(0, 0, 0, 0.82);
+
+  --ink: #f5f4f2;
+  --text: #a4a6ab;
+  --text-dim: #8a8d93;
+  --text-faint: #64676d;
+
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --line-faint: rgba(255, 255, 255, 0.05);
+
+  --gold: #c9a54e;
+  --gold-text: #e4cd93;
+  --gold-bright: #f2e0af;
+  --gold-deep: #9c7c2c;
+  --gold-wash: rgba(201, 165, 78, 0.09);
+  --gold-line: rgba(201, 165, 78, 0.32);
+
+  /* Depth kit: a warm glow to pool light, and a hairline that catches it along
+     the top edge of raised surfaces. */
+  --glow: rgba(201, 165, 78, 0.16);
+  --glow-soft: rgba(201, 165, 78, 0.06);
+  --edge-light: rgba(255, 255, 255, 0.07);
+
+  --ambient-wash: transparent;
+
+  /* No film grain over true black — any texture there reads as a grey haze
+     and stops the ground looking genuinely black. */
+  --grain: 0;
+
+  --error: #e8877f;
+  --error-wash: rgba(232, 135, 127, 0.12);
+  --success: #7fc39a;
+  --success-wash: rgba(127, 195, 154, 0.12);
+  --notice-bg: #1c1608;
+  --notice-line: #c99f2f;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.7);
+  --shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.95);
+  --shadow-lg: 0 40px 88px -32px rgba(0, 0, 0, 1);
+}
+
+/*
+   Legacy aliases — consumed by pages still on the old stylesheets.
+*/
+:root,
+body.dark-mode {
+  --bg-primary: var(--bg);
+  --bg-secondary: var(--bg-2);
+  --bg-card: var(--surface);
+  --bg-input: var(--surface-2);
+  --bg-overlay: var(--overlay);
+
+  --text-primary: var(--ink);
+  --text-secondary: var(--text);
+  --text-accent: var(--gold-text);
+
+  --accent-primary: var(--gold);
+  --accent-text: var(--gold-text);
+  --accent-light: var(--gold-wash);
+  --accent-dark: var(--gold-deep);
+
+  --border-color: var(--line);
+  --card-border: var(--line);
+  --card-border-light: var(--line-faint);
+  --loader-border: var(--line);
+  --shadow-color: var(--line-strong);
+
+  --error-color: var(--error);
+  --error-light: var(--error-wash);
+  --success-color: var(--success);
+  --success-light: var(--success-wash);
+
+  --policy-bg: var(--notice-bg);
+  --policy-border: var(--notice-line);
+  --policy-text: var(--ink);
+  --refusal-border: var(--error);
+  --refusal-text: var(--error);
+
+  --header-bg: var(--bg);
+  --header-text: var(--ink);
 }

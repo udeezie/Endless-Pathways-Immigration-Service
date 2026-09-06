@@ -1,0 +1,550 @@
+// Services — the practice's product, so it gets the most substantial treatment
+// on the site: a photographic hero, then three staged sections that alternate
+// grounds, with the two card stages and the register stage deliberately built
+// as different objects.
+.svc-page {
+  position: relative;
+}
+
+// Hero
+.svc-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 62svh;
+  padding-top: $header-h;
+  padding-bottom: 68px;
+  overflow: hidden;
+  isolation: isolate;
+
+  @include bp($bp-lg) {
+    min-height: 0;
+    padding-block: calc(#{$header-h} + 84px) 60px;
+  }
+
+  @include bp($bp-sm) {
+    padding-block: calc(#{$header-h} + 56px) 48px;
+  }
+}
+
+.svc-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 58%;
+
+    @include motion-safe {
+      animation: svcHeroPush 16s $ease-out both;
+    }
+  }
+}
+
+@keyframes svcHeroPush {
+  from {
+    transform: scale(1.07);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.svc-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      95deg,
+      rgba(6, 8, 10, 0.92) 0%,
+      rgba(6, 8, 10, 0.78) 42%,
+      rgba(6, 8, 10, 0.46) 100%
+    ),
+    linear-gradient(to top, rgba(6, 8, 10, 0.86), transparent 52%);
+
+  @include bp($bp-md) {
+    background: linear-gradient(
+      180deg,
+      rgba(6, 8, 10, 0.76),
+      rgba(6, 8, 10, 0.88)
+    );
+  }
+}
+
+.svc-hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.svc-hero__eyebrow {
+  @include eyebrow(var(--gold-bright));
+
+  display: block;
+  margin-bottom: 22px;
+}
+
+.svc-hero__title {
+  font-family: $display;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 5.2vw, 4.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.032em;
+  color: #fff;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+}
+
+.svc-hero__accent {
+  font-style: italic;
+  color: var(--gold-bright);
+}
+
+.svc-hero__sub {
+  max-width: 54ch;
+  margin-top: 24px;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+// Journey rail
+
+// Sticks under the header for the whole page. Three nodes on a track that
+// fills behind them — the stages read as a progression you are moving through,
+// and double as the page's only navigation.
+.svc-stagenav {
+  position: sticky;
+  top: $header-h;
+  z-index: 40;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+
+  @include hairline(bottom);
+}
+
+.svc-stagenav__inner {
+  position: relative;
+  padding-block: 18px;
+}
+
+// The rail sits behind the nodes, aligned to their centres.
+.svc-stagenav__track {
+  position: absolute;
+  top: 33px;
+  left: calc(#{$gutter} + 7px);
+  right: calc(#{$gutter} + 7px);
+  height: 1px;
+  background: var(--line-strong);
+  overflow: hidden;
+
+  @include bp($bp-md) {
+    display: none;
+  }
+
+  @include bp($bp-sm) {
+    left: calc(#{$gutter-sm} + 7px);
+    right: calc(#{$gutter-sm} + 7px);
+  }
+}
+
+.svc-stagenav__fill {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.6s $ease;
+}
+
+.svc-stagenav__list {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+
+  // Centre the outer nodes over the ends of the track.
+  li:last-child .svc-stagenav__item {
+    justify-self: end;
+    text-align: right;
+    flex-direction: row-reverse;
+  }
+
+  li:nth-child(2) .svc-stagenav__item {
+    justify-self: center;
+  }
+
+  @include bp($bp-md) {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    li:last-child .svc-stagenav__item {
+      justify-self: auto;
+      text-align: left;
+      flex-direction: row;
+    }
+
+    li:nth-child(2) .svc-stagenav__item {
+      justify-self: auto;
+    }
+  }
+}
+
+.svc-stagenav__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  color: var(--text-faint);
+  transition: color 0.35s $ease;
+
+  @include focus-ring;
+
+  &:hover {
+    color: var(--text);
+  }
+
+  &.is-active {
+    color: var(--ink);
+
+    .svc-stagenav__node {
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px var(--gold-wash);
+    }
+
+    .svc-stagenav__label {
+      color: var(--gold-text);
+    }
+  }
+
+  // Stages already passed keep a filled node so the rail reads as progress.
+  &.is-done .svc-stagenav__node {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  @include bp($bp-md) {
+    gap: 9px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    white-space: nowrap;
+
+    &.is-active {
+      border-color: var(--gold-line);
+      background: var(--gold-wash);
+    }
+  }
+}
+
+.svc-stagenav__node {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  transition:
+    background-color 0.4s $ease,
+    border-color 0.4s $ease,
+    box-shadow 0.4s $ease;
+
+  @include bp($bp-md) {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+.svc-stagenav__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1.2;
+
+  @include bp($bp-md) {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.svc-stagenav__label {
+  @include eyebrow(var(--text-faint));
+
+  font-size: 9px;
+  transition: color 0.35s $ease;
+
+  @include bp($bp-md) {
+    display: none;
+  }
+}
+
+.svc-stagenav__name {
+  font-family: $display;
+  font-size: 1.02rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: currentColor;
+
+  @include bp($bp-md) {
+    font-size: 0.8125rem;
+    font-family: $sans;
+    font-weight: 600;
+  }
+}
+
+// Stages
+.svc-stage {
+  @include section-pad(96px, 96px);
+
+  position: relative;
+  // Clears the fixed header plus the sticky rail beneath it.
+  scroll-margin-top: calc(#{$header-h} + 78px);
+
+}
+
+.svc-stage--tinted {
+  background: var(--surface-2);
+}
+
+.svc-stage__head {
+  max-width: 720px;
+  margin-bottom: 56px;
+
+  h2 {
+    @include display(1.9, 3);
+  }
+
+  p {
+    margin-top: 20px;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  @include bp($bp-sm) {
+    margin-bottom: 38px;
+  }
+}
+
+.svc-stage__label {
+  @include eyebrow(var(--gold-text));
+
+  display: block;
+  margin-bottom: 18px;
+}
+
+// Service cards
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+
+  @include bp($bp-lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include bp($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+.svc-card {
+  position: relative;
+  border-radius: 3px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition:
+    border-color 0.45s $ease,
+    transform 0.45s $ease,
+    box-shadow 0.45s $ease;
+
+  // Lit top edge.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--edge-light),
+      transparent
+    );
+    opacity: 0.55;
+    z-index: 1;
+  }
+
+  // Gold rule that draws across the top on hover.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s $ease;
+    z-index: 2;
+  }
+
+  &:hover {
+    border-color: var(--gold-line);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+
+    &::after {
+      transform: scaleX(1);
+    }
+
+    .svc-card__title {
+      color: var(--gold-text);
+    }
+
+    .svc-card__more i {
+      transform: translateX(5px);
+    }
+  }
+}
+
+.svc-card__hit {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 32px 30px 28px;
+
+  @include focus-ring(-4px);
+
+  @include bp($bp-sm) {
+    padding: 26px 22px 24px;
+  }
+}
+
+.svc-card__title {
+  margin-bottom: 14px;
+  font-family: $display;
+  font-size: 1.42rem;
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  transition: color 0.4s $ease;
+  text-wrap: pretty;
+}
+
+.svc-card__desc {
+  margin-bottom: 22px;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+// Capabilities, marked rather than bulleted.
+.svc-card__features {
+  list-style: none;
+  margin-bottom: 26px;
+
+  li {
+    position: relative;
+    padding: 7px 0 7px 22px;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 1.05em;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.8;
+    }
+  }
+}
+
+.svc-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 18px;
+
+  @include eyebrow(var(--gold-text));
+
+  font-size: 10.5px;
+
+  @include hairline(top, var(--line-faint));
+
+  i {
+    font-size: 0.85em;
+    transition: transform 0.4s $ease;
+  }
+}
+
+// Citizenship register
+
+// Deliberately not cards: these entries have no detail page, so they read as a
+// reference list and the stage looks different from the two above it.
+.svc-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px 72px;
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+}
+
+.svc-column__title {
+  @include eyebrow(var(--text-faint));
+
+  margin-bottom: 8px;
+  padding-bottom: 16px;
+  font-family: $sans;
+
+  @include hairline(bottom);
+}
+
+.svc-list {
+  list-style: none;
+
+  li {
+    padding: 22px 0;
+
+    @include hairline(bottom, var(--line-faint));
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  h4 {
+    margin-bottom: 8px;
+    font-family: $display;
+    font-size: 1.22rem;
+    font-weight: 400;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 52ch;
+  }
+}

@@ -1,0 +1,1006 @@
+// Book a Consultation — the conversion page. Every CTA on the site ends here,
+// so it carries the same language as the rest of the redesign: raised surfaces
+// on a warm ground, serif display, gold reserved for the selected state and the
+// submit action. Markup and form logic are untouched; this is presentation.
+.consultation-page {
+  position: relative;
+  padding-bottom: 96px;
+
+  .container {
+    @include wrap($wrap);
+  }
+}
+
+// Masthead
+.book-hero {
+  padding-top: calc(#{$header-h} + 68px);
+  padding-bottom: 52px;
+
+  @include bp($bp-lg) {
+    padding-top: calc(#{$header-h} + 48px);
+    padding-bottom: 40px;
+  }
+
+  @include bp($bp-sm) {
+    padding-top: calc(#{$header-h} + 34px);
+  }
+}
+
+.book-hero-content {
+  max-width: 780px;
+}
+
+.book-hero-eyebrow {
+  @include eyebrow(var(--gold-text));
+
+  display: block;
+  margin-bottom: 22px;
+}
+
+.book-hero-title {
+  @include display(2.2, 3.6);
+
+  margin-bottom: 22px;
+}
+
+.book-hero-highlight {
+  font-style: italic;
+  color: var(--gold-text);
+}
+
+.book-hero-subtitle {
+  max-width: 64ch;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+// Trust line under the intro.
+.book-hero-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 30px;
+  padding-top: 24px;
+
+  @include hairline(top);
+}
+
+.book-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  @include eyebrow(var(--text-dim));
+
+  font-size: 10.5px;
+
+  svg {
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+}
+
+.book-badge-sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.7;
+
+  @include bp($bp-sm) {
+    display: none;
+  }
+}
+
+// How it works strip
+.book-steps-strip {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 76px;
+  padding: 26px 30px;
+  border-radius: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 22px;
+  }
+
+  @include bp($bp-sm) {
+    margin-bottom: 52px;
+  }
+}
+
+.book-step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding-right: 26px;
+
+  @include bp($bp-md) {
+    padding-right: 0;
+  }
+}
+
+.book-step-num {
+  font-family: $display;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--gold-text);
+}
+
+.book-step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  strong {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  span {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+  }
+}
+
+.book-step-connector {
+  display: grid;
+  place-items: center;
+  padding-inline: 22px;
+  color: var(--gold);
+  font-size: 1.1rem;
+
+  @include bp($bp-md) {
+    display: none;
+  }
+}
+
+// Packages
+.consultation-section {
+  margin-bottom: 64px;
+
+  @include bp($bp-sm) {
+    margin-bottom: 44px;
+  }
+}
+
+.book-section-header {
+  margin-bottom: 28px;
+}
+
+.book-section-eyebrow {
+  @include eyebrow(var(--text-faint));
+
+  display: block;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: $display;
+  font-size: 1.85rem;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+
+  @include bp($bp-sm) {
+    font-size: 1.5rem;
+  }
+}
+
+// Fixed column count, not auto-fit. auto-fit collapses empty tracks, so a
+// three-card section rendered three wide columns while a five-card section
+// rendered four narrow ones and the cards came out different sizes.
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+
+  @include bp($bp-lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include bp($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+// The card is a control, so it has to look pressable and read unmistakably
+// once chosen — selection is what the whole page hinges on.
+.consultation-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 24px 22px;
+  border-radius: 3px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color 0.4s $ease,
+    transform 0.4s $ease,
+    box-shadow 0.4s $ease,
+    background-color 0.4s $ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s $ease;
+  }
+
+  &:hover {
+    border-color: var(--gold-line);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  &.selected {
+    border-color: var(--gold);
+    background: var(--gold-wash);
+    box-shadow: var(--shadow);
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+
+  // Nudge when the user submits without picking a package.
+  &.highlight-subtle {
+    border-color: var(--error);
+    animation: cardNudge 0.5s $ease-io 2;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes cardNudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.urgent-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  background: var(--error);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.card-header {
+  margin-bottom: 14px;
+}
+
+.card-title {
+  margin-bottom: 8px;
+  font-family: $display;
+  font-size: 1.28rem;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+}
+
+.duration {
+  @include eyebrow(var(--text-faint));
+
+  font-size: 10px;
+  margin-bottom: 14px;
+}
+
+.price {
+  font-family: $display;
+  font-size: 2.1rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--gold-text);
+}
+
+.card-body {
+  flex: 1;
+  margin-bottom: 18px;
+
+  p {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+}
+
+.card-footer {
+  padding-top: 14px;
+
+  @include hairline(top, var(--line-faint));
+}
+
+.select-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  @include eyebrow(var(--text-faint));
+
+  font-size: 10px;
+  transition: color 0.35s $ease;
+
+  &.selected {
+    color: var(--gold-text);
+  }
+}
+
+.check-icon {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #14110c;
+  font-size: 10px;
+}
+
+// Form
+.form-section {
+  scroll-margin-top: calc(#{$header-h} + 24px);
+}
+
+.form-container {
+  max-width: 860px;
+}
+
+.consultation-form {
+  padding: 40px 42px 44px;
+  border-radius: 3px;
+  background: linear-gradient(
+    180deg,
+    var(--surface-raised),
+    var(--surface) 60%
+  );
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+
+  @include bp($bp-sm) {
+    padding: 26px 20px 30px;
+  }
+}
+
+.form-heading {
+  display: block;
+  margin-bottom: 10px;
+  font-family: $display;
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+
+  @include bp($bp-sm) {
+    font-size: 1.44rem;
+  }
+}
+
+.form-subheading {
+  display: block;
+  max-width: 62ch;
+  margin-bottom: 34px;
+  padding-bottom: 28px;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text);
+
+  @include hairline(bottom);
+}
+
+// Live echo of the chosen package, so the form is never filled in blind.
+.selected-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding: 16px 20px;
+  border-radius: 3px;
+  background: var(--gold-wash);
+  border: 1px solid var(--gold-line);
+
+  strong {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  span {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  @include bp($bp-sm) {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+}
+
+.selected-summary__check {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #14110c;
+  font-size: 12px;
+}
+
+.selected-summary__price {
+  font-family: $display;
+  font-size: 1.44rem !important;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--gold-text) !important;
+  white-space: nowrap;
+}
+
+// Persistent field labels. Placeholders vanish the moment someone types, which
+// on a long form means re-reading every box to work out what it wanted.
+.field-label {
+  display: block;
+  margin-bottom: 8px;
+
+  @include eyebrow(var(--text-dim));
+
+  font-size: 9.5px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  @include bp($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+// Shared field skin.
+.consultation-input,
+.consultation-textarea,
+.country-selector,
+.date-input,
+.time-select {
+  width: 100%;
+  padding: 14px 16px;
+  font-family: $sans;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  transition:
+    border-color 0.3s $ease,
+    box-shadow 0.3s $ease,
+    background-color 0.3s $ease;
+
+  &::placeholder {
+    // The label above carries the field name; the placeholder is now only a
+    // faint echo of it.
+    color: var(--text-faint);
+    opacity: 0.7;
+  }
+
+  &:hover {
+    border-color: var(--gold-line);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-wash);
+  }
+
+  &.error {
+    border-color: var(--error);
+    background: var(--error-wash);
+  }
+
+  // These class selectors outrank the global element-level guard, so the
+  // 16px floor has to be restated here. Below 16px iOS zooms the viewport on
+  // focus and never zooms back — on a booking form that is a real loss.
+  @include bp($bp-md) {
+    font-size: 16px;
+  }
+}
+
+.consultation-textarea {
+  margin-bottom: 8px;
+  line-height: 1.65;
+  resize: vertical;
+  min-height: 140px;
+}
+
+.error-message {
+  display: block;
+  margin-top: 7px;
+  font-size: 0.8125rem;
+  color: var(--error);
+}
+
+.section-label {
+  display: block;
+  margin: 30px 0 14px;
+
+  @include eyebrow(var(--ink));
+
+  font-size: 11px;
+}
+
+/* Country selector ---------------------------------------------------------- */
+
+.country-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-icon {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  transition: transform 0.3s $ease;
+}
+
+.country-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  border-radius: 3px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.country-search {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: $sans;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--surface-2);
+  border: 0;
+
+  @include hairline(bottom);
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--text-faint);
+  }
+
+  @include bp($bp-md) {
+    font-size: 16px;
+  }
+}
+
+.country-list {
+  max-height: 230px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.country-item {
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background-color 0.2s $ease,
+    color 0.2s $ease;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--gold-wash);
+    color: var(--ink);
+    outline: none;
+  }
+}
+
+/* Time slots ---------------------------------------------------------------- */
+
+.time-slots-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.time-slot-modern {
+  position: relative;
+  padding: 16px 18px;
+  border-radius: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.time-slot-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.time-slot-number {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--gold-line);
+  background: var(--gold-wash);
+  font-family: $display;
+  font-size: 0.8125rem;
+  color: var(--gold-text);
+}
+
+.selected-time-display {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+
+.add-time-btn,
+.remove-time-btn,
+.cancel-time-btn,
+.confirm-time-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 2px;
+  font-family: $sans;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink);
+  transition:
+    color 0.3s $ease,
+    border-color 0.3s $ease,
+    background-color 0.3s $ease;
+
+  @include focus-ring(2px);
+
+  &:hover:not(:disabled) {
+    border-color: var(--gold);
+    color: var(--gold-text);
+    background: var(--gold-wash);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.remove-time-btn {
+  padding: 8px 12px;
+  color: var(--text-faint);
+
+  &:hover:not(:disabled) {
+    color: var(--error);
+    border-color: var(--error);
+    background: var(--error-wash);
+  }
+}
+
+.confirm-time-btn {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #14110c;
+
+  &:hover:not(:disabled) {
+    background: var(--gold-bright);
+    border-color: var(--gold-bright);
+    color: #14110c;
+  }
+}
+
+.time-picker-modern {
+  margin-top: 16px;
+  padding-top: 16px;
+
+  @include hairline(top);
+}
+
+.time-picker-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+
+  @include bp($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.time-picker-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+
+  label {
+    @include eyebrow(var(--text-faint));
+
+    font-size: 9.5px;
+  }
+}
+
+.date-input-wrapper {
+  position: relative;
+}
+
+.time-picker-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.time-error {
+  margin-top: 10px;
+}
+
+/* Actions ------------------------------------------------------------------- */
+
+.button-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+  padding-top: 28px;
+
+  @include hairline(top);
+}
+
+.send-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 40px;
+  border-radius: 2px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #14110c;
+  font-family: $sans;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.4s $ease,
+    box-shadow 0.4s $ease,
+    transform 0.4s $ease;
+
+  @include focus-ring;
+
+  &:hover:not(:disabled) {
+    background: var(--gold-bright);
+    border-color: var(--gold-bright);
+    box-shadow: 0 10px 26px -12px rgba(201, 165, 78, 0.9);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  @include bp($bp-sm) {
+    width: 100%;
+  }
+}
+
+.reset-button-container {
+  @include bp($bp-sm) {
+    width: 100%;
+  }
+}
+
+.reset-button {
+  padding: 15px 24px;
+  border: 0;
+  background: none;
+  color: var(--text-dim);
+  font-family: $sans;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s $ease;
+
+  @include focus-ring;
+
+  &:hover:not(:disabled) {
+    color: var(--error);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  @include bp($bp-sm) {
+    width: 100%;
+  }
+}
+
+// Feedback
+.success-toast {
+  position: fixed;
+  top: calc(#{$header-h} + 18px);
+  right: 22px;
+  z-index: 95;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+  width: min(400px, calc(100vw - 44px));
+  padding: 20px 22px;
+  border-radius: 3px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--success);
+  box-shadow: var(--shadow-lg);
+
+  @include motion-safe {
+    animation: toastIn 0.5s $ease both;
+  }
+
+  h4 {
+    margin-bottom: 5px;
+    font-family: $sans;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+}
+
+// Transform only — a confirmation the user cannot see is worse than one that
+// arrives without a fade.
+@keyframes toastIn {
+  from {
+    transform: translateX(24px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.toast-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--success);
+  color: #fff;
+  font-size: 14px;
+}
+
+.toast-close {
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--text-faint);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.3s $ease;
+
+  @include focus-ring(2px);
+
+  &:hover {
+    color: var(--ink);
+  }
+}
+
+// Nudge shown when the form is submitted with no package chosen.
+.package-subtle-hint {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  z-index: 95;
+  transform: translateX(-50%);
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: var(--ink);
+  box-shadow: var(--shadow-lg);
+
+  @include motion-safe {
+    animation: hintIn 0.4s $ease both;
+  }
+}
+
+@keyframes hintIn {
+  from {
+    transform: translate(-50%, 14px);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}
+
+.hint-text {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--bg);
+}

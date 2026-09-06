@@ -1,0 +1,261 @@
+// Footer. Follows the theme rather than being a black slab under every page —
+// a tinted ground in light, true black in dark. Its job is to be quick to scan
+// and easy to use, so: clear columns, real contact affordances, no ornament.
+.site-footer {
+  position: relative;
+  margin-top: auto;
+  overflow: hidden;
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.site-footer__grain {
+  @include grain(0.04);
+}
+
+.site-footer__inner {
+  @include wrap($wrap-wide);
+
+  position: relative;
+  z-index: 1;
+  padding-block: 72px 0;
+
+  @include bp($bp-md) {
+    padding-block: 56px 0;
+  }
+
+  @include bp($bp-sm) {
+    padding-block: 44px 0;
+  }
+}
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 52px;
+  padding-bottom: 56px;
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr 1fr;
+    gap: 44px 32px;
+  }
+
+  @include bp($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding-bottom: 40px;
+  }
+}
+
+// Brand column
+.footer-brand {
+  max-width: 380px;
+
+  @include bp($bp-md) {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
+}
+
+.footer-brand__lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.footer-brand__mark {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  background: var(--gold-wash);
+  box-shadow:
+    0 0 0 1px var(--gold-line),
+    0 0 0 5px var(--gold-wash);
+}
+
+.footer-brand__type {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  line-height: 1;
+}
+
+.footer-brand__name {
+  font-family: $display;
+  font-size: 1.28rem;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+}
+
+.footer-brand__sub {
+  @include eyebrow(var(--gold-text));
+
+  font-size: 8.5px;
+  letter-spacing: 0.24em;
+}
+
+.footer-social {
+  display: flex;
+  gap: 9px;
+  margin-top: 24px;
+
+  a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-size: 14px;
+    transition:
+      color 0.35s $ease,
+      background-color 0.35s $ease,
+      border-color 0.35s $ease,
+      transform 0.35s $ease;
+
+    @include focus-ring(2px);
+
+    &:hover,
+    &:focus-visible {
+      color: #14110c;
+      background: var(--gold);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Link / contact columns
+.footer-col__title {
+  @include eyebrow(var(--text-faint));
+
+  margin-bottom: 18px;
+  font-family: $sans;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+
+  a {
+    display: block;
+    padding: 6px 0;
+    font-size: 0.9375rem;
+    color: var(--text);
+    transition:
+      color 0.3s $ease,
+      padding-left 0.35s $ease;
+
+    @include focus-ring(2px);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--gold-text);
+      padding-left: 8px;
+    }
+  }
+}
+
+// Contact rows are the most-used thing down here, so they are proper tap
+// targets rather than a run of small print.
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-style: normal;
+
+  a {
+    display: block;
+    padding: 8px 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: color 0.3s $ease;
+
+    @include focus-ring(2px);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--gold-text);
+    }
+  }
+}
+
+.footer-contact__addr {
+  padding: 8px 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.footer-contact__hours {
+  margin-top: 10px;
+
+  @include eyebrow(var(--text-faint));
+
+  font-size: 9.5px;
+  line-height: 1.6;
+}
+
+// Bottom bar
+.site-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 36px;
+  flex-wrap: wrap;
+  padding-block: 8px 30px;
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+
+  @include bp($bp-md) {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+.footer-reg {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+
+  @include bp($bp-xs) {
+    flex-direction: column;
+    gap: 3px;
+  }
+}
+
+.footer-reg__sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+
+  @include bp($bp-xs) {
+    display: none;
+  }
+}
+
+.footer-credit a {
+  color: var(--text-dim);
+
+  @include underline-link(var(--gold));
+
+  &:hover {
+    color: var(--gold-text);
+  }
+}

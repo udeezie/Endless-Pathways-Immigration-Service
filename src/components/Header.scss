@@ -1,0 +1,601 @@
+// Header: slim editorial bar + full-screen mobile drawer.
+
+// Main bar
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 55;
+  height: $header-h;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    transform 0.55s $ease,
+    background-color 0.45s $ease,
+    border-color 0.45s $ease,
+    backdrop-filter 0.45s $ease;
+
+  &.is-scrolled {
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border-bottom-color: var(--line);
+  }
+
+  &.is-hidden {
+    transform: translateY(-100%);
+  }
+
+  @include bp($bp-md) {
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border-bottom-color: var(--line);
+  }
+}
+
+.site-header__inner {
+  @include wrap($wrap-wide);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 100%;
+}
+
+// Brand
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  flex-shrink: 0;
+
+  @include focus-ring;
+
+  &:hover .brand__mark::after {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+.brand__mark {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  // Gold hairline instead of a hard border: reads as a struck coin edge.
+  box-shadow:
+    0 0 0 1px var(--gold-line),
+    0 0 0 4px var(--gold-wash);
+
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  background: var(--gold-wash);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    opacity: 0.6;
+    transition: transform 0.5s $ease, opacity 0.5s $ease;
+  }
+
+  @include bp($bp-sm) {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.brand__type {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1;
+}
+
+.brand__name {
+  font-family: $display;
+  font-size: 1.16rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  transition: color 0.45s $ease;
+
+  @include bp($bp-sm) {
+    font-size: 1rem;
+  }
+}
+
+.brand__sub {
+  @include eyebrow(var(--text-faint));
+
+  font-size: 8.5px;
+  letter-spacing: 0.24em;
+  transition: color 0.45s $ease;
+
+  @include bp($bp-sm) {
+    font-size: 8px;
+  }
+}
+
+// Desktop nav
+// Sentence case at a readable size rather than small tracked capitals — the
+// nav should be easy to read at a glance, not decorative.
+.site-nav {
+  @include bp($bp-lg) {
+    display: none;
+  }
+
+  ul {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    list-style: none;
+  }
+}
+
+// A single element that travels between links, rather than a separate
+// underline fading in and out under each one. Position and width are measured
+// in the component and applied inline.
+.site-nav__indicator {
+  position: absolute;
+  inset: 0 auto 0 0;
+  pointer-events: none;
+
+  span {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: var(--gold-wash);
+    box-shadow: inset 0 0 0 1px var(--gold-line);
+    transition:
+      transform 0.5s $ease,
+      width 0.5s $ease;
+  }
+}
+
+.site-nav__link {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--text-dim);
+  transition: color 0.35s $ease;
+
+  @include focus-ring(0);
+
+  &:hover {
+    color: var(--ink);
+  }
+
+  &.is-active {
+    color: var(--gold-text);
+    font-weight: 600;
+  }
+}
+
+// Actions
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.theme-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  transition:
+    color 0.35s $ease,
+    border-color 0.35s $ease,
+    background-color 0.35s $ease;
+
+  @include focus-ring(2px);
+
+  &:hover {
+    color: var(--gold-text);
+    border-color: var(--gold-line);
+    background: var(--gold-wash);
+  }
+
+  svg {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    transition:
+      opacity 0.45s $ease,
+      transform 0.55s $ease;
+  }
+}
+
+// The two glyphs stack and swap with a quarter-turn.
+.theme-btn__glyph {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+}
+
+.theme-btn__sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-btn__moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+body.dark-mode .theme-btn {
+  .theme-btn__sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+  }
+
+  .theme-btn__moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.header-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #14110c;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  white-space: nowrap;
+  transition:
+    background-color 0.4s $ease,
+    box-shadow 0.4s $ease,
+    transform 0.4s $ease;
+
+  @include focus-ring;
+
+  &:hover {
+    background: var(--gold-bright);
+    border-color: var(--gold-bright);
+    box-shadow: 0 8px 22px -10px rgba(201, 165, 78, 0.9);
+    transform: translateY(-1px);
+  }
+
+  @include bp($bp-lg) {
+    display: none;
+  }
+}
+
+// Hamburger: two bars that cross into an X.
+.menu-btn {
+  display: none;
+  position: relative;
+  width: 40px;
+  height: 38px;
+  place-items: center;
+
+  @include focus-ring(2px);
+
+  @include bp($bp-lg) {
+    display: grid;
+  }
+}
+
+.menu-btn__bar {
+  position: absolute;
+  left: 9px;
+  width: 22px;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition:
+    transform 0.45s $ease,
+    width 0.45s $ease;
+
+  &:nth-child(1) {
+    transform: translateY(-4px);
+  }
+
+  &:nth-child(2) {
+    transform: translateY(4px);
+    width: 14px;
+  }
+}
+
+.menu-btn.is-open .menu-btn__bar {
+  width: 22px;
+
+  &:nth-child(1) {
+    transform: rotate(45deg);
+  }
+
+  &:nth-child(2) {
+    transform: rotate(-45deg);
+  }
+}
+
+// Over the home hero photograph — invert to light-on-dark until the bar picks
+// up its own background on scroll.
+.site-header.is-overHero {
+  .brand__name {
+    color: #fff;
+  }
+
+  .brand__sub {
+    color: rgba(255, 255, 255, 0.66);
+  }
+
+  .brand__mark {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.35),
+      0 0 0 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .site-nav__link {
+    color: rgba(255, 255, 255, 0.8);
+
+    &:hover,
+    &:focus-visible {
+      color: #fff;
+    }
+
+    &.is-active {
+      color: var(--gold-bright);
+    }
+  }
+
+  .site-nav__indicator span {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  }
+
+  .theme-btn {
+    color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.28);
+
+    &:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .menu-btn__bar {
+    background: #fff;
+  }
+}
+
+// Mobile drawer
+.mobile-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  backdrop-filter: blur(3px);
+  transition:
+    opacity 0.5s $ease,
+    visibility 0.5s;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @include bp-min($bp-lg) {
+    display: none;
+  }
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+  width: min(430px, 88vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(101%);
+  visibility: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transition:
+    transform 0.62s $ease,
+    visibility 0.62s;
+
+  &.is-open {
+    transform: none;
+    visibility: visible;
+  }
+
+  // Grain, so the panel does not read as a flat colour block.
+  &::before {
+    @include grain(0.05);
+
+    position: fixed;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @include bp-min($bp-lg) {
+    display: none;
+  }
+}
+
+.mobile-nav__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 26px;
+
+  @include hairline(bottom);
+}
+
+.mobile-nav__close {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  transition:
+    color 0.3s $ease,
+    border-color 0.3s $ease,
+    transform 0.4s $ease;
+
+  @include focus-ring(2px);
+
+  &:hover {
+    color: var(--gold-text);
+    border-color: var(--gold-line);
+    transform: rotate(90deg);
+  }
+
+  svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+}
+
+.mobile-nav__list {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 26px 26px;
+  flex: 1;
+}
+
+.mobile-nav__link {
+  display: block;
+  padding: 17px 0;
+  font-family: $display;
+  font-size: 1.55rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+
+  @include hairline(bottom, var(--line-faint));
+
+  // Staggered entrance; per-item delay is set inline in the component.
+  opacity: 0;
+  transform: translateX(20px);
+  transition:
+    opacity 0.55s $ease,
+    transform 0.55s $ease,
+    color 0.3s $ease;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover,
+  &.is-active {
+    color: var(--gold-text);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: color 0.3s ease;
+  }
+}
+
+.mobile-nav.is-open .mobile-nav__link {
+  opacity: 1;
+  transform: none;
+}
+
+.mobile-nav__foot {
+  padding: 24px 26px 34px;
+  background: var(--surface-2);
+
+  @include hairline(top);
+}
+
+.mobile-nav__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 20px;
+  font-size: 0.875rem;
+  color: var(--text);
+
+  a {
+    color: var(--ink);
+    transition: color 0.3s $ease;
+
+    &:hover {
+      color: var(--gold-text);
+    }
+  }
+
+  span {
+    font-size: 0.8125rem;
+    color: var(--text-faint);
+  }
+}
+
+.mobile-nav__social {
+  display: flex;
+  gap: 11px;
+
+  a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    font-size: 15px;
+    transition:
+      color 0.35s $ease,
+      border-color 0.35s $ease,
+      background-color 0.35s $ease,
+      transform 0.35s $ease;
+
+    &:hover {
+      color: #14110c;
+      background: var(--gold);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+  }
+}

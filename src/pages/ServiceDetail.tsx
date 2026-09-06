@@ -1,185 +1,376 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
 import { serviceDetails } from "../data/serviceDetails";
-import "./ServiceDetail.css";
+import Reveal from "../components/Reveal";
+import { useScrollSpy, slugify } from "../hooks/useScrollSpy";
+import "./ServiceDetail.scss";
+
+const FAQItem: React.FC<{ q: string; a: string; index: number }> = ({
+  q,
+  a,
+  index,
+}) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className={`sd-qa ${open ? "is-open" : ""}`}>
+      <h3>
+        <button
+          className="sd-qa__q"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-controls={`sd-faq-${index}`}
+          id={`sd-faq-btn-${index}`}
+          type="button"
+        >
+          <span className="sd-qa__text">{q}</span>
+          <span className="sd-qa__sign" aria-hidden="true" />
+        </button>
+      </h3>
+      <div
+        className="sd-qa__panel"
+        id={`sd-faq-${index}`}
+        role="region"
+        aria-labelledby={`sd-faq-btn-${index}`}
+      >
+        <div className="sd-qa__panelInner">
+          <p>{a}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ServiceDetail: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const service = serviceId ? serviceDetails[serviceId] : undefined;
 
   useEffect(() => {
-    if (service) {
-      document.title = `${service.title} | Endless Pathways Immigration Services`;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute("content", service.heroText);
-      } else {
-        const newMeta = document.createElement("meta");
-        newMeta.setAttribute("name", "description");
-        newMeta.setAttribute("content", service.heroText);
-        document.head.appendChild(newMeta);
-      }
+    if (!service) return;
+
+    document.title = `${service.title} | Endless Pathways Immigration Services`;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", service.heroText);
+    } else {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "description");
+      meta.setAttribute("content", service.heroText);
+      document.head.appendChild(meta);
     }
+
     return () => {
       document.title = "Endless Pathways Immigration Services";
     };
   }, [service]);
 
-  if (!service) {
-    return <Navigate to="/services" replace />;
-  }
+  // Derived from the headings this page renders, so the rail can never drift
+  // out of sync with the document. Computed before the early return below:
+  // hooks must run in the same order on every render, and `service` is
+  // undefined for an unknown slug.
+  const toc = useMemo(() => {
+    if (!service) return [] as { id: string; label: string }[];
+
+    return [
+      ...service.sections.map((sec) => ({
+        id: slugify(sec.heading),
+        label: sec.heading,
+      })),
+      ...(service.comparisonTable
+        ? [
+            {
+              id: slugify(service.comparisonTable.title),
+              label: service.comparisonTable.title,
+            },
+          ]
+        : []),
+      ...(service.refusalReasons?.length
+        ? [{ id: "common-refusal-reasons", label: "Common Refusal Reasons" }]
+        : []),
+      { id: "how-we-can-help", label: "How We Can Help" },
+      ...(service.faqs?.length
+        ? [
+            {
+              id: "frequently-asked-questions",
+              label: "Frequently Asked Questions",
+            },
+          ]
+        : []),
+    ];
+  }, [service]);
+
+  const tocIds = useMemo(() => toc.map((t) => t.id), [toc]);
+  const activeId = useScrollSpy(tocIds);
+
+  if (!service) return <Navigate to="/services" replace />;
+
+  const refusals = service.refusalReasons ?? [];
 
   return (
-    <div className="service-detail-container">
-      <div className="service-hero">
-        <h1>{service.title}</h1>
-        <p className="hero-text">{service.heroText}</p>
-      </div>
+    <article className="sd">
+      {/* Masthead — a reference page opens on its title, not a photograph. */}
+      <header className="sd-mast">
+        <div className="wrap">
+          <nav className="sd-crumb" aria-label="Breadcrumb">
+            <Link to="/services">Services</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{service.title}</span>
+          </nav>
 
-      {service.hookParagraph && (
-        <div className="hook-paragraph">
-          <p>{service.hookParagraph}</p>
-        </div>
-      )}
+          <h1 className="sd-mast__title">{service.title}</h1>
+          <p className="sd-mast__lede">{service.heroText}</p>
 
-      {service.policyAlert && (
-        <div className="policy-alert">
-          <h3>📢 {service.policyAlert.title}</h3>
-          <p>{service.policyAlert.description}</p>
-          <span className="policy-date">
-            Effective: {service.policyAlert.effectiveDate}
-          </span>
-        </div>
-      )}
-
-      {service.sections.map((section, idx) => (
-        <div key={idx} className="service-section">
-          <h2>{section.heading}</h2>
-          {section.content.map((item, i) => {
-            if (typeof item === "string") {
-              return <p key={i} dangerouslySetInnerHTML={{ __html: item }} />;
-            }
-            return (
-              <ul key={i} className="bullet-list">
-                {item.map((li, j) => (
-                  <li key={j} dangerouslySetInnerHTML={{ __html: li }} />
-                ))}
-              </ul>
-            );
-          })}
-        </div>
-      ))}
-
-      {service.comparisonTable && (
-        <div className="comparison-section">
-          <h2>{service.comparisonTable.title}</h2>
-          <table className="comparison-table">
-            <thead>
-              <tr>
-                {service.comparisonTable.headers.map((header, i) => (
-                  <th key={i}>{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {service.comparisonTable.rows.map((row, i) => (
-                <tr key={i}>
-                  {row.map((cell, j) => (
-                    <td key={j}>{cell}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {service.feeBreakdown && (
-        <div className="fee-section">
-          <h2>Government Fees</h2>
-          <div className="fee-breakdown">
-            {service.feeBreakdown.items.map((item, i) => (
-              <div key={i} className="fee-item">
-                <span>{item.description}</span>
-                <span>{item.amount}</span>
-              </div>
-            ))}
-            <div className="fee-item total">
-              <span>Total</span>
-              <span>{service.feeBreakdown.total}</span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {service.processingTime && (
-        <div className="processing-section">
-          <h2>Processing Times</h2>
-          <div className="processing-time">
-            {service.processingTime.insideCanada && (
-              <div className="time-card">
-                <h4>Inside Canada</h4>
-                <p>{service.processingTime.insideCanada}</p>
-              </div>
-            )}
-            {service.processingTime.outsideCanada && (
-              <div className="time-card">
-                <h4>Outside Canada</h4>
-                <p>{service.processingTime.outsideCanada}</p>
-              </div>
-            )}
-          </div>
-          {service.processingTime.note && (
-            <p className="time-note">{service.processingTime.note}</p>
+          {service.hookParagraph && (
+            <p className="sd-mast__hook">{service.hookParagraph}</p>
           )}
         </div>
-      )}
+      </header>
 
-      {service.refusalReasons && service.refusalReasons.length > 0 && (
-        <div className="refusal-section">
-          <h2>Common Refusal Reasons & How We Help</h2>
-          <div className="refusal-grid">
-            {service.refusalReasons.map((item, i) => (
-              <div key={i} className="refusal-item">
-                <div className="refusal-reason">{item.reason}</div>
-                <div className="refusal-solution">{item.solution}</div>
+      <div className="wrap sd-body">
+        <div className="sd-main">
+          {service.policyAlert && (
+            <Reveal className="sd-notice" as="div">
+              <div className="sd-notice__head">
+                <span className="sd-notice__badge">Policy Update</span>
+                <span className="sd-notice__date">
+                  {service.policyAlert.effectiveDate}
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
-      )}
+              <h2 className="sd-notice__title">{service.policyAlert.title}</h2>
+              <p>{service.policyAlert.description}</p>
+            </Reveal>
+          )}
 
-      <div className="how-we-help">
-        <h2>How We Can Help</h2>
-        <p>{service.howWeHelp.intro}</p>
-        {service.howWeHelp.points && (
-          <ul className="help-list">
-            {service.howWeHelp.points.map((point, i) => (
-              <li key={i}>{point}</li>
-            ))}
-          </ul>
-        )}
-        <div className="help-cta">
-          <Link to="/book-consultation" className="cta-button">
-            {service.howWeHelp.ctaText}
-          </Link>
+          {service.sections.map((section, idx) => (
+            <Reveal
+              as="section"
+              key={idx}
+              className="sd-section"
+              id={slugify(section.heading)}
+            >
+              <h2>{section.heading}</h2>
+              {section.content.map((item, i) =>
+                typeof item === "string" ? (
+                  <p key={i} dangerouslySetInnerHTML={{ __html: item }} />
+                ) : (
+                  <ul key={i} className="sd-bullets">
+                    {item.map((li, j) => (
+                      <li key={j} dangerouslySetInnerHTML={{ __html: li }} />
+                    ))}
+                  </ul>
+                ),
+              )}
+            </Reveal>
+          ))}
+
+          {service.comparisonTable && (
+            <Reveal
+              as="section"
+              className="sd-section"
+              id={slugify(service.comparisonTable.title)}
+            >
+              <h2>{service.comparisonTable.title}</h2>
+              <div className="sd-tableWrap">
+                <table className="sd-table">
+                  <thead>
+                    <tr>
+                      {service.comparisonTable.headers.map((h, i) => (
+                        <th key={i}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {service.comparisonTable.rows.map((row, i) => (
+                      <tr key={i}>
+                        {row.map((cell, j) => (
+                          <td key={j}>{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Reveal>
+          )}
+
+          {/* Refusal reasons paired with their fix. Each row reads left to
+              right as problem then remedy, which is the whole point of the
+              section — so the two halves are set side by side and colour-coded
+              rather than stacked in one undifferentiated block. */}
+          {refusals.length > 0 && (
+            <Reveal
+              as="section"
+              className="sd-section"
+              id="common-refusal-reasons"
+            >
+              <h2>Common Refusal Reasons &amp; How We Help</h2>
+
+              <ul className="sd-refusals">
+                {refusals.map((item, i) => (
+                  <li key={i} className="sd-refusal">
+                    <div className="sd-refusal__side sd-refusal__side--risk">
+                      <span className="sd-refusal__mark" aria-hidden="true">
+                        <svg viewBox="0 0 16 16">
+                          <path d="M4 4l8 8M12 4l-8 8" />
+                        </svg>
+                      </span>
+                      <p>{item.reason}</p>
+                    </div>
+
+                    <div className="sd-refusal__side sd-refusal__side--fix">
+                      <span className="sd-refusal__mark" aria-hidden="true">
+                        <svg viewBox="0 0 16 16">
+                          <path d="M3.5 8.5l3 3 6-7" />
+                        </svg>
+                      </span>
+                      <p>{item.solution}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          )}
+
+          <Reveal as="section" className="sd-help" id="how-we-can-help">
+            <h2>How We Can Help</h2>
+            <p className="sd-help__intro">{service.howWeHelp.intro}</p>
+
+            {service.howWeHelp.points && (
+              <ul className="sd-help__list">
+                {service.howWeHelp.points.map((point, i) => (
+                  <li key={i}>{point}</li>
+                ))}
+              </ul>
+            )}
+
+            <Link to="/book-consultation" className="btn btn--gold">
+              {service.howWeHelp.ctaText}
+            </Link>
+          </Reveal>
+
+          {service.faqs && service.faqs.length > 0 && (
+            <Reveal
+              as="section"
+              className="sd-section"
+              id="frequently-asked-questions"
+            >
+              <h2>Frequently Asked Questions</h2>
+              <div className="sd-faqs">
+                {service.faqs.map((faq, i) => (
+                  <FAQItem key={i} q={faq.q} a={faq.a} index={i} />
+                ))}
+              </div>
+            </Reveal>
+          )}
         </div>
+
+        {/* The rail turns a 6,000px reference document into something you can
+            navigate. Labels come from the headings the page renders, so it is
+            always an accurate map of what is actually below. */}
+        <aside className="sd-aside">
+          <div className="sd-aside__inner">
+            <nav className="sd-toc" aria-label="On this page">
+              <ul>
+                {toc.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className={`sd-toc__link ${
+                        activeId === item.id ? "is-active" : ""
+                      }`}
+                      aria-current={activeId === item.id ? "true" : undefined}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document
+                          .getElementById(item.id)
+                          ?.scrollIntoView({ block: "start" });
+                        // Reflect the jump in the URL without a router navigation.
+                        window.history.replaceState(null, "", `#${item.id}`);
+                      }}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {service.processingTime && (
+              <div className="sd-facts">
+                <h2 className="sd-facts__title">Processing Times</h2>
+                <dl className="sd-facts__list">
+                  {service.processingTime.insideCanada && (
+                    <div>
+                      <dt>Inside Canada</dt>
+                      <dd>{service.processingTime.insideCanada}</dd>
+                    </div>
+                  )}
+                  {service.processingTime.outsideCanada && (
+                    <div>
+                      <dt>Outside Canada</dt>
+                      <dd>{service.processingTime.outsideCanada}</dd>
+                    </div>
+                  )}
+                </dl>
+                {service.processingTime.note && (
+                  <p className="sd-facts__note">{service.processingTime.note}</p>
+                )}
+              </div>
+            )}
+
+            {service.feeBreakdown && (
+              <div className="sd-facts">
+                <h2 className="sd-facts__title">Government Fees</h2>
+                <dl className="sd-fees">
+                  {service.feeBreakdown.items.map((item, i) => (
+                    <div key={i}>
+                      <dt>{item.description}</dt>
+                      <dd>{item.amount}</dd>
+                    </div>
+                  ))}
+                  <div className="sd-fees__total">
+                    <dt>Total</dt>
+                    <dd>{service.feeBreakdown.total}</dd>
+                  </div>
+                </dl>
+              </div>
+            )}
+          </div>
+        </aside>
       </div>
 
-      {service.faqs && service.faqs.length > 0 && (
-        <div className="faq-section">
-          <h2>Frequently Asked Questions</h2>
-          <div className="faq-grid">
-            {service.faqs.map((faq, i) => (
-              <details key={i} className="faq-item">
-                <summary>{faq.q}</summary>
-                <p>{faq.a}</p>
-              </details>
-            ))}
+      {service.relatedServices && service.relatedServices.length > 0 && (
+        <section className="sd-related">
+          <div className="wrap">
+            <h2 className="sd-related__title">Related Services</h2>
+            <div className="sd-related__grid">
+              {service.relatedServices
+                .filter((id) => serviceDetails[id])
+                .map((id, i) => {
+                  const related = serviceDetails[id];
+                  return (
+                    <Reveal
+                      as="article"
+                      key={id}
+                      className="sd-relCard"
+                      delay={0.05 * i}
+                    >
+                      <Link to={`/services/${id}`}>
+                        <h3>{related.title}</h3>
+                        <p>{related.heroText}</p>
+                        <span className="sd-relCard__more">
+                          Learn more
+                          <i className="fas fa-arrow-right" aria-hidden="true" />
+                        </span>
+                      </Link>
+                    </Reveal>
+                  );
+                })}
+            </div>
           </div>
-        </div>
+        </section>
       )}
-    </div>
+    </article>
   );
 };
 

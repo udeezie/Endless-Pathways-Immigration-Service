@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./BookConsultation.css";
+import "./BookConsultation.scss";
 
 export interface ConsultationOption {
   id: string;
@@ -341,7 +341,7 @@ const BookConsultation: React.FC = () => {
   const generateTimeOptions = () => {
     const times = [];
     for (let hour = 8; hour <= 17; hour++) {
-      for (let minute of ["00", "30"]) {
+      for (const minute of ["00", "30"]) {
         const ampm = hour >= 12 ? "PM" : "AM";
         const displayHour = hour > 12 ? hour - 12 : hour;
         times.push(
@@ -650,13 +650,96 @@ const BookConsultation: React.FC = () => {
           </div>
         )}
 
+        <section className="book-hero">
+          <div className="book-hero-content">
+            <span className="book-hero-eyebrow">
+              Expert Immigration Guidance
+            </span>
+            <h1 className="book-hero-title">
+              Book Your
+              <span className="book-hero-highlight"> Consultation</span>
+            </h1>
+            <p className="book-hero-subtitle">
+              Speak directly with a Regulated Canadian Immigration Consultant.
+              Select a package below, choose your preferred times, and submit
+              your intake form and we'll confirm within 24 hours.
+            </p>
+            <div className="book-hero-badges">
+              <span className="book-badge">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                RCIC-IRB Licensed
+              </span>
+              <span className="book-badge-sep" aria-hidden="true" />
+              <span className="book-badge">Confidential &amp; Secure</span>
+              <span className="book-badge-sep" aria-hidden="true" />
+              <span className="book-badge">Response Within 24 Hours</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="book-steps-strip">
+          <div className="book-step">
+            <span className="book-step-num">01</span>
+            <div className="book-step-text">
+              <strong>Select a Package</strong>
+              <span>
+                Choose the option that fits your situation and location
+              </span>
+            </div>
+          </div>
+          <div className="book-step-connector" aria-hidden="true">
+            →
+          </div>
+          <div className="book-step">
+            <span className="book-step-num">02</span>
+            <div className="book-step-text">
+              <strong>Complete the Form</strong>
+              <span>
+                Share your background and preferred consultation times
+              </span>
+            </div>
+          </div>
+          <div className="book-step-connector" aria-hidden="true">
+            →
+          </div>
+          <div className="book-step">
+            <span className="book-step-num">03</span>
+            <div className="book-step-text">
+              <strong>Get Confirmed</strong>
+              <span>
+                We'll reach out within 24 hours to confirm your session
+              </span>
+            </div>
+          </div>
+        </section>
+
         <section className="consultation-section" ref={consultationSectionRef}>
-          <h2 className="section-title">Residing in Canada</h2>
+          <div className="book-section-header">
+            <span className="book-section-eyebrow">Currently in Canada</span>
+            <h2 className="section-title">Residing in Canada</h2>
+          </div>
           <div className="card-grid">{renderCards("canada")}</div>
         </section>
 
         <section className="consultation-section">
-          <h2 className="section-title">Residing Outside Canada</h2>
+          <div className="book-section-header">
+            <span className="book-section-eyebrow">Outside Canada</span>
+            <h2 className="section-title">Residing Outside Canada</h2>
+          </div>
           <div className="card-grid">{renderCards("outside")}</div>
         </section>
 
@@ -669,12 +752,37 @@ const BookConsultation: React.FC = () => {
                 consultation and respond to your request efficiently.
               </span>
 
+              {/* The package is chosen further up the page; by the time the
+                  form is filled in it has scrolled away, so it is echoed here
+                  as a live summary rather than left to memory. */}
+              {selectedConsultation && (
+                <div className="selected-summary">
+                  <span className="selected-summary__check" aria-hidden="true">
+                    ✓
+                  </span>
+                  <div className="selected-summary__text">
+                    <strong>{selectedConsultation.title}</strong>
+                    <span>
+                      {selectedConsultation.duration} ·{" "}
+                      {selectedConsultation.location}
+                    </span>
+                  </div>
+                  <span className="selected-summary__price">
+                    ${selectedConsultation.price}
+                  </span>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} noValidate>
                 <div className="form-row">
                   <div className="input-group">
+                    <label className="field-label" htmlFor="firstName">
+                      First Name *
+                    </label>
                     <input
                       type="text"
                       name="firstName"
+                      id="firstName"
                       className={`consultation-input ${errors.firstName ? "error" : ""}`}
                       placeholder="First Name *"
                       value={formData.firstName}
@@ -685,9 +793,13 @@ const BookConsultation: React.FC = () => {
                     )}
                   </div>
                   <div className="input-group">
+                    <label className="field-label" htmlFor="lastName">
+                      Last Name *
+                    </label>
                     <input
                       type="text"
                       name="lastName"
+                      id="lastName"
                       className={`consultation-input ${errors.lastName ? "error" : ""}`}
                       placeholder="Last Name *"
                       value={formData.lastName}
@@ -701,9 +813,13 @@ const BookConsultation: React.FC = () => {
 
                 <div className="form-row">
                   <div className="input-group">
+                    <label className="field-label" htmlFor="phone">
+                      Phone Number *
+                    </label>
                     <input
                       type="tel"
                       name="phone"
+                      id="phone"
                       className={`consultation-input ${errors.phone ? "error" : ""}`}
                       placeholder="Phone Number *"
                       value={formData.phone}
@@ -714,9 +830,13 @@ const BookConsultation: React.FC = () => {
                     )}
                   </div>
                   <div className="input-group">
+                    <label className="field-label" htmlFor="email">
+                      Email Address *
+                    </label>
                     <input
                       type="email"
                       name="email"
+                      id="email"
                       className={`consultation-input ${errors.email ? "error" : ""}`}
                       placeholder="Email Address *"
                       value={formData.email}
@@ -730,6 +850,7 @@ const BookConsultation: React.FC = () => {
 
                 <div className="form-row">
                   <div className="input-group" ref={residenceRef}>
+                    <span className="field-label">Country of Residence *</span>
                     <div className="country-selector">
                       <input
                         type="text"
@@ -778,6 +899,7 @@ const BookConsultation: React.FC = () => {
                   </div>
 
                   <div className="input-group" ref={citizenshipRef}>
+                    <span className="field-label">Country of Citizenship *</span>
                     <div className="country-selector">
                       <input
                         type="text"
@@ -924,8 +1046,11 @@ const BookConsultation: React.FC = () => {
                   )}
                 </div>
 
-                <span className="section-label">Consultation Details *</span>
+                <label className="section-label" htmlFor="details">
+                  Consultation Details *
+                </label>
                 <textarea
+                  id="details"
                   name="details"
                   className={`consultation-textarea ${errors.details ? "error" : ""}`}
                   rows={5}

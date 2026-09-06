@@ -1,81 +1,141 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
+import Reveal from "../components/Reveal";
 import { blogPosts } from "../data/blogPosts";
-import "./Home.css";
+import "./Home.scss";
 
-const useInView = (options?: IntersectionObserverInit) => {
-  const [isInView, setIsInView] = useState(false);
-  const ref = useRef<HTMLElement | null>(null);
+const estimateReadTime = (content: string) =>
+  Math.max(1, Math.round(content.trim().split(/\s+/).length / 200));
 
-  const stableOptions = useMemo(
-    () => ({ threshold: 0.1, ...(options || {}) }),
-    [options],
-  );
+const REASONS = [
+  {
+    title: "Regulated & Authorized",
+    body: "Appiah Bonsu is a Regulated Canadian Immigration Consultant (RCIC IRB) in good standing with the College of Immigration and Citizenship Consultants (CICC). When you work with us, you are represented by a qualified professional bound by a strict code of ethics.",
+  },
+  {
+    title: "Lived Experience + Academic Rigour",
+    body: "As a former international student, Appiah understands the immigration system from the inside. Combined with a Master's degree in Critical Sociology and more than 10 years of research on immigrant experiences, his advice is both empathetic and evidence based.",
+  },
+  {
+    title: "Research-Driven Strategy",
+    body: "Over a decade of research revealed a core truth: many immigrants struggle because the system is complex. We turn that insight into clear, proactive application strategies that anticipate officer concerns and help reduce refusal risks.",
+  },
+  {
+    title: "Full-Service Representation",
+    body: "From study permits and work visas to family sponsorship, refugee claims, and citizenship, we support clients throughout the entire immigration lifecycle. As your goals evolve, you will not need to switch firms.",
+  },
+  {
+    title: "Transparent & Ethical",
+    body: "Fixed fees with no hidden charges. We provide a clear written agreement before any work begins. Integrity is not optional. It is the foundation of our practice.",
+  },
+  {
+    title: "Demonstrated Success",
+    body: "We have supported numerous applications across multiple immigration streams. While every case is unique, our methodical approach has earned the trust of clients from around the world.",
+  },
+];
 
-  useEffect(() => {
-    if (!ref.current) return;
+const SERVICE_GROUPS = [
+  {
+    title: "Temporary Residence",
+    items: [
+      "Study Permits",
+      "Work Permits",
+      "Visitor Visas (TRV)",
+      "Super Visa",
+      "Visitor Record",
+      "Temporary Resident Permit",
+      "Electronic Travel Authorization (eTA)",
+    ],
+  },
+  {
+    title: "Permanent Residence",
+    items: [
+      "Family Sponsorship",
+      "Economic Immigration",
+      "Express Entry",
+      "Provincial Nominee Programs",
+      "Humanitarian & Compassionate",
+      "Refugee Protection",
+    ],
+  },
+  {
+    title: "Citizenship & More",
+    items: [
+      "Citizenship Applications",
+      "Admissibility Issues",
+      "Appeals & Reviews",
+      "Compliance Reviews",
+      "Misrepresentation Concerns",
+      "Strategic Advice",
+    ],
+  },
+];
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsInView(true);
-        observer.unobserve(entry.target);
-      }
-    }, stableOptions);
+const PROCESS_STEPS = [
+  {
+    title: "In-Depth Consultation",
+    description:
+      "Meet with us to discuss your case in detail. We analyse your situation, answer your questions, and outline the most effective strategy. Our consultation fee is clearly communicated upfront.",
+    buttonText: "Book Now",
+    buttonLink: "/book-consultation",
+  },
+  {
+    title: "Document Guidance",
+    description:
+      "Once you retain our services, we provide a customised document checklist and step-by-step guidance. We ensure you gather the right evidence and complete all forms accurately.",
+    buttonText: "View Services",
+    buttonLink: "/services",
+  },
+  {
+    title: "Final Review",
+    description:
+      "Before submission, we conduct a thorough audit of your entire application. We verify that every document is current, consistent, and meets IRCC requirements.",
+    buttonText: "Our Process",
+    buttonLink: "/services",
+  },
+  {
+    title: "Submission & Letter",
+    description:
+      "We submit your complete application along with a professionally drafted explanatory letter. Our regulated consultant's letter helps visa officers process your case efficiently and correctly.",
+    buttonText: "Learn More",
+    buttonLink: "/services",
+  },
+  {
+    title: "Ongoing Support",
+    description:
+      "Our relationship doesn't end at submission. We monitor your application, provide regular updates, and liaise with IRCC on your behalf whenever necessary.",
+    buttonText: "Contact Us",
+    buttonLink: "/contact",
+  },
+];
 
-    observer.observe(ref.current);
+const FAQS = [
+  {
+    q: "What makes Endless Pathways different from other immigration consultants?",
+    a: "Our founder's personal journey as an immigrant, combined with academic research (Master's in Critical Sociology) and professional regulation (RCIC-IRB), gives us unique insight. We treat clients as people, not file numbers, and our decade of research on immigrant experiences informs every application strategy.",
+  },
+  {
+    q: "How do I know which immigration program is right for me?",
+    a: "We assess your profile during our in-depth consultation: education, work experience, language ability, family connections, and long-term goals. From there, we recommend the strongest pathway whether it's Express Entry, a Provincial Nominee Program, a work permit, or family sponsorship.",
+  },
+  {
+    q: "What are your fees and how does billing work?",
+    a: "We believe in complete transparency. All fees are discussed upfront during your consultation, and we provide a clear written agreement before any work begins. There are no hidden charges. Our fixed-fee structure means you know exactly what to expect.",
+  },
+  {
+    q: "How long does the immigration process take?",
+    a: "Processing times vary significantly by program and individual circumstances. Express Entry: 6 months; Family Sponsorship: 12–24 months; Study Permits: 8–15 weeks; Work Permits: 3–5 months. We provide realistic timelines based on current IRCC data and keep you updated throughout.",
+  },
+  {
+    q: "What happens if my application is refused?",
+    a: "A refusal is not the end of the road. We analyze the reasons, identify options (appeal, judicial review, reapplication with stronger evidence, or alternative pathways), and guide you through the best course of action. Many clients succeed on their second attempt with proper representation.",
+  },
+];
 
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
-  }, [stableOptions]);
-
-  return { ref, isInView };
-};
+// Page
 
 const Home: React.FC = () => {
-  const [showMore, setShowMore] = useState(false);
-  const toggleMoreInsights = () => setShowMore(!showMore);
-
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const videoContentRef = useInView();
-  const imageRef = useInView();
-  const welcomeRef = useInView();
-  const verifySectionRef = useInView();
-  const badgesRef = useInView();
-  const contentRefs = [
-    useInView(),
-    useInView(),
-    useInView(),
-    useInView(),
-    useInView(),
-  ];
-  const learnMoreBtnRef = useInView();
-  const whyChooseTitleRef = useInView();
-  const benefitRefs = [
-    useInView(),
-    useInView(),
-    useInView(),
-    useInView(),
-    useInView(),
-    useInView(),
-  ];
-  const servicesTitleRef = useInView();
-  const serviceCardRefs = [useInView(), useInView(), useInView()];
-  const processTitleRef = useInView();
-  const processCardRefs = [
-    useInView(),
-    useInView(),
-    useInView(),
-    useInView(),
-    useInView(),
-  ];
-  const reviewsTitleRef = useInView();
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.75;
-    }
-  }, []);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   useEffect(() => {
     const scriptId = "elfsight-platform-script";
@@ -88,769 +148,339 @@ const Home: React.FC = () => {
     }
   }, []);
 
-  const latestPost = blogPosts.reduce((latest, post) => {
-    const postDate = new Date(post.date);
-    const latestDate = new Date(latest.date);
-    return postDate > latestDate ? post : latest;
-  }, blogPosts[0]);
+  const latestPost = useMemo(
+    () =>
+      blogPosts.reduce(
+        (latest, post) =>
+          new Date(post.date) > new Date(latest.date) ? post : latest,
+        blogPosts[0],
+      ),
+    [],
+  );
 
-  const recentPosts = blogPosts.slice(0, 3);
-
-  const faqs = [
-    {
-      q: "What makes Endless Pathways different from other immigration consultants?",
-      a: "Our founder's personal journey as an immigrant, combined with academic research (Master's in Critical Sociology) and professional regulation (RCIC-IRB), gives us unique insight. We treat clients as people, not file numbers, and our decade of research on immigrant experiences informs every application strategy.",
-    },
-    {
-      q: "How do I know which immigration program is right for me?",
-      a: "We assess your profile during our in-depth consultation: education, work experience, language ability, family connections, and long-term goals. From there, we recommend the strongest pathway whether it's Express Entry, a Provincial Nominee Program, a work permit, or family sponsorship.",
-    },
-    {
-      q: "What are your fees and how does billing work?",
-      a: "We believe in complete transparency. All fees are discussed upfront during your consultation, and we provide a clear written agreement before any work begins. There are no hidden charges. Our fixed-fee structure means you know exactly what to expect.",
-    },
-    {
-      q: "How long does the immigration process take?",
-      a: "Processing times vary significantly by program and individual circumstances. Express Entry: 6 months; Family Sponsorship: 12-24 months; Study Permits: 8-15 weeks; Work Permits: 3-5 months. We provide realistic timelines based on current IRCC data and keep you updated throughout.",
-    },
-    {
-      q: "What happens if my application is refused?",
-      a: "A refusal is not the end of the road. We analyze the reasons, identify options (appeal, judicial review, reapplication with stronger evidence, or alternative pathways), and guide you through the best course of action. Many clients succeed on their second attempt with proper representation.",
-    },
-  ];
-
-  const processSteps = [
-    {
-      step: 1,
-      title: "In‑Depth Consultation",
-      description:
-        "Meet with us to discuss your case in detail. We analyse your situation, answer your questions, and outline the most effective strategy. Our consultation fee is clearly communicated upfront.",
-      buttonText: "Book Now",
-      buttonLink: "/book-consultation",
-      icon: "fas fa-comments",
-    },
-    {
-      step: 2,
-      title: "Document Guidance",
-      description:
-        "Once you retain our services, we provide a customised document checklist and step‑by‑step guidance. We ensure you gather the right evidence and complete all forms accurately.",
-      buttonText: "Retainer Info",
-      buttonLink: "/services",
-      icon: "fas fa-file-lines",
-    },
-    {
-      step: 3,
-      title: "Final Review",
-      description:
-        "Before submission, we conduct a thorough audit of your entire application. We verify that every document is current, consistent, and meets IRCC requirements.",
-      buttonText: "Review Process",
-      buttonLink: "/services",
-      icon: "fas fa-magnifying-glass",
-    },
-    {
-      step: 4,
-      title: "Submission & Letter",
-      description:
-        "We submit your complete application along with a professionally drafted explanatory letter. Our regulated consultant's letter helps visa officers process your case efficiently and correctly.",
-      buttonText: "See Submission",
-      buttonLink: "/services",
-      icon: "fas fa-envelope",
-    },
-    {
-      step: 5,
-      title: "Ongoing Support",
-      description:
-        "Our relationship doesn't end at submission. We monitor your application, provide regular updates, and liaise with IRCC on your behalf whenever necessary.",
-      buttonText: "Support Details",
-      buttonLink: "/contact",
-      icon: "fas fa-headset",
-    },
-  ];
+  const recentPosts = useMemo(
+    () =>
+      [...blogPosts]
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .slice(0, 3),
+    [],
+  );
 
   return (
-    <div className="home-container">
-      <div className="background-pattern" aria-hidden="true"></div>
+    <div className="home">
+      {/* Opening */}
+      {/* No hero. The page opens on the headline, the promise, the two actions
+          and the regulatory standing — everything a visitor needs in the first
+          screen, with nothing staged around it. */}
+      <section className="opening">
+        <div className="wrap opening__inner">
+          <Reveal className="opening__type" variant="mask">
+            <h1 className="opening__title">
+              Where Your Canadian Immigration Journey Finds <em>Clarity</em>
+            </h1>
+          </Reveal>
 
-      <section className="video-hero-section">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="hero-video"
-        >
-          <source src="/canada.mp4" type="video/mp4" />
-        </video>
-        <div className="video-overlay" aria-hidden="true"></div>
-        <div
-          className={`video-content ${videoContentRef.isInView ? "in-view" : ""}`}
-          ref={videoContentRef.ref as React.RefObject<HTMLDivElement>}
-        >
-          <h1 className="hero-title">
-            Where Your Canadian Immigration Journey Finds Clarity
-          </h1>
-          <Link
-            to="/book-consultation"
-            className="hero-btn styled-btn"
-            aria-label="Book a consultation"
-          >
-            Book Consultation
-          </Link>
+          <Reveal className="opening__body" delay={0.08}>
+            <p className="opening__text">
+              At Endless Pathways Immigration Services, we are a team of
+              immigrants, professionals, and educators who know firsthand what
+              it means to build a new life in Canada. Our clients are never just
+              file numbers. We offer ethical, comprehensive, and personalized
+              immigration services that reflect the complexity of your goals and
+              the care they deserve.
+            </p>
+
+            <div className="opening__actions">
+              <Link
+                to="/book-consultation"
+                className="btn btn--gold"
+                aria-label="Book a consultation"
+              >
+                Book Consultation
+              </Link>
+              <Link to="/about" className="btn">
+                Learn More
+              </Link>
+            </div>
+          </Reveal>
         </div>
+
+        <Reveal className="opening__cred" variant="fade" delay={0.16}>
+          <div className="wrap opening__credInner">
+            <div className="opening__credBadges">
+              <img
+                src="/cc.png"
+                alt="College of Immigration and Citizenship Consultants"
+                onError={(e) => (e.currentTarget.style.display = "none")}
+                loading="lazy"
+              />
+              <img
+                src="/ca.png"
+                alt="RCIC Badge"
+                onError={(e) => (e.currentTarget.style.display = "none")}
+                loading="lazy"
+              />
+            </div>
+
+            <div className="opening__credText">
+              <span>College of Immigration and Citizenship Consultants</span>
+              <span className="opening__credReg">RCIC Number: R1053912</span>
+            </div>
+
+            <a
+              href="https://register.college-ic.ca/Public-Register-EN/Licensee/Profile.aspx?ID=53912"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opening__credVerify"
+              aria-label="Verify my RCIC status on CICC website"
+            >
+              <span>Verify my status on the CICC Register</span>
+              <i className="fas fa-arrow-up-right-from-square" aria-hidden="true" />
+            </a>
+          </div>
+        </Reveal>
       </section>
 
-      <section className="home-content">
-        <div
-          className={`image-section fade-in ${imageRef.isInView ? "in-view" : ""}`}
-          ref={imageRef.ref as React.RefObject<HTMLDivElement>}
-        >
-          <img
-            src="/appiah.jpg"
-            alt="Appiah Bonsu - Regulated Canadian Immigration Consultant"
-            className="appiah-image"
-            loading="eager"
-          />
-        </div>
+      {/* Services */}
+      <section className="services" id="services">
+        <div className="wrap">
+          <Reveal className="sec-head sec-head--center" as="header">
+            <h2>Our Immigration Services</h2>
+            <p>
+              We offer comprehensive immigration solutions tailored to your
+              unique journey. From temporary visas to permanent residence and
+              citizenship, we're here to help you navigate every step.
+            </p>
+          </Reveal>
 
-        <div className="text-section">
-          <article className="welcome-section">
-            <h2
-              className={`welcome-title slide-up ${welcomeRef.isInView ? "in-view" : ""}`}
-              ref={welcomeRef.ref as React.RefObject<HTMLHeadingElement>}
-            >
-              Welcome to Endless Pathways Immigration Services
-            </h2>
-
-            <div className="content-block">
-              <p
-                className={`fade-in ${contentRefs[0].isInView ? "in-view" : ""}`}
-                ref={
-                  contentRefs[0].ref as React.RefObject<HTMLParagraphElement>
-                }
+          <div className="services__grid">
+            {SERVICE_GROUPS.map((group, i) => (
+              <Reveal
+                as="article"
+                key={group.title}
+                className="svc"
+                delay={0.08 * i}
               >
-                My name is Appiah Bonsu, a Regulated Canadian Immigration
-                Consultant (RCIC-IRB - L3) in good standing with the College of
-                Immigration and Citizenship Consultants (CICC).
-              </p>
-
-              <div
-                className={`verify-section slide-up ${verifySectionRef.isInView ? "in-view" : ""}`}
-                ref={verifySectionRef.ref as React.RefObject<HTMLDivElement>}
-              >
-                <a
-                  href="https://register.college-ic.ca/Public-Register-EN/Licensee/Profile.aspx?ID=53912"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="verify-link"
-                  aria-label="Verify my RCIC status on CICC website"
-                >
-                  Verify my status
-                </a>
-
-                <div className="downward-arrow" aria-hidden="true">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-
-                <div
-                  className={`accreditation-badges fade-in ${badgesRef.isInView ? "in-view" : ""}`}
-                  ref={badgesRef.ref as React.RefObject<HTMLDivElement>}
-                >
-                  <img
-                    src="/cc.png"
-                    alt=""
-                    className="cicc-logo"
-                    onError={(e) => (e.currentTarget.style.display = "none")}
-                    loading="lazy"
-                  />
-                  <img
-                    src="/ca.png"
-                    alt=""
-                    className="rcic-badge"
-                    onError={(e) => (e.currentTarget.style.display = "none")}
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-
-              <p
-                className={`fade-in ${contentRefs[1].isInView ? "in-view" : ""}`}
-                ref={
-                  contentRefs[1].ref as React.RefObject<HTMLParagraphElement>
-                }
-              >
-                Like many of the clients I now serve, my journey to Canada began
-                as an immigrant. I first arrived as an international student,
-                navigating the same complex systems, uncertainty, and high
-                stakes decisions that so many newcomers face. That lived
-                experience continues to shape both my professional practice and
-                my commitment to ethical, client centered immigration services.
-              </p>
-
-              <p
-                className={`fade-in ${contentRefs[2].isInView ? "in-view" : ""}`}
-                ref={
-                  contentRefs[2].ref as React.RefObject<HTMLParagraphElement>
-                }
-              >
-                I hold a Master's degree in Critical Sociology from Brock
-                University (Ontario) and have spent over a decade working as a
-                Research Manager and researcher, leading and contributing to
-                multiple projects focused on the lived experiences of immigrants
-                in Canada. One finding appeared again and again across this
-                work: immigrants often struggle to understand, maintain, and
-                secure their legal status due to the complexity of Canada's
-                immigration system.
-              </p>
-
-              <p
-                className={`fade-in ${contentRefs[3].isInView ? "in-view" : ""}`}
-                ref={
-                  contentRefs[3].ref as React.RefObject<HTMLParagraphElement>
-                }
-              >
-                That insight, grounded in research and real lives, is what led
-                to the creation of Endless Pathways Immigration Services.
-              </p>
-
-              <p
-                className={`fade-in ${contentRefs[4].isInView ? "in-view" : ""}`}
-                ref={
-                  contentRefs[4].ref as React.RefObject<HTMLParagraphElement>
-                }
-              >
-                At Endless Pathways Immigration Services, we are a team of
-                immigrants, professionals, and educators who know firsthand what
-                it means to build a new life in Canada. Our clients are never
-                just file numbers. We offer ethical, comprehensive, and
-                personalized immigration services that reflect the complexity of
-                your goals and the care they deserve.
-              </p>
-            </div>
-          </article>
-
-          <div
-            className={`insights-button-container fade-in ${learnMoreBtnRef.isInView ? "in-view" : ""}`}
-            ref={learnMoreBtnRef.ref as React.RefObject<HTMLDivElement>}
-          >
-            <button
-              onClick={toggleMoreInsights}
-              className="styled-btn"
-              aria-expanded={showMore}
-            >
-              {showMore ? "Show Less" : "Learn More"}
-            </button>
+                <h3 className="svc__title">{group.title}</h3>
+                <ul className="svc__list">
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </Reveal>
+            ))}
           </div>
 
-          {showMore && (
-            <div className="expandable-content slide-up in-view">
-              <article className="approach-section">
-                <h3 className="section-subtitle">OUR APPROACH</h3>
-                <div className="content-block">
-                  <p>
-                    Endless Pathways Immigration Services operates as a
-                    professional immigration consulting firm, providing advisory
-                    and authorized representation services in full compliance
-                    with federal and provincial regulations. We support clients
-                    through every stage of the immigration process, including:
-                  </p>
-                  <ul className="professional-list">
-                    <li>
-                      <i
-                        className="fas fa-passport list-icon"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="list-text">
-                        Temporary residence applications (study permits, work
-                        permits, visitor visas)
-                      </span>
-                    </li>
-                    <li>
-                      <i
-                        className="fas fa-house-chimney list-icon"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="list-text">
-                        Permanent residence pathways (economic, family, and
-                        humanitarian streams)
-                      </span>
-                    </li>
-                    <li>
-                      <i
-                        className="fas fa-hand-holding-heart list-icon"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="list-text">
-                        Refugee claimant support
-                      </span>
-                    </li>
-                    <li>
-                      <i
-                        className="fas fa-leaf list-icon"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="list-text">
-                        Citizenship applications
-                      </span>
-                    </li>
-                    <li>
-                      <i
-                        className="fas fa-scale-balanced list-icon"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="list-text">
-                        Compliance reviews and post-decision support
-                      </span>
-                    </li>
-                    <li>
-                      <i
-                        className="fas fa-gavel list-icon"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="list-text">
-                        Representation before Immigration, Refugees and
-                        Citizenship Canada (IRCC) and other authorized bodies
-                      </span>
-                    </li>
-                    <li>
-                      <i
-                        className="fas fa-compass list-icon"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="list-text">
-                        Settlement-related guidance, document review, and
-                        procedural advice
-                      </span>
-                    </li>
-                    <li>
-                      <i
-                        className="fas fa-chalkboard-user list-icon"
-                        aria-hidden="true"
-                      ></i>
-                      <span className="list-text">
-                        Immigration education through consultations, workshops,
-                        and informational resources
-                      </span>
-                    </li>
-                  </ul>
-                  <p>
-                    All services are delivered in accordance with professional
-                    ethics, regulatory standards, and the CICC Code of Conduct.
-                    We do not engage in unlawful recruitment, employment
-                    placement, or any activities outside the authorized scope of
-                    immigration consulting.
-                  </p>
-                </div>
-              </article>
-
-              <article className="closing-section">
-                <h3 className="section-subtitle">MORE THAN A FILE NUMBER</h3>
-                <div className="content-block">
-                  <p>
-                    At Endless Pathways Immigration Services, clients are never
-                    treated as just applications or case numbers. We understand
-                    that immigration decisions affect families, futures, and
-                    identities. Our work is guided by care, accuracy,
-                    transparency, and respect values shaped by both professional
-                    training and lived experience.
-                  </p>
-                  <p className="highlighted-text">
-                    Wherever you are in your journey of planning, applying,
-                    responding to a decision, or rebuilding after a setback, we
-                    are here to help you move forward with clarity, confidence,
-                    and integrity.
-                  </p>
-                </div>
-              </article>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section className="why-choose-section">
-        <h2
-          className={`section-title slide-up ${whyChooseTitleRef.isInView ? "in-view" : ""}`}
-          ref={whyChooseTitleRef.ref as React.RefObject<HTMLHeadingElement>}
-        >
-          WHY CHOOSE ENDLESS PATHWAYS IMMIGRATION SERVICES?
-        </h2>
-        <div className="benefits-grid">
-          {benefitRefs.map((ref, index) => (
-            <article
-              key={index}
-              className={`benefit-card fade-in ${ref.isInView ? "in-view" : ""}`}
-              ref={ref.ref as React.RefObject<HTMLDivElement>}
+          <Reveal className="services__cta">
+            <Link
+              to="/services"
+              className="btn"
+              aria-label="View all immigration services"
             >
-              <div className="benefit-icon-container" aria-hidden="true">
-                <i
-                  className={`benefit-icon ${
-                    index === 0
-                      ? "fas fa-certificate"
-                      : index === 1
-                        ? "fas fa-graduation-cap"
-                        : index === 2
-                          ? "fas fa-chart-line"
-                          : index === 3
-                            ? "fas fa-umbrella"
-                            : index === 4
-                              ? "fas fa-handshake"
-                              : "fas fa-trophy"
-                  }`}
-                ></i>
-              </div>
-              <h3>
-                {index === 0 && "REGULATED & AUTHORIZED"}
-                {index === 1 && "LIVED EXPERIENCE + ACADEMIC RIGOUR"}
-                {index === 2 && "RESEARCH‑DRIVEN STRATEGY"}
-                {index === 3 && "FULL‑SERVICE REPRESENTATION"}
-                {index === 4 && "TRANSPARENT & ETHICAL"}
-                {index === 5 && "DEMONSTRATED SUCCESS"}
-              </h3>
-              <p>
-                {index === 0 &&
-                  "Appiah Bonsu is a Regulated Canadian Immigration Consultant (RCIC IRB) in good standing with the College of Immigration and Citizenship Consultants (CICC). When you work with us, you are represented by a qualified professional bound by a strict code of ethics."}
-
-                {index === 1 &&
-                  "As a former international student, Appiah understands the immigration system from the inside. Combined with a Master's degree in Critical Sociology and more than 10 years of research on immigrant experiences, his advice is both empathetic and evidence based."}
-
-                {index === 2 &&
-                  "Over a decade of research revealed a core truth: many immigrants struggle because the system is complex. We turn that insight into clear, proactive application strategies that anticipate officer concerns and help reduce refusal risks."}
-
-                {index === 3 &&
-                  "From study permits and work visas to family sponsorship, refugee claims, and citizenship, we support clients throughout the entire immigration lifecycle. As your goals evolve, you will not need to switch firms."}
-
-                {index === 4 &&
-                  "Fixed fees with no hidden charges. We provide a clear written agreement before any work begins. Integrity is not optional. It is the foundation of our practice."}
-
-                {index === 5 &&
-                  "We have supported numerous applications across multiple immigration streams. While every case is unique, our methodical approach has earned the trust of clients from around the world."}
-              </p>
-            </article>
-          ))}
+              View All Services
+              <i className="fas fa-arrow-right btn-icon" aria-hidden="true" />
+            </Link>
+          </Reveal>
         </div>
       </section>
 
-      <section className="services-overview-section">
-        <h2
-          className={`section-title slide-up ${servicesTitleRef.isInView ? "in-view" : ""}`}
-          ref={servicesTitleRef.ref as React.RefObject<HTMLHeadingElement>}
-        >
-          OUR IMMIGRATION SERVICES
-        </h2>
-        <p className="services-intro">
-          We offer comprehensive immigration solutions tailored to your unique
-          journey. From temporary visas to permanent residence and citizenship,
-          we're here to help you navigate every step.
-        </p>
+      {/* Process */}
+      <section className="process" id="process">
+        <div className="wrap">
+          <Reveal className="sec-head" as="header">
+            <h2>Application Process</h2>
+          </Reveal>
 
-        <div className="services-category-grid">
-          <article
-            className={`service-category-card fade-in ${serviceCardRefs[0].isInView ? "in-view" : ""}`}
-            ref={serviceCardRefs[0].ref as React.RefObject<HTMLDivElement>}
-          >
-            <div className="service-icon-wrapper" aria-hidden="true">
-              <i className="fas fa-plane-departure service-main-icon"></i>
-            </div>
-            <h3>TEMPORARY RESIDENCE</h3>
-            <ul className="service-category-list">
-              <li>
-                <i
-                  className="fas fa-graduation-cap list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Study Permits
-              </li>
-              <li>
-                <i
-                  className="fas fa-briefcase list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Work Permits
-              </li>
-              <li>
-                <i
-                  className="fas fa-passport list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Visitor Visas (TRV)
-              </li>
-              <li>
-                <i
-                  className="fas fa-people-group list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Super Visa
-              </li>
-              <li>
-                <i
-                  className="fas fa-calendar-alt list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Visitor Record
-              </li>
-              <li>
-                <i
-                  className="fas fa-id-card list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Temporary Resident Permit
-              </li>
-              <li>
-                <i
-                  className="fas fa-globe list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Electronic Travel Authorization (eTA)
-              </li>
-            </ul>
-          </article>
-
-          <article
-            className={`service-category-card fade-in ${serviceCardRefs[1].isInView ? "in-view" : ""}`}
-            ref={serviceCardRefs[1].ref as React.RefObject<HTMLDivElement>}
-          >
-            <div className="service-icon-wrapper" aria-hidden="true">
-              <i className="fas fa-house-chimney service-main-icon"></i>
-            </div>
-            <h3>PERMANENT RESIDENCE</h3>
-            <ul className="service-category-list">
-              <li>
-                <i
-                  className="fas fa-people-arrows list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Family Sponsorship
-              </li>
-              <li>
-                <i
-                  className="fas fa-chart-line list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Economic Immigration
-              </li>
-              <li>
-                <i
-                  className="fas fa-bolt list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Express Entry
-              </li>
-              <li>
-                <i
-                  className="fas fa-map-pin list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Provincial Nominee Programs
-              </li>
-              <li>
-                <i
-                  className="fas fa-heart list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Humanitarian & Compassionate
-              </li>
-              <li>
-                <i
-                  className="fas fa-shield-halved list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Refugee Protection
-              </li>
-            </ul>
-          </article>
-
-          <article
-            className={`service-category-card fade-in ${serviceCardRefs[2].isInView ? "in-view" : ""}`}
-            ref={serviceCardRefs[2].ref as React.RefObject<HTMLDivElement>}
-          >
-            <div className="service-icon-wrapper" aria-hidden="true">
-              <i className="fas fa-leaf service-main-icon"></i>
-            </div>
-            <h3>CITIZENSHIP & MORE</h3>
-            <ul className="service-category-list">
-              <li>
-                <i
-                  className="fas fa-certificate list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Citizenship Applications
-              </li>
-              <li>
-                <i
-                  className="fas fa-triangle-exclamation list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Admissibility Issues
-              </li>
-              <li>
-                <i
-                  className="fas fa-gavel list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Appeals & Reviews
-              </li>
-              <li>
-                <i
-                  className="fas fa-clipboard-check list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Compliance Reviews
-              </li>
-              <li>
-                <i
-                  className="fas fa-circle-exclamation list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Misrepresentation Concerns
-              </li>
-              <li>
-                <i
-                  className="fas fa-lightbulb list-bullet-icon"
-                  aria-hidden="true"
-                ></i>{" "}
-                Strategic Advice
-              </li>
-            </ul>
-          </article>
-        </div>
-
-        <div className="services-cta-container">
-          <Link
-            to="/services"
-            className="styled-btn view-all-btn"
-            aria-label="View all immigration services"
-          >
-            VIEW ALL SERVICES{" "}
-            <i className="fas fa-arrow-right btn-icon" aria-hidden="true"></i>
-          </Link>
-        </div>
-      </section>
-
-      <section className="process-section">
-        <h2
-          className={`process-title slide-up ${processTitleRef.isInView ? "in-view" : ""}`}
-          ref={processTitleRef.ref as React.RefObject<HTMLHeadingElement>}
-        >
-          APPLICATION PROCESS
-        </h2>
-        <div className="process-grid">
-          {processSteps.map((step, idx) => (
-            <article
-              key={idx}
-              className={`process-card slide-up ${processCardRefs[idx].isInView ? "in-view" : ""}`}
-              ref={processCardRefs[idx].ref as React.RefObject<HTMLDivElement>}
-            >
-              <div className="process-card-header">
-                <i
-                  className={`process-icon ${step.icon}`}
-                  aria-hidden="true"
-                ></i>
-                <div className="step-number" aria-hidden="true">
-                  {step.step}
+          <div className="process__rail">
+            {PROCESS_STEPS.map((step, i) => (
+              <Reveal
+                as="article"
+                key={step.title}
+                className="step"
+                delay={0.06 * i}
+              >
+                <div className="step__marker" aria-hidden="true">
+                  <span>{String(i + 1).padStart(2, "0")}</span>
                 </div>
-              </div>
-              <h3 className="step-title">{step.title.toUpperCase()}</h3>
-              <p className="step-description">{step.description}</p>
-              {idx === 0 ? (
+                <h3 className="step__title">{step.title}</h3>
+                <p className="step__body">{step.description}</p>
                 <Link
                   to={step.buttonLink}
-                  className="process-btn styled-btn"
-                  aria-label={`${step.buttonText} for consultation`}
+                  className="step__link"
+                  aria-label={step.buttonText}
                 >
-                  {step.buttonText.toUpperCase()}{" "}
-                  <i
-                    className="fas fa-arrow-right btn-icon-small"
-                    aria-hidden="true"
-                  ></i>
+                  {step.buttonText}
+                  <i className="fas fa-arrow-right" aria-hidden="true" />
                 </Link>
-              ) : null}
-            </article>
-          ))}
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="home-reviews-section">
-        <h2
-          className={`section-title slide-up ${reviewsTitleRef.isInView ? "in-view" : ""}`}
-          ref={reviewsTitleRef.ref as React.RefObject<HTMLHeadingElement>}
-        >
-          REAL CLIENTS, REAL RESULTS – CLIENTS WHO TRUSTED ENDLESS PATHWAYS
-          IMMIGRATION SERVICES
-        </h2>
-        <div className="home-reviews-container">
-          <div
-            className="elfsight-app-f58d9626-b2a6-48ca-9a96-40c89f7f8f31"
-            data-elfsight-app-lazy
-          ></div>
-        </div>
-        <div className="view-all-reviews-btn-container">
-          <a
-            href="https://www.google.com/maps/place/?q=place_id:ChIJY-EBXtHf1IkReDCiRTx5LEE"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="view-all-reviews-btn styled-btn"
-          >
-            VIEW ALL REVIEWS ON GOOGLE
-            <i
-              className="fas fa-external-link-alt btn-icon"
-              aria-hidden="true"
-            ></i>
-          </a>
+      {/* Why choose */}
+      <section className="reasons" id="why">
+        <div className="wrap">
+          <Reveal className="sec-head sec-head--center" as="header">
+            <h2>Why Choose Endless Pathways Immigration Services?</h2>
+          </Reveal>
+
+          <ol className="reasons__list">
+            {REASONS.map((item, i) => (
+              <Reveal
+                as="li"
+                key={item.title}
+                className="reason"
+                delay={0.04 * (i % 2)}
+              >
+                <h3 className="reason__title">{item.title}</h3>
+                <p className="reason__body">{item.body}</p>
+              </Reveal>
+            ))}
+          </ol>
         </div>
       </section>
 
-      <section className="home-blogs-section">
-        <h2 className="section-title">MONDAY IMMIGRATION WATCH</h2>
-        <p className="blogs-intro">
-          Weekly insights, analysis, and strategies for your Canadian
-          immigration journey
-        </p>
+      {/* Reviews */}
+      <section className="reviews" id="reviews">
+        <div className="wrap">
+          <Reveal className="sec-head sec-head--center" as="header">
+            <h2>
+              Real Clients, Real Results – Clients Who Trusted Endless Pathways
+              Immigration Services
+            </h2>
+          </Reveal>
 
-        <div className="home-blogs-grid">
-          {recentPosts.map((post) => (
-            <article key={post.id} className="home-blog-card">
-              <div className="home-blog-meta">
-                <time dateTime={post.date} className="home-blog-date">
-                  {post.date}
-                </time>
-                {post.id === latestPost.id && (
-                  <span className="home-blog-new">NEW</span>
-                )}
-              </div>
-              <h3 className="home-blog-title">
-                <Link to={`/blogs/${post.id}`} className="home-blog-link">
-                  {post.title}
-                </Link>
-              </h3>
-              <p className="home-blog-excerpt">{post.excerpt}</p>
-              <div className="home-blog-footer">
-                <span className="home-blog-author">By {post.author}</span>
-                <Link to={`/blogs/${post.id}`} className="home-blog-read-more">
-                  Read Article <i className="fas fa-arrow-right"></i>
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+          <Reveal className="reviews__frame">
+            <div
+              className="elfsight-app-f58d9626-b2a6-48ca-9a96-40c89f7f8f31"
+              data-elfsight-app-lazy
+            />
+          </Reveal>
 
-        <div className="home-blogs-cta">
-          <Link to="/blogs" className="styled-btn view-all-btn">
-            VIEW ALL ARTICLES <i className="fas fa-arrow-right btn-icon"></i>
-          </Link>
+          <Reveal className="reviews__cta">
+            <a
+              href="https://www.google.com/maps/place/?q=place_id:ChIJY-EBXtHf1IkReDCiRTx5LEE"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn"
+            >
+              View All Reviews on Google
+              <i
+                className="fas fa-arrow-up-right-from-square btn-icon"
+                aria-hidden="true"
+              />
+            </a>
+          </Reveal>
         </div>
       </section>
 
-      <section className="home-faq-section">
-        <h2 className="section-title">FREQUENTLY ASKED QUESTIONS</h2>
-        <div className="home-faq-grid">
-          {faqs.map((faq, index) => (
-            <details key={index} className="home-faq-item">
-              <summary>{faq.q}</summary>
-              <p>{faq.a}</p>
-            </details>
-          ))}
+      {/* Journal */}
+      <section className="journal" id="journal">
+        <div className="wrap">
+          <Reveal className="sec-head" as="header">
+            <h2>Monday Immigration Watch</h2>
+            <p>
+              Weekly insights, analysis, and strategies for your Canadian
+              immigration journey
+            </p>
+          </Reveal>
+
+          <div className="journal__grid">
+            {recentPosts.map((post, i) => (
+              <Reveal
+                as="article"
+                key={post.id}
+                className="entry"
+                variant="scale"
+                delay={0.06 * i}
+              >
+                <Link to={`/blogs/${post.id}`} className="entry__hit">
+                  <div className="entry__figure">
+                    {post.image && (
+                      <img src={post.image} alt="" loading="lazy" decoding="async" />
+                    )}
+                    {post.id === latestPost.id && (
+                      <span className="entry__new">NEW</span>
+                    )}
+                  </div>
+
+                  <div className="entry__body">
+                    <div className="entry__meta">
+                      <time dateTime={post.date}>{post.date}</time>
+                      <span className="entry__dot" aria-hidden="true" />
+                      <span>{estimateReadTime(post.content)} min read</span>
+                    </div>
+
+                    <h3 className="entry__title">{post.title}</h3>
+                    <p className="entry__excerpt">{post.excerpt}</p>
+
+                    <div className="entry__foot">
+                      <span className="entry__author">By {post.author}</span>
+                      <span className="entry__more">
+                        Read Article
+                        <i className="fas fa-arrow-right" aria-hidden="true" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal className="journal__cta">
+            <Link to="/blogs" className="btn">
+              View All Articles
+              <i className="fas fa-arrow-right btn-icon" aria-hidden="true" />
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="faq" id="faq">
+        <div className="wrap faq__wrap">
+          <Reveal className="sec-head sec-head--center" as="header">
+            <h2>Frequently Asked Questions</h2>
+          </Reveal>
+
+          <div className="faq__list">
+            {FAQS.map((faq, i) => {
+              const open = openFaq === i;
+              return (
+                <Reveal
+                  key={faq.q}
+                  className={`qa ${open ? "is-open" : ""}`}
+                  delay={0.04 * i}
+                >
+                  <h3>
+                    <button
+                      className="qa__q"
+                      onClick={() => setOpenFaq(open ? null : i)}
+                      aria-expanded={open}
+                      aria-controls={`faq-panel-${i}`}
+                      id={`faq-btn-${i}`}
+                      type="button"
+                    >
+                      <span className="qa__text">{faq.q}</span>
+                      <span className="qa__sign" aria-hidden="true" />
+                    </button>
+                  </h3>
+
+                  <div
+                    className="qa__panel"
+                    id={`faq-panel-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-btn-${i}`}
+                  >
+                    <div className="qa__panelInner">
+                      <p>{faq.a}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
     </div>
