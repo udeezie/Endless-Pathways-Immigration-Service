@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
+import { responsiveImage } from "../utils/images";
 import "./Blogs.scss";
 
 const estimateReadTime = (content: string) =>
@@ -37,7 +38,12 @@ const Blogs: React.FC = () => {
           <Link to={`/blogs/${featuredPost.id}`} className="blogs-featured">
             {featuredPost.image && (
               <div className="blogs-featured-image">
-                <img src={featuredPost.image} alt={featuredPost.title} />
+                <img
+                  {...responsiveImage(featuredPost.image)}
+                  sizes="(max-width: 900px) 100vw, 615px"
+                  alt={featuredPost.title}
+                  decoding="async"
+                />
               </div>
             )}
             <div className="blogs-featured-content">
@@ -72,9 +78,11 @@ const Blogs: React.FC = () => {
                     <div className="blogs-card-image">
                       {post.image ? (
                         <img
-                          src={post.image}
+                          {...responsiveImage(post.image)}
+                          sizes="(max-width: 900px) 100vw, 380px"
                           alt={`Illustration for ${post.title}`}
                           loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="blogs-card-image-placeholder">

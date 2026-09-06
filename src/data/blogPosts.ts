@@ -82,7 +82,7 @@ Review your current immigration situation
 
 Identify the next steps you should take before your work permit expires`,
     author: "Appiah Bonsu",
-    image: "/blog8.png",
+    image: "/blog8.webp",
   },
   {
     id: 7,
@@ -142,7 +142,7 @@ Every immigration case is different, and preparing the right documents in advanc
 
 If you want to understand whether this upcoming pathway could apply to your situation and what documents you should start gathering now, feel free to reach out.`,
     author: "Appiah Bonsu",
-    image: "/blog7.png",
+    image: "/blog7.webp",
   },
   {
     id: 6,
@@ -215,7 +215,7 @@ Need Guidance?
 
 If you are unsure whether you qualify under Ontario’s EOI system, professional guidance can help you assess your options and avoid costly mistakes.`,
     author: "Appiah Bonsu",
-    image: "/blog6.png",
+    image: "/blog6.webp",
   },
   {
     id: 1,
@@ -261,7 +261,7 @@ Canada maintains its openness to immigration, yet success now depends more than 
 
 *For personalized guidance on how these changes may affect your specific circumstances, professional consultation is recommended.*`,
     author: "Appiah Bonsu",
-    image: "/blog1.png",
+    image: "/blog1.webp",
   },
   {
     id: 2,
@@ -341,7 +341,7 @@ The PGWP presents a valuable opportunity, but it is temporary. Success depends n
 
 *For individuals seeking clarity on their specific situation, professional immigration advice is strongly recommended before making critical status decisions.*`,
     author: "Appiah Bonsu",
-    image: "/blog2.png",
+    image: "/blog2.webp",
   },
   {
     id: 3,
@@ -411,7 +411,7 @@ This approach represents strategic alignment with immigration demand rather than
 
 If your CRS score remains below 490, inaction represents the highest-risk decision available. The candidates who succeed in the current environment are those who treat their profile as a work in progress rather than a static submission.`,
     author: "Appiah Bonsu",
-    image: "/blog3.png",
+    image: "/blog3.webp",
   },
   {
     id: 4,
@@ -504,7 +504,7 @@ A single incorrect decision can cost months of time, significant financial inves
 
 *For professional guidance on OINP employer-supported pathways and stream selection, consultation with a regulated immigration professional is strongly recommended.*`,
     author: "Appiah Bonsu",
-    image: "/blog4.png",
+    image: "/blog4.webp",
   },
   {
     id: 5,
@@ -559,6 +559,6 @@ These figures exclude study permit holders and extensions. Competition continues
 
 *For individuals needing professional guidance on Express Entry alternatives and PNP strategies, consultation with a regulated immigration professional is recommended.*`,
     author: "Appiah Bonsu",
-    image: "/blog5.png",
+    image: "/blog5.webp",
   },
 ];

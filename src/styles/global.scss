@@ -108,9 +108,11 @@ select {
   border-radius: 2px;
 }
 
+// Kept faint. A solid gold fill reads like a highlighter pen dragged across
+// the page, which is very obvious on headings and nav labels.
 ::selection {
-  background: var(--gold);
-  color: #14110c;
+  background: var(--gold-wash);
+  color: inherit;
 }
 
 // Scrollbar

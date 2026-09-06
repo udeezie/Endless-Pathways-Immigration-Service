@@ -116,8 +116,7 @@
   gap: 12px;
 }
 
-.blog-post-author-avatar,
-.avatar {
+.blog-post-author-avatar {
   display: grid;
   place-items: center;
   width: 40px;
@@ -466,16 +465,4 @@
   .back-to-blogs-btn {
     margin-top: 10px;
   }
-}
-
-.tooltip {
-  position: absolute;
-  z-index: 5;
-  padding: 6px 10px;
-  border-radius: 2px;
-  background: var(--ink);
-  color: var(--bg);
-  font-size: 0.75rem;
-  white-space: nowrap;
-  pointer-events: none;
 }
