@@ -14,6 +14,7 @@ const NAV = [
   { to: "/", label: "Home", end: true },
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
+  { to: "/crs-calculator", label: "CRS Calculator" },
   { to: "/blogs", label: "Blog" },
   { to: "/events", label: "Events" },
   { to: "/contact", label: "Contact" },

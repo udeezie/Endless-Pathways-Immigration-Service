@@ -15,6 +15,7 @@ import Events from "./pages/Events";
 import Blogs from "./pages/Blogs";
 import BlogPost from "./pages/BlogPost";
 import BookConsultation from "./pages/BookConsultation";
+import CrsCalculator from "./pages/CrsCalculator";
 import Loader from "./components/Loader";
 import BackToTop from "./components/BackToTop";
 import ScrollProgress from "./components/ScrollProgress";
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       { path: "blogs", element: <Blogs /> },
       { path: "blogs/:id", element: <BlogPost /> },
       { path: "book-consultation", element: <BookConsultation /> },
+      { path: "crs-calculator", element: <CrsCalculator /> },
     ],
   },
 ]);
