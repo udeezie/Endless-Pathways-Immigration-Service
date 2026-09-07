@@ -848,3 +848,16 @@
     transition: transform 0.4s $ease;
   }
 }
+
+// Date stamp under the processing time and fee cards. Deliberately quiet — it
+// is provenance, not content — but present, so the figures read as maintained
+// rather than as permanent truths.
+.sd-facts__verified {
+  margin-top: 14px;
+  padding-top: 11px;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  color: var(--text-faint);
+
+  @include hairline(top, var(--line-faint));
+}

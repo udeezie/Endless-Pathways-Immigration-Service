@@ -9,6 +9,7 @@ import {
   calculateCrs,
 } from "../data/crs";
 import type { Abilities, CrsInput, EducationLevel } from "../data/crs";
+import DrawTracker from "../components/DrawTracker";
 import "./CrsCalculator.scss";
 
 /**
@@ -216,6 +217,10 @@ const CrsCalculator: React.FC = () => {
           </p>
         </div>
       </header>
+
+      <div className="wrap crs-draws">
+        <DrawTracker />
+      </div>
 
       <div className="wrap crs-body">
         <div className="crs-form">

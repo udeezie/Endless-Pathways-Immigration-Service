@@ -1,9 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
-import { serviceDetails } from "../data/serviceDetails";
+import { serviceDetails, FACTS_VERIFIED } from "../data/serviceDetails";
 import Reveal from "../components/Reveal";
+import EligibilityCheck from "../components/EligibilityCheck";
 import { useScrollSpy, slugify } from "../hooks/useScrollSpy";
 import "./ServiceDetail.scss";
+
+// Sections whose list is a set of requirements the reader can hold themselves
+// against, rather than explanatory prose.
+const REQUIREMENTS_HEADING = /eligib|requirement|who can|qualify/i;
 
 const FAQItem: React.FC<{ q: string; a: string; index: number }> = ({
   q,
@@ -141,27 +146,37 @@ const ServiceDetail: React.FC = () => {
             </Reveal>
           )}
 
-          {service.sections.map((section, idx) => (
-            <Reveal
-              as="section"
-              key={idx}
-              className="sd-section"
-              id={slugify(section.heading)}
-            >
-              <h2>{section.heading}</h2>
-              {section.content.map((item, i) =>
-                typeof item === "string" ? (
-                  <p key={i} dangerouslySetInnerHTML={{ __html: item }} />
-                ) : (
-                  <ul key={i} className="sd-bullets">
-                    {item.map((li, j) => (
-                      <li key={j} dangerouslySetInnerHTML={{ __html: li }} />
-                    ))}
-                  </ul>
-                ),
-              )}
-            </Reveal>
-          ))}
+          {service.sections.map((section, idx) => {
+            // A requirements section gets its first list rendered as something
+            // the reader can tick off rather than a static run of bullets. Same
+            // copy either way — only the presentation differs.
+            const isRequirements = REQUIREMENTS_HEADING.test(section.heading);
+            const firstList = section.content.findIndex((c) => Array.isArray(c));
+
+            return (
+              <Reveal
+                as="section"
+                key={idx}
+                className="sd-section"
+                id={slugify(section.heading)}
+              >
+                <h2>{section.heading}</h2>
+                {section.content.map((item, i) =>
+                  typeof item === "string" ? (
+                    <p key={i} dangerouslySetInnerHTML={{ __html: item }} />
+                  ) : isRequirements && i === firstList ? (
+                    <EligibilityCheck key={i} items={item} />
+                  ) : (
+                    <ul key={i} className="sd-bullets">
+                      {item.map((li, j) => (
+                        <li key={j} dangerouslySetInnerHTML={{ __html: li }} />
+                      ))}
+                    </ul>
+                  ),
+                )}
+              </Reveal>
+            );
+          })}
 
           {service.comparisonTable && (
             <Reveal
@@ -323,6 +338,9 @@ const ServiceDetail: React.FC = () => {
                 {service.processingTime.note && (
                   <p className="sd-facts__note">{service.processingTime.note}</p>
                 )}
+                <p className="sd-facts__verified">
+                  Checked against IRCC in {FACTS_VERIFIED}
+                </p>
               </div>
             )}
 
@@ -341,6 +359,9 @@ const ServiceDetail: React.FC = () => {
                     <dd>{service.feeBreakdown.total}</dd>
                   </div>
                 </dl>
+                <p className="sd-facts__verified">
+                  Government fees only. Checked against IRCC in {FACTS_VERIFIED}
+                </p>
               </div>
             )}
           </div>

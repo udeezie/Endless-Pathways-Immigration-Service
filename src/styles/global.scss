@@ -393,3 +393,34 @@ select {
   white-space: nowrap;
   border: 0;
 }
+
+// Route change. Without this the outgoing page blinks out and the incoming one
+// appears fully formed, which is the single thing that makes navigation feel
+// dead.
+//
+// Opacity only, on purpose. transform, filter and clip-path would each make
+// this wrapper a containing block for position: fixed descendants, which would
+// tear the CRS calculator's pinned score bar off the viewport for the length of
+// the animation.
+//
+// No fill-mode either: if animations never run — a background tab, a window
+// that is not painting, an engine that throttles them — the page stays at its
+// natural opacity of 1 rather than being stuck invisible.
+.route-view {
+  animation: route-in 0.4s $ease-io;
+}
+
+@keyframes route-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-view {
+    animation: none;
+  }
+}

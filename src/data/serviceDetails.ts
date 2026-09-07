@@ -1,3 +1,14 @@
+/**
+ * When the processing times and government fees on the service pages were last
+ * checked against IRCC. Both drift — fees are adjusted and processing times are
+ * republished regularly — and figures with no date on them read as permanent
+ * facts, which is how a site starts quietly misinforming people.
+ *
+ * Update this string whenever the figures are reviewed. It is printed under
+ * every processing time and fee card.
+ */
+export const FACTS_VERIFIED = "September 2026";
+
 export interface ServiceDetail {
   id: string;
   title: string;

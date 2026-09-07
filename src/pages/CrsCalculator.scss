@@ -756,3 +756,14 @@
     bottom: calc(84px + env(safe-area-inset-bottom));
   }
 }
+
+// Draw snapshot sits between the intro and the form: context first, then the
+// tool. It is not inside .crs-body because that grid belongs to the form and
+// the sticky score column.
+.crs-draws {
+  padding-bottom: 26px;
+
+  @include bp($bp-md) {
+    padding-bottom: 20px;
+  }
+}

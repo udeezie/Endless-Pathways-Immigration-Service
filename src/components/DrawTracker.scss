@@ -1,0 +1,182 @@
+// Dated snapshot of recent Express Entry rounds. Sits above the calculator as
+// context, so it is deliberately quieter than the form beneath it.
+
+.drawtrack {
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.drawtrack__bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 28px;
+  padding: 18px 24px;
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 18px 20px;
+  }
+}
+
+.drawtrack__lead {
+  min-width: 0;
+}
+
+.drawtrack__label {
+  margin-bottom: 7px;
+
+  @include eyebrow(var(--gold-text));
+
+  font-size: 9.5px;
+}
+
+.drawtrack__headline {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.drawtrack__date {
+  font-family: $display;
+  font-size: 1.16rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.drawtrack__type {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--text-dim);
+}
+
+.drawtrack__figures {
+  display: flex;
+  gap: 28px;
+
+  dt {
+    margin-bottom: 4px;
+
+    @include eyebrow(var(--text-faint));
+
+    font-size: 9px;
+  }
+
+  dd {
+    font-family: $display;
+    font-size: 1.24rem;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .is-score {
+    color: var(--gold-text);
+  }
+}
+
+.drawtrack__toggle {
+  justify-self: start;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  white-space: nowrap;
+
+  @include eyebrow(var(--text-dim));
+
+  font-size: 9.5px;
+  transition:
+    border-color 0.3s $ease,
+    color 0.3s $ease;
+
+  @include focus-ring;
+
+  &:hover {
+    border-color: var(--gold);
+    color: var(--gold-text);
+  }
+}
+
+// 0fr -> 1fr animates to the panel's real height without hard-coding one.
+.drawtrack__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s $ease;
+
+  &.is-open {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.drawtrack__panelInner {
+  overflow: hidden;
+}
+
+.drawtrack__scroll {
+  overflow-x: auto;
+  border-top: 1px solid var(--line);
+}
+
+.drawtrack__table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+
+  th,
+  td {
+    padding: 10px 16px;
+    text-align: left;
+    white-space: nowrap;
+
+    @include hairline(bottom, var(--line-faint));
+  }
+
+  th {
+    background: var(--bg-2);
+
+    @include eyebrow(var(--text-dim));
+
+    font-size: 9px;
+  }
+
+  td {
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  // Category is the only column that can breathe; the rest are figures.
+  td:nth-child(3) {
+    white-space: normal;
+    color: var(--text-dim);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.drawtrack__foot {
+  padding: 14px 24px 16px;
+  font-size: 0.6875rem;
+  line-height: 1.65;
+  color: var(--text-faint);
+
+  a {
+    color: var(--gold-text);
+
+    @include underline-link;
+  }
+
+  @include bp($bp-md) {
+    padding-inline: 20px;
+  }
+}

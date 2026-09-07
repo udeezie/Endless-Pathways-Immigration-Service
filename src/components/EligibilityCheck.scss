@@ -1,0 +1,194 @@
+// Interactive requirement list. Replaces the plain bullets in a service's
+// eligibility section, so it has to read as part of the document rather than as
+// a widget dropped into it — hence the restrained frame.
+
+.elig {
+  margin-bottom: 18px;
+  padding: 24px 26px 20px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  max-width: 72ch;
+
+  @include bp($bp-sm) {
+    padding: 20px 18px 16px;
+  }
+}
+
+.elig__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.elig__title {
+  font-family: $sans;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.elig__count {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+
+  strong {
+    font-family: $display;
+    font-size: 1.24rem;
+    font-weight: 400;
+    color: var(--gold-text);
+  }
+}
+
+.elig__meter {
+  height: 3px;
+  margin-bottom: 18px;
+  border-radius: 2px;
+  background: var(--line);
+  overflow: hidden;
+
+  i {
+    display: block;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--gold);
+    transition: width 0.45s $ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}
+
+.elig__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.elig__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 13px;
+  padding: 9px 10px;
+  margin-inline: -10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.25s $ease;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: var(--gold-wash);
+  }
+
+  // Focus lands on the visually hidden checkbox.
+  &:focus-within {
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+  }
+
+  &.is-on {
+    .elig__box {
+      background: var(--gold);
+      border-color: var(--gold);
+
+      svg {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .elig__text {
+      color: var(--ink);
+    }
+  }
+}
+
+.elig__box {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  transition:
+    background-color 0.25s $ease,
+    border-color 0.25s $ease;
+
+  svg {
+    width: 13px;
+    height: 13px;
+    fill: none;
+    stroke: #14110c;
+    stroke-width: 2.1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    // The tick draws itself on rather than appearing, which is the small piece
+    // of feedback that makes ticking a list feel responsive.
+    stroke-dasharray: 16;
+    stroke-dashoffset: 16;
+    transition: stroke-dashoffset 0.3s $ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}
+
+.elig__text {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--text);
+  transition: color 0.25s $ease;
+}
+
+.elig__verdict {
+  margin-top: 16px;
+  padding-top: 15px;
+
+  @include hairline(top, var(--line));
+
+  p {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--text-dim);
+  }
+
+  &.is-live p {
+    color: var(--ink);
+  }
+}
+
+.elig__cta {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--gold-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+
+  @include underline-link(var(--gold));
+  @include focus-ring;
+}
+
+.elig__disclaimer {
+  margin-top: 14px;
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  color: var(--text-faint);
+}
