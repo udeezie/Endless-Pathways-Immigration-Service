@@ -28,7 +28,11 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  // clip, not hidden. Both contain the full-bleed bands that break out with
+  // 100vw (100vw counts the scrollbar, so they overhang a few px), but hidden
+  // turns this into a scroll container and that is what silently disables
+  // position: sticky further down the tree.
+  overflow-x: clip;
   transition:
     background-color 0.5s $ease-io,
     color 0.5s $ease-io;
@@ -209,7 +213,11 @@ select {
   font-weight: 600;
   letter-spacing: 0.11em;
   text-transform: uppercase;
-  line-height: 1;
+  // Long CTA labels ("Start your Super Visa application") wrap inside the
+  // button on phones, and at a line-height of 1 the two lines sat on top of
+  // each other. Also centre the wrapped lines rather than leaving them ragged.
+  line-height: 1.35;
+  text-align: center;
   color: var(--btn-fg);
   background: var(--btn-bg);
   border: 1px solid var(--btn-line);

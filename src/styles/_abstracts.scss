@@ -81,7 +81,11 @@ $bp-xs: 460px;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  line-height: 1;
+  // Not 1. These labels are wide (uppercase plus 0.2em tracking), so on narrow
+  // screens they wrap — and at a line-height of 1 the second line sits directly
+  // on top of the first. "Preferred consultation times (up to 5, in order of
+  // priority)" was collided on every phone.
+  line-height: 1.4;
   color: $color;
 }
 

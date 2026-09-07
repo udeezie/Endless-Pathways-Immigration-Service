@@ -592,6 +592,46 @@
   gap: 12px;
   cursor: pointer;
   text-align: left;
+
+  // The wrapper is the field: it carries the border and padding so the chevron
+  // sits inside the box. The input within it is only a value holder, so it has
+  // to give the shared skin back — it was picking up its own border, padding
+  // and background and rendering as a bordered box inside a bordered box, at
+  // roughly twice the height of every other field.
+  .consultation-input {
+    width: auto;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      border: 0;
+      box-shadow: none;
+    }
+
+    // Error and focus are painted by the wrapper below, not here.
+    &.error {
+      background: transparent;
+    }
+  }
+
+  // The states live on the wrapper because that is what the user sees as the
+  // field, even though the class and focus land on the inner input.
+  &:has(.consultation-input:focus) {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-wash);
+  }
+
+  &:has(.consultation-input.error) {
+    border-color: var(--error);
+    background: var(--error-wash);
+  }
 }
 
 .dropdown-icon {
@@ -798,6 +838,39 @@
 
 .date-input-wrapper {
   position: relative;
+}
+
+.date-input {
+  // iOS gives date inputs an intrinsic width they refuse to shrink below and
+  // centres the value inside the control. Left alone, the date field rendered
+  // wider than the time select stacked beneath it, with "Sep 6, 2026" floating
+  // off to the right while "Select time" sat left.
+  appearance: none;
+  min-width: 0;
+  max-width: 100%;
+  text-align: left;
+  // The value sits in its own line box that runs taller than a select's, so
+  // without a shared line-height the date field stood 7px taller than the time
+  // field it sits beside.
+  line-height: 1.375;
+
+  &::-webkit-date-and-time-value {
+    text-align: left;
+    line-height: inherit;
+  }
+
+  // Chrome pads the internal date editor, which is what was left of the height
+  // difference against the select once line-height was matched.
+  &::-webkit-datetime-edit,
+  &::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+
+  // Keeps the calendar glyph pinned to the trailing edge rather than tucked
+  // against the value once the control is no longer content-width.
+  &::-webkit-calendar-picker-indicator {
+    margin-left: auto;
+  }
 }
 
 .time-picker-actions {

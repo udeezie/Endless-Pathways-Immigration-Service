@@ -45,7 +45,9 @@ const Contact: React.FC = () => {
               <div>
                 <strong>Phone</strong>
                 <p>
-                  +1 (905) 931-3776
+                  {/* Same formatting as the header and footer, and dialable
+                      from a phone rather than plain text to copy out. */}
+                  <a href="tel:905-931-3776">905-931-3776</a>
                   <br />
                   Mon–Fri, 9AM–6PM
                 </p>
@@ -56,7 +58,9 @@ const Contact: React.FC = () => {
               <div>
                 <strong>Email</strong>
                 <p>
-                  info@endlesspathways.ca
+                  <a href="mailto:info@endlesspathways.ca">
+                    info@endlesspathways.ca
+                  </a>
                 </p>
               </div>
             </div>

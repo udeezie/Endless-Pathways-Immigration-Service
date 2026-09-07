@@ -607,6 +607,12 @@
 
 // Sticky facts column
 .sd-aside {
+  // The grid sets align-items: start, which left this column only as tall as
+  // its own contents. A sticky child cannot travel inside a box it already
+  // fills, so the rail scrolled away instead of holding position. Stretching
+  // just this column back to the row height gives it somewhere to stick.
+  align-self: stretch;
+
   // On narrow screens the rail is hidden and only the figures remain, so they
   // lead — a phone reader wants the timeline and the cost first.
   @include bp($bp-lg) {
@@ -701,7 +707,14 @@
     font-size: 0.9375rem;
     font-weight: 600;
     color: var(--ink);
-    white-space: nowrap;
+    text-align: right;
+    // Deliberately not nowrap. Most amounts are bare figures, which carry no
+    // break opportunity anyway, but a few are prose - "Varies (paid directly to
+    // panel physician)". Pinned to one line that row had a 288px minimum, which
+    // forced the fees card to 434px, blew the grid track past the page and left
+    // the whole super-visa page scrolling sideways on a phone.
+    overflow-wrap: break-word;
+    text-wrap: pretty;
   }
 }
 
@@ -722,6 +735,24 @@
     font-size: 1.28rem !important;
     font-weight: 500;
     color: var(--gold-text) !important;
+    // Totals are frequently prose, not a figure - "$1,290 plus additional
+    // family member fees". The nowrap inherited from .sd-fees dd forced that
+    // onto one line and ran it straight off the card on phones.
+    white-space: normal;
+    text-align: right;
+    text-wrap: pretty;
+  }
+
+  // Once the value wraps to two or three lines, sitting it beside the label
+  // leaves a ragged column. Below this width the total reads better stacked.
+  @include bp($bp-sm) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+
+    dd {
+      text-align: left;
+    }
   }
 }
 

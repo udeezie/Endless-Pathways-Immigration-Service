@@ -170,7 +170,15 @@ const ServiceDetail: React.FC = () => {
               id={slugify(service.comparisonTable.title)}
             >
               <h2>{service.comparisonTable.title}</h2>
-              <div className="sd-tableWrap">
+              {/* The table keeps a 520px minimum and scrolls sideways on
+                  phones. tabIndex makes that scroll reachable by keyboard,
+                  which an overflow container does not get on its own. */}
+              <div
+                className="sd-tableWrap"
+                role="region"
+                aria-label={service.comparisonTable.title}
+                tabIndex={0}
+              >
                 <table className="sd-table">
                   <thead>
                     <tr>

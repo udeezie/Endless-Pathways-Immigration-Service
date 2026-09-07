@@ -1,24 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal";
-import { useScrollSpy } from "../hooks/useScrollSpy";
 import "./Services.scss";
 
-// The page is built as a journey, so the navigator is too: three nodes on a
-// rail, filling as you move through them. Labels are the stage names already
-// used on the page.
-const STAGES = [
-  { id: "temporary-residence", label: "Stage One", name: "Temporary Residence" },
-  { id: "permanent-residence", label: "Stage Two", name: "Permanent Residence" },
-  { id: "citizenship", label: "Stage Three", name: "Citizenship & Other" },
-];
-
-const STAGE_IDS = STAGES.map((s) => s.id);
-
 const Services: React.FC = () => {
-  const activeStage = useScrollSpy(STAGE_IDS, 200);
-  const activeIndex = Math.max(0, STAGE_IDS.indexOf(activeStage));
-
   return (
     <div className="svc-page">
       {/* Hero */}
@@ -47,52 +32,6 @@ const Services: React.FC = () => {
           </Reveal>
         </div>
       </section>
-
-      {/* Sticky journey rail — orientation on a long page, and it makes the
-          three stages an actual progression rather than a decorative label. */}
-      <nav
-        className="svc-stagenav"
-        aria-label="Service stages"
-        style={{ "--stage-progress": activeIndex } as React.CSSProperties}
-      >
-        <div className="wrap svc-stagenav__inner">
-          <div className="svc-stagenav__track" aria-hidden="true">
-            <span
-              className="svc-stagenav__fill"
-              style={{
-                width: `${(activeIndex / (STAGES.length - 1)) * 100}%`,
-              }}
-            />
-          </div>
-
-          <ul className="svc-stagenav__list">
-            {STAGES.map((stage, i) => (
-              <li key={stage.id}>
-                <a
-                  href={`#${stage.id}`}
-                  className={`svc-stagenav__item ${
-                    i === activeIndex ? "is-active" : ""
-                  } ${i < activeIndex ? "is-done" : ""}`}
-                  aria-current={i === activeIndex ? "true" : undefined}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document
-                      .getElementById(stage.id)
-                      ?.scrollIntoView({ block: "start" });
-                    window.history.replaceState(null, "", `#${stage.id}`);
-                  }}
-                >
-                  <span className="svc-stagenav__node" aria-hidden="true" />
-                  <span className="svc-stagenav__text">
-                    <span className="svc-stagenav__label">{stage.label}</span>
-                    <span className="svc-stagenav__name">{stage.name}</span>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
 
       {/* Temporary */}
       <section className="svc-stage" id="temporary-residence">
