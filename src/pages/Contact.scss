@@ -80,16 +80,36 @@
   box-sizing: border-box;
 }
 
+// One card per office. Sticky is dropped now that this column holds more than
+// a single map — pinning a stack taller than the viewport just traps the lower
+// half of it out of reach.
 .map-section {
-  position: sticky;
-  top: calc(#{$header-h} + 30px);
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
 
-  @include bp($bp-md) {
-    position: static;
-  }
+.map-card__head {
+  margin-bottom: 12px;
+}
+
+.map-card__city {
+  font-family: $display;
+  font-size: 1.16rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.map-card__addr {
+  margin-top: 3px;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--text-dim);
 }
 
 .map-container {
+  display: block;
   border-radius: 3px;
   overflow: hidden;
   background: var(--surface-2);

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import Logo from "./Logo";
 import "./Footer.scss";
+import { locations } from "../data/locations";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -80,11 +81,13 @@ const Footer: React.FC = () => {
           <div className="footer-col">
             <h2 className="footer-col__title">Contact</h2>
             <address className="footer-contact">
-              <span className="footer-contact__addr">
-                190 Harwood Avenue S
-                <br />
-                Ajax, Ontario L1S 2H6
-              </span>
+              {locations.map((l) => (
+                <span className="footer-contact__addr" key={l.city}>
+                  {l.street}
+                  <br />
+                  {l.region}
+                </span>
+              ))}
               <a href="tel:905-931-3776">905-931-3776</a>
               <a href="mailto:info@endlesspathways.ca">
                 info@endlesspathways.ca

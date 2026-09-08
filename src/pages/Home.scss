@@ -171,21 +171,36 @@ $head-offset: $header-h; // fixed header height
 }
 
 // Credential band closing the opener, full width against a tinted ground.
+// Credential band. This is the trust anchor of the home page, so it is given
+// the room of a real section rather than a thin utility strip, and the licence
+// number is set as the thing worth reading rather than as more micro-type.
+//
+// The badge artwork sets a ceiling on how large this can go: ca.png is only
+// 84x84, so it softens above roughly 46px on a retina screen.
 .opening__cred {
   background: var(--surface-2);
+  border-block: 1px solid var(--line);
 }
 
 .opening__credInner {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 16px 34px;
-  flex-wrap: wrap;
-  padding-block: 22px;
+  gap: 30px;
+  padding-block: 44px;
 
-  @include bp($bp-sm) {
-    justify-content: center;
+  @include bp($bp-lg) {
+    grid-template-columns: auto auto minmax(0, 1fr);
+    row-gap: 26px;
+    padding-block: 38px;
+  }
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr;
+    justify-items: center;
     text-align: center;
-    gap: 14px 18px;
+    gap: 22px;
+    padding-block: 34px;
   }
 }
 
@@ -195,57 +210,115 @@ $head-offset: $header-h; // fixed header height
   gap: 16px;
   flex-shrink: 0;
 
+  // Both marks sit on their own plate. The CICC lockup is transparent artwork
+  // while the CAPIC one carries its own solid block, so against the paper they
+  // read as two different kinds of object; a matched plate under each makes
+  // them a pair. It also removes the need to special-case dark mode, where the
+  // dark artwork would otherwise disappear into the background.
   img {
-    height: 42px;
+    box-sizing: content-box;
     width: auto;
+    height: 40px;
+    padding: 13px 17px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
     object-fit: contain;
-    // Supplied as artwork on white; multiply drops the box out on the paper.
-    mix-blend-mode: multiply;
+  }
+
+  // The square CAPIC mark reads larger than the wide CICC lockup at a matched
+  // height, so it is held back slightly to even them out optically.
+  img:last-child {
+    height: 34px;
   }
 
   @include bp($bp-sm) {
+    gap: 12px;
+
     img {
-      height: 34px;
+      height: 33px;
+      padding: 10px 13px;
+    }
+
+    img:last-child {
+      height: 28px;
     }
   }
 }
 
-body.dark-mode .opening__credBadges img {
-  mix-blend-mode: normal;
-  background: #fff;
-  padding: 4px 6px;
-  border-radius: 2px;
+.opening__credRule {
+  width: 1px;
+  height: 52px;
+  background: var(--line-strong);
+
+  @include bp($bp-md) {
+    display: none;
+  }
 }
 
 .opening__credText {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  line-height: 1.5;
+  gap: 9px;
+  min-width: 0;
+}
+
+// Sentence case, at a size meant to be read. The old all-caps micro-setting
+// made the accrediting body look like fine print.
+.opening__credBody {
+  font-size: 0.9375rem;
+  line-height: 1.45;
   color: var(--text-dim);
+  max-width: 34ch;
 }
 
 .opening__credReg {
-  color: var(--gold-text);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+
+  @include bp($bp-md) {
+    justify-content: center;
+  }
 }
 
+.opening__credRegLabel {
+  @include eyebrow(var(--text-faint));
+
+  font-size: 9.5px;
+}
+
+.opening__credRegNo {
+  font-family: $display;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--gold-text);
+  font-variant-numeric: tabular-nums;
+
+  @include bp($bp-sm) {
+    font-size: 1.3rem;
+  }
+}
+
+// A bordered target rather than a bare link: this is the one action in the band
+// and it was previously indistinguishable from the text beside it.
 .opening__credVerify {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  margin-left: auto;
+  gap: 11px;
+  padding: 14px 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--ink);
-  transition: color 0.35s $ease;
-
-  span {
-    @include underline-link(var(--gold));
-  }
+  white-space: nowrap;
+  transition:
+    color 0.35s $ease,
+    border-color 0.35s $ease,
+    background-color 0.35s $ease;
 
   i {
     font-size: 0.72em;
@@ -255,6 +328,8 @@ body.dark-mode .opening__credBadges img {
 
   &:hover {
     color: var(--gold-text);
+    border-color: var(--gold);
+    background: var(--gold-wash);
 
     i {
       transform: translate(3px, -3px);
@@ -263,13 +338,16 @@ body.dark-mode .opening__credBadges img {
 
   @include focus-ring;
 
-  @include bp($bp-md) {
-    margin-left: 0;
-    width: 100%;
+  @include bp($bp-lg) {
+    // Drops to its own row once the four-column layout collapses.
+    grid-column: 1 / -1;
+    justify-self: start;
   }
 
-  @include bp($bp-sm) {
-    justify-content: center;
+  @include bp($bp-md) {
+    justify-self: center;
+    white-space: normal;
+    text-align: center;
   }
 }
 

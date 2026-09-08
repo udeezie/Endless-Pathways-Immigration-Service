@@ -223,9 +223,19 @@ const Home: React.FC = () => {
               />
             </div>
 
+            <span className="opening__credRule" aria-hidden="true" />
+
             <div className="opening__credText">
-              <span>College of Immigration and Citizenship Consultants</span>
-              <span className="opening__credReg">RCIC Number: R1053912</span>
+              <span className="opening__credBody">
+                College of Immigration and Citizenship Consultants
+              </span>
+              {/* Split into label and number so the licence — the part a
+                  visitor can actually check — carries the weight, rather than
+                  being buried in a line of uniform micro-type. */}
+              <span className="opening__credReg">
+                <span className="opening__credRegLabel">RCIC Number</span>
+                <span className="opening__credRegNo">R1053912</span>
+              </span>
             </div>
 
             <a
