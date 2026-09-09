@@ -403,42 +403,6 @@
   color: var(--text);
 }
 
-// Runs the full width of the card base, so the action reads as the card's
-// conclusion rather than as a button someone left lying in it.
-.sd-help__cta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px 22px;
-  margin: 32px -36px -36px;
-  padding: 24px 36px;
-  border-top: 1px solid var(--gold-line);
-  border-radius: 0 0 3px 3px;
-  background: var(--gold-wash);
-
-  @include bp($bp-sm) {
-    margin: 26px -22px -28px;
-    padding: 20px 22px;
-
-    .btn {
-      width: 100%;
-    }
-  }
-}
-
-.sd-help__or {
-  font-size: 0.875rem;
-  color: var(--text-dim);
-
-  a {
-    font-weight: 600;
-    color: var(--gold-text);
-
-    @include underline-link(var(--gold));
-    @include focus-ring;
-  }
-}
-
 .sd-help__list {
   list-style: none;
   margin-bottom: 30px;

@@ -1,0 +1,68 @@
+// Standalone call to action. No box, no border, no card — it sits on whatever
+// ground the page already has, separated from the content above it by space and
+// one rule. Two earlier versions lived inside a card and both read as belonging
+// to that card rather than to the page.
+
+.cta-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px 48px;
+  margin-block: 52px;
+  padding-top: 34px;
+  border-top: 1px solid var(--line-strong);
+
+  @include bp($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-block: 40px;
+    padding-top: 26px;
+  }
+}
+
+.cta-block__text {
+  max-width: 52ch;
+  font-family: $display;
+  font-size: 1.24rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: pretty;
+
+  @include bp($bp-sm) {
+    font-size: 1.08rem;
+  }
+}
+
+.cta-block__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  @include bp($bp-md) {
+    align-items: stretch;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}
+
+.cta-block__or {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+
+  @include bp($bp-md) {
+    text-align: center;
+  }
+
+  a {
+    font-weight: 600;
+    color: var(--gold-text);
+
+    @include underline-link(var(--gold));
+    @include focus-ring;
+  }
+}

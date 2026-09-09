@@ -494,40 +494,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-// Not a card. This used to be a bordered white box nested inside the result
-// panel with the button floating in it — a card within a card. It now runs as
-// a band across the base of the panel, the same shape the service pages use,
-// so the site has one CTA pattern rather than two.
-.crs-cta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px 24px;
-  margin: 4px -34px -34px;
-  padding: 26px 34px;
-  border-top: 1px solid var(--gold-line);
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  background: var(--gold-wash);
-
-  @include bp($bp-md) {
-    margin: 0 -20px -24px;
-    padding: 22px 20px;
-
-    .btn {
-      width: 100%;
-    }
-  }
-}
-
-.crs-cta__text {
-  flex: 1 1 26ch;
-  min-width: 0;
-  max-width: 52ch;
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: var(--text);
-}
-
 .crs-disclaimer {
   font-size: 0.75rem;
   line-height: 1.65;
