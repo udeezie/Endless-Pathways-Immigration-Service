@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal";
 import { blogPosts } from "../data/blogPosts";
-import { responsiveImage } from "../utils/images";
+import BlogCover from "../components/BlogCover";
 import "./Home.scss";
 
 const estimateReadTime = (content: string) =>
@@ -408,15 +408,7 @@ const Home: React.FC = () => {
               >
                 <Link to={`/blogs/${post.id}`} className="entry__hit">
                   <div className="entry__figure">
-                    {post.image && (
-                      <img
-                        {...responsiveImage(post.image)}
-                        sizes="(max-width: 900px) 100vw, 380px"
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    )}
+                    <BlogCover variant={post.cover} />
                     {post.id === latestPost.id && (
                       <span className="entry__new">NEW</span>
                     )}

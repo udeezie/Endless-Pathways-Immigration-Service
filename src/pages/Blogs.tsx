@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
-import { responsiveImage } from "../utils/images";
+import BlogCover from "../components/BlogCover";
 import "./Blogs.scss";
 
 const estimateReadTime = (content: string) =>
@@ -36,16 +36,9 @@ const Blogs: React.FC = () => {
       <main className="blogs-main">
         <div className="blogs-container">
           <Link to={`/blogs/${featuredPost.id}`} className="blogs-featured">
-            {featuredPost.image && (
-              <div className="blogs-featured-image">
-                <img
-                  {...responsiveImage(featuredPost.image)}
-                  sizes="(max-width: 900px) 100vw, 615px"
-                  alt={featuredPost.title}
-                  decoding="async"
-                />
-              </div>
-            )}
+            <div className="blogs-featured-image">
+              <BlogCover variant={featuredPost.cover} />
+            </div>
             <div className="blogs-featured-content">
               <div className="blogs-featured-meta">
                 <span className="blogs-card-new">LATEST</span>
@@ -76,19 +69,7 @@ const Blogs: React.FC = () => {
                     style={{ animationDelay: `${0.05 + idx * 0.05}s` }}
                   >
                     <div className="blogs-card-image">
-                      {post.image ? (
-                        <img
-                          {...responsiveImage(post.image)}
-                          sizes="(max-width: 900px) 100vw, 380px"
-                          alt={`Illustration for ${post.title}`}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : (
-                        <div className="blogs-card-image-placeholder">
-                          <span>Image coming soon</span>
-                        </div>
-                      )}
+                      <BlogCover variant={post.cover} />
                     </div>
                     <div className="blogs-card-content">
                       <div className="blogs-card-meta">

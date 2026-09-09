@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
-import { responsiveImage } from "../utils/images";
+import BlogCover from "../components/BlogCover";
 import "./BlogPost.scss";
 
 const estimateReadTime = (content: string) =>
@@ -205,18 +205,9 @@ const BlogPost: React.FC = () => {
         </div>
 
         <article className="blog-post-container" ref={articleRef}>
-          {post.image && (
-            <div className="blog-post-featured-image">
-              {/* Loads eagerly: it sits above the fold and is the first thing
-                  the reader sees, so deferring it leaves an empty box. */}
-              <img
-                {...responsiveImage(post.image)}
-                sizes="(max-width: 980px) 100vw, 832px"
-                alt={post.title}
-                decoding="async"
-              />
-            </div>
-          )}
+          <div className="blog-post-featured-image">
+            <BlogCover variant={post.cover} />
+          </div>
 
           <div className="blog-post-category">MONDAY IMMIGRATION WATCH</div>
           <h1 className="blog-post-title">{post.title}</h1>
@@ -287,17 +278,9 @@ const BlogPost: React.FC = () => {
                   key={rp.id}
                   className="blog-related-card"
                 >
-                  {rp.image && (
-                    <div className="blog-related-image">
-                      <img
-                        {...responsiveImage(rp.image)}
-                        sizes="(max-width: 900px) 100vw, 380px"
-                        alt={rp.title}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                  )}
+                  <div className="blog-related-image">
+                    <BlogCover variant={rp.cover} />
+                  </div>
                   <div className="blog-related-body">
                     <span className="blog-related-date">{rp.date}</span>
                     <h3 className="blog-related-title">{rp.title}</h3>
