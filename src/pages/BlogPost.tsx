@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
-import BlogCover from "../components/BlogCover";
 import "./BlogPost.scss";
 
 const estimateReadTime = (content: string) =>
@@ -205,10 +204,6 @@ const BlogPost: React.FC = () => {
         </div>
 
         <article className="blog-post-container" ref={articleRef}>
-          <div className="blog-post-featured-image">
-            <BlogCover variant={post.cover} />
-          </div>
-
           <div className="blog-post-category">MONDAY IMMIGRATION WATCH</div>
           <h1 className="blog-post-title">{post.title}</h1>
 
@@ -278,9 +273,6 @@ const BlogPost: React.FC = () => {
                   key={rp.id}
                   className="blog-related-card"
                 >
-                  <div className="blog-related-image">
-                    <BlogCover variant={rp.cover} />
-                  </div>
                   <div className="blog-related-body">
                     <span className="blog-related-date">{rp.date}</span>
                     <h3 className="blog-related-title">{rp.title}</h3>

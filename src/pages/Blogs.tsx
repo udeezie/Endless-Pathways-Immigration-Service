@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
-import BlogCover from "../components/BlogCover";
 import "./Blogs.scss";
 
 const estimateReadTime = (content: string) =>
@@ -36,9 +35,6 @@ const Blogs: React.FC = () => {
       <main className="blogs-main">
         <div className="blogs-container">
           <Link to={`/blogs/${featuredPost.id}`} className="blogs-featured">
-            <div className="blogs-featured-image">
-              <BlogCover variant={featuredPost.cover} />
-            </div>
             <div className="blogs-featured-content">
               <div className="blogs-featured-meta">
                 <span className="blogs-card-new">LATEST</span>
@@ -61,46 +57,28 @@ const Blogs: React.FC = () => {
           {otherPosts.length > 0 && (
             <div className="blogs-grid-section">
               <h2 className="blogs-grid-label">All Articles</h2>
-              <div className="blogs-grid">
-                {otherPosts.map((post, idx) => (
-                  <article
-                    key={post.id}
-                    className="blogs-card"
-                    style={{ animationDelay: `${0.05 + idx * 0.05}s` }}
-                  >
-                    <div className="blogs-card-image">
-                      <BlogCover variant={post.cover} />
-                    </div>
-                    <div className="blogs-card-content">
-                      <div className="blogs-card-meta">
-                        <time dateTime={post.date} className="blogs-card-date">
-                          {post.date}
-                        </time>
-                        <span className="blogs-card-read-time">
-                          {estimateReadTime(post.content)} min read
-                        </span>
+
+              {/* A list, not a grid of cards. With no artwork to carry them,
+                  seven boxes read as boxes with something missing; a broadsheet
+                  index gets its rhythm from the date rail and the rules
+                  between entries instead. */}
+              <ol className="blogs-list">
+                {otherPosts.map((post) => (
+                  <li key={post.id} className="blogs-entry">
+                    <Link to={`/blogs/${post.id}`} className="blogs-entry__hit">
+                      <div className="blogs-entry__rail">
+                        <time dateTime={post.date}>{post.date}</time>
+                        <span>{estimateReadTime(post.content)} min read</span>
                       </div>
 
-                      <h3 className="blogs-card-title">
-                        <Link to={`/blogs/${post.id}`} className="blogs-card-link">
-                          {post.title}
-                        </Link>
-                      </h3>
-
-                      <p className="blogs-card-excerpt">{post.excerpt}</p>
-
-                      <div className="blogs-card-footer">
-                        <span className="blogs-card-author">By {post.author}</span>
-                        <Link
-                          to={`/blogs/${post.id}`}
-                          className="blogs-read-more"
-                          aria-label={`Read ${post.title}`}
-                        >
-                          <span>Read article</span>
+                      <div className="blogs-entry__body">
+                        <h3 className="blogs-entry__title">{post.title}</h3>
+                        <p className="blogs-entry__excerpt">{post.excerpt}</p>
+                        <span className="blogs-entry__cta">
+                          Read article
                           <svg
-                            className="blogs-read-more-icon"
-                            width="20"
-                            height="20"
+                            width="18"
+                            height="18"
                             viewBox="0 0 20 20"
                             fill="none"
                             aria-hidden="true"
@@ -113,12 +91,12 @@ const Blogs: React.FC = () => {
                               strokeLinejoin="round"
                             />
                           </svg>
-                        </Link>
+                        </span>
                       </div>
-                    </div>
-                  </article>
+                    </Link>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </div>
           )}
         </div>

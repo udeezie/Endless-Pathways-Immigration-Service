@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal";
 import { blogPosts } from "../data/blogPosts";
-import BlogCover from "../components/BlogCover";
 import "./Home.scss";
 
 const estimateReadTime = (content: string) =>
@@ -407,15 +406,11 @@ const Home: React.FC = () => {
                 delay={0.06 * i}
               >
                 <Link to={`/blogs/${post.id}`} className="entry__hit">
-                  <div className="entry__figure">
-                    <BlogCover variant={post.cover} />
-                    {post.id === latestPost.id && (
-                      <span className="entry__new">NEW</span>
-                    )}
-                  </div>
-
                   <div className="entry__body">
                     <div className="entry__meta">
+                      {post.id === latestPost.id && (
+                        <span className="entry__new">New</span>
+                      )}
                       <time dateTime={post.date}>{post.date}</time>
                       <span className="entry__dot" aria-hidden="true" />
                       <span>{estimateReadTime(post.content)} min read</span>

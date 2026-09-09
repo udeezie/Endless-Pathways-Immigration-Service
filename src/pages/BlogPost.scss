@@ -64,24 +64,6 @@
   white-space: nowrap;
 }
 
-.blog-post-featured-image {
-  margin-bottom: 40px;
-  border-radius: 3px;
-  overflow: hidden;
-  background: var(--surface-2);
-  aspect-ratio: 16 / 9;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  @include bp($bp-sm) {
-    margin-bottom: 28px;
-  }
-}
-
 .blog-post-category {
   @include eyebrow(var(--gold-text));
 
@@ -359,25 +341,14 @@
 .blog-related-card {
   display: flex;
   flex-direction: column;
-  border-radius: 3px;
-  overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  transition:
-    border-color 0.45s $ease,
-    transform 0.45s $ease,
-    box-shadow 0.45s $ease;
+  padding-top: 18px;
+  border-top: 2px solid var(--line-strong);
+  transition: border-color 0.45s $ease;
 
-  @include focus-ring(-4px);
+  @include focus-ring(4px);
 
   &:hover {
-    border-color: var(--gold-line);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
-
-    .blog-related-image img {
-      transform: scale(1.05);
-    }
+    border-top-color: var(--gold);
 
     .blog-related-title {
       color: var(--gold-text);
@@ -389,24 +360,10 @@
   }
 }
 
-.blog-related-image {
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--surface-2);
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1s $ease;
-  }
-}
-
 .blog-related-body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 22px 22px 24px;
 }
 
 .blog-related-date {

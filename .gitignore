@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Font cached by make-share-card.mjs
+.fonts/

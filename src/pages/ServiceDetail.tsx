@@ -266,9 +266,18 @@ const ServiceDetail: React.FC = () => {
               </ul>
             )}
 
-            <Link to="/book-consultation" className="btn btn--gold">
-              {service.howWeHelp.ctaText}
-            </Link>
+            {/* A loose button at the foot of a long card reads as an
+                afterthought. The action gets its own band across the base of
+                the card instead, with the phone beside it for anyone who would
+                rather not fill in a form. */}
+            <div className="sd-help__cta">
+              <Link to="/book-consultation" className="btn btn--gold">
+                {service.howWeHelp.ctaText}
+              </Link>
+              <span className="sd-help__or">
+                or call <a href="tel:905-931-3776">905-931-3776</a>
+              </span>
+            </div>
           </Reveal>
 
           {service.faqs && service.faqs.length > 0 && (
