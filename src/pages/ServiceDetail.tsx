@@ -3,7 +3,7 @@ import { useParams, Navigate, Link } from "react-router-dom";
 import { serviceDetails, FACTS_VERIFIED } from "../data/serviceDetails";
 import Reveal from "../components/Reveal";
 import EligibilityCheck from "../components/EligibilityCheck";
-import CtaBlock from "../components/CtaBlock";
+import SideNote from "../components/SideNote";
 import { useScrollSpy, slugify } from "../hooks/useScrollSpy";
 import "./ServiceDetail.scss";
 
@@ -269,12 +269,7 @@ const ServiceDetail: React.FC = () => {
 
           </Reveal>
 
-          {/* Outside the card on purpose. Inside it — whether loose or as a
-              band across its base — the action read as part of the card rather
-              than as the page asking for something. */}
-          <CtaBlock label={service.howWeHelp.ctaText}>
-            {service.howWeHelp.intro}
-          </CtaBlock>
+          <SideNote>{service.howWeHelp.intro}</SideNote>
 
           {service.faqs && service.faqs.length > 0 && (
             <Reveal

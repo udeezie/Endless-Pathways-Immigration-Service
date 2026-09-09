@@ -1,0 +1,25 @@
+// A side note. Set apart by space and tone rather than by a rule or a box —
+// it is an aside on the page, not a panel of its own.
+
+.side-note {
+  max-width: 62ch;
+  margin-block: 30px 8px;
+
+  p {
+    font-family: $display;
+    font-size: 1.08rem;
+    font-style: italic;
+    line-height: 1.62;
+    letter-spacing: -0.01em;
+    color: var(--text-dim);
+    text-wrap: pretty;
+  }
+
+  @include bp($bp-sm) {
+    margin-block: 24px 6px;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}

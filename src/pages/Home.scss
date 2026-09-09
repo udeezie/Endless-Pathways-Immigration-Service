@@ -441,7 +441,6 @@ $head-offset: $header-h; // fixed header height
   font-weight: 400;
   letter-spacing: -0.022em;
   color: var(--ink);
-  border-bottom: 1px solid var(--line);
 }
 
 .svc__list {
@@ -605,7 +604,6 @@ $head-offset: $header-h; // fixed header height
 
   position: relative;
   background: #08090a;
-  border-block: 1px solid rgba(244, 244, 244, 0.1);
   overflow: hidden;
 
   &::after {

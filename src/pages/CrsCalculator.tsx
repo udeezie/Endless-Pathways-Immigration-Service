@@ -9,7 +9,7 @@ import {
 } from "../data/crs";
 import type { Abilities, CrsInput, EducationLevel } from "../data/crs";
 import DrawTracker from "../components/DrawTracker";
-import CtaBlock from "../components/CtaBlock";
+import SideNote from "../components/SideNote";
 import "./CrsCalculator.scss";
 
 /**
@@ -564,12 +564,11 @@ const CrsCalculator: React.FC = () => {
 
           </section>
 
-          {/* Sibling of the result panel, not part of it. */}
-          <CtaBlock label="Discuss your score with an RCIC">
+          <SideNote>
             A score is a starting point, not a verdict. Which pathway suits you,
             and which factors are realistically worth improving, depends on your
             full situation.
-          </CtaBlock>
+          </SideNote>
         </div>
 
         {/* Live score */}

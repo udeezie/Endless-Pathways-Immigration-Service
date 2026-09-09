@@ -678,8 +678,6 @@
   font-size: 0.8125rem;
   line-height: 1.6;
   color: var(--text-faint);
-
-  @include hairline(top, var(--line-faint));
 }
 
 .sd-fees {
@@ -761,7 +759,6 @@
   @include section-pad(72px, 88px);
 
   background: var(--surface-2);
-  border-top: 1px solid var(--line);
 }
 
 .sd-related__title {

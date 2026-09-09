@@ -411,8 +411,6 @@
   gap: 16px;
   padding-bottom: 9px;
 
-  @include hairline(bottom, var(--line));
-
   h3 {
     font-size: 0.875rem;
     font-weight: 700;

@@ -61,10 +61,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px 18px;
-  margin-top: 30px;
-  padding-top: 24px;
-
-  @include hairline(top);
+  margin-top: 34px;
 }
 
 .book-badge {
@@ -346,9 +343,7 @@
 }
 
 .card-footer {
-  padding-top: 14px;
-
-  @include hairline(top, var(--line-faint));
+  padding-top: 12px;
 }
 
 .select-indicator {
@@ -424,8 +419,6 @@
   font-size: 0.9375rem;
   line-height: 1.7;
   color: var(--text);
-
-  @include hairline(bottom);
 }
 
 // Live echo of the chosen package, so the form is never filled in blind.
