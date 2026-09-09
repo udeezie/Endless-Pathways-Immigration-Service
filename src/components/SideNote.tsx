@@ -11,7 +11,7 @@ import "./SideNote.scss";
  */
 const SideNote: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <aside className="side-note">
-    <p>{children}</p>
+    <p className="side-note__text">{children}</p>
   </aside>
 );
 

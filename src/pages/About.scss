@@ -241,30 +241,6 @@ body.dark-mode .ab-verify__badges img {
   }
 }
 
-// Opening paragraph is simply set larger. No drop cap.
-.ab-story__open {
-  font-size: 1.1875rem !important;
-  line-height: 1.72 !important;
-  color: var(--ink) !important;
-}
-
-// The sentence the whole practice turns on — given its own beat.
-.ab-story__pull {
-  margin-block: 38px !important;
-  padding-left: 28px;
-  border-left: 2px solid var(--gold);
-  font-family: $display !important;
-  font-size: 1.5rem !important;
-  line-height: 1.4 !important;
-  letter-spacing: -0.018em;
-  color: var(--ink) !important;
-
-  @include bp($bp-sm) {
-    font-size: 1.24rem !important;
-    padding-left: 18px;
-  }
-}
-
 // Approach
 .ab-approach .sec-head {
   max-width: 860px;
@@ -312,26 +288,6 @@ body.dark-mode .ab-verify__badges img {
 }
 
 // Compliance notice
-.ab-notice {
-  margin-top: 56px;
-  padding: 30px 34px;
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-left: 2px solid var(--gold);
-
-  p {
-    max-width: 88ch;
-    font-size: 0.9375rem;
-    line-height: 1.8;
-    color: var(--text-dim);
-  }
-
-  @include bp($bp-sm) {
-    margin-top: 38px;
-    padding: 24px 22px;
-  }
-}
-
 // Closing band
 
 // The page's one dark moment, echoing the home page's anchor band.

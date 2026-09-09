@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal";
+import SideNote from "../components/SideNote";
 import "./About.scss";
 
 const SCOPE = [
@@ -78,7 +79,7 @@ const About: React.FC = () => {
         <div className="wrap ab-profile__wrap">
           <div className="ab-story">
             <Reveal>
-              <p className="ab-story__open">
+              <p>
                 Like many of the clients I now serve, my journey to Canada began
                 as an immigrant. I first arrived as an international student,
                 navigating the same complex systems, uncertainty, and high
@@ -102,7 +103,7 @@ const About: React.FC = () => {
             </Reveal>
 
             <Reveal delay={0.05}>
-              <p className="ab-story__pull">
+              <p>
                 That insight, grounded in research and real lives, is what led
                 to the creation of Endless Pathways Immigration Services.
               </p>
@@ -167,15 +168,14 @@ const About: React.FC = () => {
             ))}
           </ul>
 
-          {/* Regulatory scope, set as a formal notice rather than body copy. */}
-          <Reveal className="ab-notice" as="div">
-            <p>
-              All services are delivered in accordance with professional ethics,
-              regulatory standards, and the CICC Code of Conduct. We do not
-              engage in unlawful recruitment, employment placement, or any
-              activities outside the authorized scope of immigration consulting.
-            </p>
-          </Reveal>
+          {/* Regulatory scope, as an aside rather than a boxed callout — the
+              same note the calculator closes on. */}
+          <SideNote>
+            All services are delivered in accordance with professional ethics,
+            regulatory standards, and the CICC Code of Conduct. We do not engage
+            in unlawful recruitment, employment placement, or any activities
+            outside the authorized scope of immigration consulting.
+          </SideNote>
         </div>
       </section>
 

@@ -5,7 +5,11 @@
   max-width: 62ch;
   margin-block: 30px 8px;
 
-  p {
+  // Addressed by class, not by element. A bare `.side-note p` ties with any
+  // `.ab-story p` style of the section it is dropped into and loses on load
+  // order — which is how the note on About came out a size smaller than the
+  // one on the calculator.
+  &__text {
     font-family: $display;
     font-size: 1.08rem;
     font-style: italic;
@@ -18,7 +22,7 @@
   @include bp($bp-sm) {
     margin-block: 24px 6px;
 
-    p {
+    .side-note__text {
       font-size: 1rem;
     }
   }
